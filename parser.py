@@ -1,5 +1,5 @@
 from pyparsing import Word, Group, Combine, Suppress, OneOrMore, alphas, nums,\
-alphanums, stringEnd, ParseException, oneOf, Literal, ParserElement, LineEnd
+alphanums, stringEnd, ParseException, oneOf, Literal, ParserElement, LineEnd, pprint,infixNotation
 
 #ParserElement.setDefaultWhitespaceChars(' \t')
 
@@ -7,9 +7,13 @@ i_consider_whitespaces_to_be_only = ' '
 ParserElement.setDefaultWhitespaceChars(i_consider_whitespaces_to_be_only)
 
 
-state = oneOf("0 1")
+x = oneOf("0 1 2 3")
+y = oneOf("0 1 2 3")
+state = oneOf("1 0 X")
 CLB_code = oneOf("0 1 2 3")
+face= oneOf("A B C D")
 port  = oneOf("0 1 2 3 4 5 6 7")
+
 input_port = oneOf("I0 I1 I2 I3 I4 I5 I6 I7 I8 I9 I10 I11 I12 I13 I14 I15")
 output_port = oneOf("Q1 Q2 Q3 Q4 Q5 Q6 Q7 Q8")
 operand = input_port | output_port
@@ -21,8 +25,17 @@ equal=Literal("=")
 curlyop=Literal("[").suppress()
 curlyclose=Literal("]").suppress()
 rhs= Group(operand + comma + operand + comma + operand + comma + operand).setResultsName('rhs')
-expression = output_port + equal + op + bopen + rhs + bclose
-config_body = OneOrMore(expression)
+#expression = infixNotation((output_port + equal + op + bopen + rhs + bclose), 
+#	     ("IO"+bopen+x+comma+y+bclose+curlyop+state+comma+state+comma+state+comma+state+comma+state+comma+state+comma+state+comma+state+curlyclose), 
+#	     ("SB"+bopen+x+comma+y+bclose+curlyop+state+comma+state+comma+state+comma+state+comma+state+comma+state+comma+state+comma+state+curlyclose))
+	
+expression = output_port + equal + op + bopen + rhs + bclose | \
+	     "IO" + bopen + x + comma + y + bclose + equal + curlyop + state + comma + state + comma + state + comma + state + comma + state + comma + state + comma + state \
++ comma + state + curlyclose | \
+       	     "SB" + bopen + x + comma + y + bclose + equal + curlyop + state + comma + state + comma + state + comma + state + comma + state + comma + state + comma + state \
++ comma + state + curlyclose
+
+config=OneOrMore(expression)
 #config = "CLB" + bopen + CLB_code('CLB_addr') + bclose + LineEnd + curlyop + config_body + curlyclose
 #prgm = OneOrMore(config + LineEnd())
  
@@ -32,6 +45,8 @@ counter=0
 
 
 tests ="""\
+IO(0,0)=[1,1,1,1,X,X,0,0]
+SB(1,2)=[1,1,1,X,X,0,1,0]
 Q1=&(I1,I2,I3,I4)
 Q2=^(Q1,I3,I5,I6)
 Q4=|(I5,I6,Q1,Q2)
@@ -39,7 +54,7 @@ Q4=|(I5,I6,Q1,Q2)
 
 
 for test in tests:
-	stats = config_body.parseString(test)
+	stats = config.parseString(test)
 	counter+=1
 	print stats.asList()
 
