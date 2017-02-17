@@ -1,5 +1,4 @@
-from pyparsing import Word, Group, Combine, Suppress, OneOrMore, alphas, nums,\
-alphanums, stringEnd, ParseException, oneOf, Literal, ParserElement, LineEnd, pprint,infixNotation
+from pyparsing import*
 
 #ParserElement.setDefaultWhitespaceChars(' \t')
 
@@ -24,16 +23,19 @@ comma=Literal(",").suppress()
 equal=Literal("=")
 curlyop=Literal("[").suppress()
 curlyclose=Literal("]").suppress()
-rhs= Group(operand + comma + operand + comma + operand + comma + operand).setResultsName('rhs')
-#expression = infixNotation((output_port + equal + op + bopen + rhs + bclose), 
-#	     ("IO"+bopen+x+comma+y+bclose+curlyop+state+comma+state+comma+state+comma+state+comma+state+comma+state+comma+state+comma+state+curlyclose), 
-#	     ("SB"+bopen+x+comma+y+bclose+curlyop+state+comma+state+comma+state+comma+state+comma+state+comma+state+comma+state+comma+state+curlyclose))
+
+coordinates=Group(bopen + x + comma + y + bclose).setResultsName('coordinates')
+
+lut_rhs= Group(operand + comma + operand + comma + operand + comma + operand).setResultsName('rhs')
+io_rhs= Group(state + comma + state + comma + state + comma + state + comma + state + comma + state + comma + state \
++ comma + state).setResultsName('io_port_config')
+sb_rhs= Group(state + comma + state + comma + state + comma + state + comma + state + comma + state + comma + state \
++ comma + state).setResultsName('sb_port_config')
+
 	
 expression = output_port + equal + op + bopen + rhs + bclose | \
-	     "IO" + bopen + x + comma + y + bclose + equal + curlyop + state + comma + state + comma + state + comma + state + comma + state + comma + state + comma + state \
-+ comma + state + curlyclose | \
-       	     "SB" + bopen + x + comma + y + bclose + equal + curlyop + state + comma + state + comma + state + comma + state + comma + state + comma + state + comma + state \
-+ comma + state + curlyclose
+	     "IO" + bopen + x + comma + y + bclose + equal + curlyop + io_port_config + curlyclose | \
+       	     "SB" + bopen + x + comma + y + bclose + equal + curlyop + sb_port_config + curlyclose
 
 config=OneOrMore(expression)
 #config = "CLB" + bopen + CLB_code('CLB_addr') + bclose + LineEnd + curlyop + config_body + curlyclose
@@ -53,17 +55,15 @@ Q4=|(I5,I6,Q1,Q2)
 """.splitlines()
 
 
+
 for test in tests:
-	stats = config.parseString(test)
+	bnf = Dict(OneOrMore(Group(config)))
+	stats = bnf.parseString(test)
 	counter+=1
-	print stats.asList()
+	print stats
 
 print counter
 	
-i=0
-while(i<4):
-	print stats[i]
-	i=i+1
 
 
 

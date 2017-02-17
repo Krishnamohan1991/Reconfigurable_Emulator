@@ -17,7 +17,8 @@ LUT_connect={"Q1":['00','04'],"Q2":['00','04'],"Q3":['00','01'],"Q4":['00','01']
 
 
 
-#cb_connect is the dictionary whose key fiels it he CB ID and values: i)CB code ii)SB on the left iii)SB on the right
+#cb_connect is the dictionary whose key field store the Connection block ID and values: i)CB code(identical for CB sharing the same global lines) 
+#  ii)SB on the left iii)SB on the right
 
 CB_connect={"00":['C1','00','01'],"01":['C2','01','11'],"02":['C3','10','11'],"03":['C4','00','10'],
 
@@ -41,14 +42,22 @@ LUT_interconnect={"I0":'00000',"I1":'00001',"I2":'00010',"I3":'00011',"I4":'0010
 
 
 def begins(cls):
-	c=str(cls[2][0])
-	print cls.function
-	print cls.LUTId
-	print LUT_interconnect[c]
+	#c=str(cls[2][0])
+	print LUT_function[cls.function],
+	print LUT_interconnect[cls.LUTID],
+	print LUT_interconnect[cls.op1],
+	print LUT_interconnect[cls.op2],
+	print LUT_interconnect[cls.op3],
+	print LUT_interconnect[cls.op4]
+	#print cls.LUTId
+	#print LUT_interconnect[c]
 
-input_port = oneOf("I0 I1 I2 I3 I4 I5 I6 I7 I8 I9 I10 I11 I12 I13 I14 I15").setResultsName('inputLine')
-output_port = oneOf("Q1 Q2 Q3 Q4 Q5 Q6 Q7 Q8").setResultsName('LUTId')
-operand = input_port | output_port
+input_port = oneOf("I0 I1 I2 I3 I4 I5 I6 I7 I8 I9 I10 I11 I12 I13 I14 I15").setResultsName('InputLine')
+output_port = oneOf("Q1 Q2 Q3 Q4 Q5 Q6 Q7 Q8").setResultsName('LUTID')
+operand1 = (input_port | output_port).setResultsName('op1')
+operand2 = (input_port | output_port).setResultsName('op2')
+operand3 = (input_port | output_port).setResultsName('op3')
+operand4 = (input_port | output_port).setResultsName('op4')
 op = (oneOf("& | ^").setResultsName('function'))
 bopen=Literal("(").suppress()
 bclose=Literal(")").suppress()
@@ -57,7 +66,7 @@ equal=Literal("=").suppress()
 
 
 
-lut_rhs= (Group(operand + comma + operand + comma + operand + comma + operand))
+lut_rhs= operand1 + comma + operand2 + comma + operand3 + comma + operand4
 
 	
 expression = output_port + equal + op + bopen + lut_rhs + bclose 
@@ -68,21 +77,24 @@ config=OneOrMore(expression)
 
 counter=0
 
+tests=open("data.txt","r")
+scr=tests.read()
+scr_split=scr.splitlines()
 
-tests ="""\
-Q1=&(I1,I2,I3,I4)
-Q2=^(Q1,I3,I5,I6)
-""".splitlines()
+#tests ="""\
+#Q1=&(I1,I2,I3,I4)
+#Q2=^(Q1,I3,I5,I6)
+#""".splitlines()
 
 
 
 
 
-for test in tests:
+for test in scr_split:
 	stats = config.parseString(test)
 	begins(stats)
-	counter+=1
+#	counter+=1
 	
-
+tests.close()
 print counter
 	

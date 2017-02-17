@@ -28,7 +28,7 @@ class fpga(object):
 
 
 class connection_block(fpga):
-	def __init__(self,out_port,CB_code):
+	def __init__(self,out_port,CB_code,sb_left,sb_right):
 		pass
 
 	def getPortStatus(self,CB_code,port):
