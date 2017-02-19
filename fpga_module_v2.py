@@ -16,14 +16,20 @@ def configureLUT(lutid,lutfunc,inp1,inp2,inp3,inp4,mux):
 def begins(cls):
 
 	
-	if(LUT_connect.get(cls.LUTID,0)):
+	
+	if(LUT_connect.get(cls.config_code,0)):
 		configureLUT(cls.LUTID,LUT_function[cls.function],LUT_interconnect[cls.op1],LUT_interconnect[cls.op2],LUT_interconnect[cls.op3],LUT_interconnect[cls.op4],
 		cls.MUXswitch)
-		
-	
+
+	elif cls.config_code=='SB':
+		print 'yooooo'
+
 	return 1
 
-input_port = (oneOf("I0 I1 I2 I3 I4 I5 I6 I7 I8 I9 I10 I11 I12 I13 I14 I15 Q1 Q2 Q3 Q4 Q5 Q6 Q7 Q8 Q9 Q10 Q11 Q12 Q13 Q14 Q15 Q16 Q17 Q18 Q19 Q20 Q21 Q22 Q23 Q24 Q25 Q26 Q27 Q28 Q29 Q30 Q31 Q32")).setResultsName('InputLine')
+
+
+
+input_port = (oneOf("I0 I1 I2 I3 I4 I5 I6 I7 I8 I9 I10 I11 I12 I13 I14 I15 Q1 Q2 Q3 Q4 Q5 Q6 Q7 Q8 Q9 Q10 Q11 Q12 Q13 Q14 Q15 Q16 Q17 Q18 Q19 Q20 Q21 Q22 Q23 Q24 Q25 Q26 Q27 Q28  Q29 Q30 Q31 Q32")).setResultsName('InputLine')
 
 #inputLines=(oneOf("I0 I1 I2 I3 I4 I5 I6 I7 I8 I9 I10 I11 I12 I13 I14 I15")).setResultsName('onlyInput')
 output_port = (oneOf("Q1 Q2 Q3 Q4 Q5 Q6 Q7 Q8 Q9 Q10 Q11 Q12 Q13 Q14 Q15 Q16 Q17 Q18 Q19 Q20 Q21 Q22 Q23 Q24 Q25 Q26 Q27 Q28 Q29 Q30 Q31 Q32")).setResultsName('LUTID')
@@ -47,9 +53,11 @@ sqopen=Literal("[").suppress()
 sqclose=Literal("]").suppress()
 equal=Literal("=").suppress()
 MUXswitch=(oneOf("1 0")).setResultsName('MUXswitch')
-config_code=(oneOf('IO' 'SB' 'CB')).setResultsName('configCode')
+
 
 #config_code=(oneOf('IO' 'SB' 'CB')).setResultsName('configCode')
+
+config_code=(output_port | oneOf("IO SB CB")).setResultsName('configCode')
 
 
 lut_rhs= operand1 + comma + operand2 + comma + operand3 + comma + operand4
@@ -57,14 +65,15 @@ lut_rhs= operand1 + comma + operand2 + comma + operand3 + comma + operand4
 #lut_rhs= operand + comma + operand + comma + operand + comma + operand
 
 	
-expression = output_port + equal + op + bopen + lut_rhs + bclose + sqopen + MUXswitch + sqclose  | \
-		config_code + switchId + bopen + fromFace + faceIndex + comma + toFace + faceIndex + bclose
+expression = output_port + equal + op + bopen + lut_rhs + bclose + sqopen + MUXswitch + sqclose | \
+             config_code+ bopen + switchId + bclose + equal + bopen + fromFace + faceIndex + comma + toFace + faceIndex + bclose
+
 config=OneOrMore(expression)
 
 
 counter=0
 
-tests=open("data.txt","r")
+tests=open("new_data.txt","r")
 scr=tests.read()
 
 scr_split=scr.splitlines()
@@ -73,6 +82,7 @@ scr_split=scr.splitlines()
 #tests ="""\
 #Q1=&(I1,I2,I3,I4)[1]
 #Q2=^(Q1,I3,I5,I6)[0]
+#SB(00)=(A0,B0)
 #""".splitlines()
 
 
@@ -87,7 +97,8 @@ for test in scr_split:
 #print stats.dump()
 #	counter+=1
 	
-tests.close()
+#tests.close()
+
 
 print lutobjectDictionary['Q7'].status
 print lutobjectDictionary['Q1'].status
