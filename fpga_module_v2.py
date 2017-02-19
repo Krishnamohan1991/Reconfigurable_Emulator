@@ -10,25 +10,8 @@ ParserElement.setDefaultWhitespaceChars(i_consider_whitespaces_to_be_only)
 
 def configureLUT(lutid,lutfunc,inp1,inp2,inp3,inp4,mux):
 	s=str(lutid)
-	#print lutobjectDictionary[s]
-	
 	lut.lutConfig(lutobjectDictionary[s],s,lutfunc,inp1,inp2,inp3,inp4,mux)
-	#print lut.bits(lutobjectDictionary[s])
 	
-	
-	#print Q1.lutTable
-	#print Q2.lutTable
-	#print lutObject
-	#lutObject.lutTable=lutfunc
-	#print lutObject.lutTable
-	#lutObject.muxSwitch=mux
-	#print lutObject.muxSwitch
-	#lutObject.outputPort=lutid
-	#print lutObject.outputPort
-	#lutObject.inputPort1=inp1
-	#lutObject.inputPort2=inp2
-	#lutObject.inputPort3=inp3
-	#lutObject.inputPort4=inp4
 	
 def begins(cls):
 
@@ -36,19 +19,6 @@ def begins(cls):
 	if(LUT_connect.get(cls.LUTID,0)):
 		configureLUT(cls.LUTID,LUT_function[cls.function],LUT_interconnect[cls.op1],LUT_interconnect[cls.op2],LUT_interconnect[cls.op3],LUT_interconnect[cls.op4],
 		cls.MUXswitch)
-	
-	'''	
-
-	if (cls.LUTID=='Q1' or cls.LUTID=='Q2' or cls.LUTID=='Q3' or cls.LUTID=='Q4' or cls.LUTID=='Q5' or 
-	   cls.LUTID=='Q6' or cls.LUTID=='Q7' or cls.LUTID=='Q8' or cls.LUTID=='Q9' or cls.LUTID=='Q10' or cls.LUTID=='Q11'
-	   or cls.LUTID=='Q12' or cls.LUTID=='Q13' or cls.LUTID=='Q14' or cls.LUTID=='Q15' or cls.LUTID=='Q16' or cls.LUTID=='Q17' 
-	   or  cls.LUTID=='Q18' or cls.LUTID=='Q19' or cls.LUTID=='Q20' or cls.LUTID=='Q21' or cls.LUTID=='Q22' or cls.LUTID=='Q23' 
-	   or cls.LUTID=='Q24' or cls.LUTID=='Q25' or cls.LUTID=='Q26' or cls.LUTID=='Q27' or cls.LUTID=='Q28' or cls.LUTID=='Q29' 
-	   or  cls.LUTID=='Q30' or cls.LUTID=='Q31' or     cls.LUTID=='Q32') :
-		configureLUT(cls.LUTID,LUT_function[cls.function],LUT_interconnect[cls.op1],LUT_interconnect[cls.op2],LUT_interconnect[cls.op3],LUT_interconnect[cls.op4],
-		cls.MUXswitch)
-	'''
-			
 		
 	
 	return 1
@@ -127,11 +97,4 @@ print lutobjectDictionary['Q3'].bits()
 print lutobjectDictionary['Q1'].bits()
 print lutobjectDictionary['Q7'].bits() 
 print lutobjectDictionary['Q5'].bits()
-    #print name
 
-#print Q1.bits()
-#print Q2.bits()
-#print Q2.lutTable
-#print Q3.lutTable
-#print counter
-	
