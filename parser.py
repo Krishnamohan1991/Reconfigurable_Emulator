@@ -33,9 +33,9 @@ sb_rhs= Group(state + comma + state + comma + state + comma + state + comma + st
 + comma + state).setResultsName('sb_port_config')
 
 	
-expression = output_port + equal + op + bopen + rhs + bclose | \
-	     "IO" + bopen + x + comma + y + bclose + equal + curlyop + io_port_config + curlyclose | \
-       	     "SB" + bopen + x + comma + y + bclose + equal + curlyop + sb_port_config + curlyclose
+expression = output_port + equal + op + bopen + lut_rhs + bclose | \
+	     "IO" + bopen + x + comma + y + bclose + equal + curlyop + io_rhs + curlyclose | \
+       	     "SB" + bopen + x + comma + y + bclose + equal + curlyop + sb_rhs + curlyclose
 
 config=OneOrMore(expression)
 #config = "CLB" + bopen + CLB_code('CLB_addr') + bclose + LineEnd + curlyop + config_body + curlyclose
