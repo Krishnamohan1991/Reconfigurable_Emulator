@@ -1,7 +1,12 @@
 cat1 = {"james":[1,2,3], "bob":[3,4,5]}
 print cat1['james'][2]
 
+cat1['james'][2]=999
 
+print cat1['james'][2]
+
+stk='ptr'
+ft='ft'
 
 def isPresent():
 	key="jas"
@@ -16,6 +21,14 @@ def isPresent():
 #print isPresent()
 
 
+def convet():
+	s='34'
+	t=int(s)
+	print s+'9'
+	print t+9
+
+convet()
+
 
 def isto():
 	key="james"
@@ -28,6 +41,12 @@ def isto():
 
 isto()
 
+
+
+if('C'>'A'):
+	print 'bazingaaa'
+else:
+	print 'hakuna matata'
 
 #print LUT_connect['Q17'][1]
 
