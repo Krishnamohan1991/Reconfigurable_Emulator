@@ -42,6 +42,7 @@ for name in objectNames:
     lutobjectDictionary[name] = lut(name)
 
 
+
 class switchBlock(object):
 	def __init__(self,switchID):
 		self.A=['X','X','X','X','X','X','X','X']  #the config for IO blocks should update the face nearest to it while coding
@@ -207,6 +208,9 @@ class switchBlock(object):
 
 		
 SBobjectNames = ["00", "01", "02", "10", "11", "12", "20", "21","22"]
+
+
+
 	       
 SBobjectDictionary = {}
 for name in SBobjectNames:
@@ -231,7 +235,7 @@ class IOBlocks(object):
 		self.ioId=ioId
 		self.ioConf=['X','X','X','X','X','X','X','X']
 		self.status=0
-		self.ioDict={"0":'00',"1":'00',"2":'00',"3":'00',"4":'00',"5":'00',"6":'00',"7":'00'}
+		self.ioDict={"0":'00',"1":'00',"2":'00',"3":'00',"4":'00',"5":'00',"6":'00',"7":'00'} #key: the global line number value: bits for setting the switch
 
 	def setIOBits(self,port,index):
 		if(port=='I'):
@@ -272,6 +276,8 @@ IOobjectDictionary = {}
 for name in IOobjectNames:
     IOobjectDictionary[name] = IOBlocks(name)
 
+#IO_connect key value=io_block ID values: i)adjacent switch block ii) face of adjacent SB facing the IO port 
+
 IO_connect={"00":['00','A'],"01":['01','A'],"02":['02','A'],
 	    "10":['00','D'],"11":['02','B'],
 	    "20":['10','D'],"21":['12','B'],
@@ -298,13 +304,74 @@ class connectionBlock(object):
 
 
 
+CB_objects=["00", "01", "02", "03","10", "11", "12", "13" ,"20", "21", "22","23","30","31","32","33"]
+
+CBobjectDictionary = {}
+for name in CB_objects:
+    CBobjectDictionary[name] = connectionBlock(name)
+
+
+#SB_Map_code key:SB code ---values:code representing the SB on the CB_SB_map dictionary
+SB_Map_code = {"00":"SB00", "01":"SB01", "02":"SB02", "10":"SB10", "11":"SB11", "12":"SB12", "20":"SB20", "21":"SB21","22":"SB22"}
+	       
+#CB_Map_code key:CB code ----values:code representing the CB on the CB_SB_map dictionary
+CB_map_code={"00":'C1',"01":'C2',"02":'C3',"03":'C4',
+
+	    "10":'C5',"11":'C6',"12":'C7',"13":'C2',
+            
+	    "20":'C7',"21":'C8',"22":'C9',"23":'C10',
+
+	    "30":'C3',"31":'C10',"32":'C11',"33":'C12'}
 
 
 
+#CB_SB_map is the graphical representation of the CB and SB layout on the FPGA skeleton
+
+CB_SB_map={"SB00":['C1','SB01','C4','SB10'],
+	  "SB01":['SB00','SB02','SB11','C1','C5','C2'],
+	  "SB02":['SB01','SB12','C5','C6'],
+	  "SB10":['SB00','SB11','SB20','C4','C12'],
+	  "SB11":['SB01','SB21','SB12','SB10','C3','C7'],
+	  "SB12":['SB02','SB22','SB11','C6','C8','C7'],
+          "SB20":['SB10','SB21','C12','C11'],
+	  "SB21":['SB20','SB11','SB22','C11','C9'],
+	  "SB22":['SB12','SB21','C8','C9'],
+	  "C1":['SB00','SB01'],
+	  "C5":['SB01','SB02'],
+	  "C4":['SB00','SB10'],
+	  "C2":['SB01','SB11'],
+	  "C6":['SB02','SB12'],
+	  "C12":['SB10','SB20'],
+	  "C3":['SB10','SB11'],
+	  "C7":['SB11','SB12'],
+	  "C10":['SB11','SB21'],
+	  "C9":['SB21','SB22'],
+	  "C8":['SB12','SB22']
+	  }
+
+
+def find_shortest_path(graph, start, end, path=[]):	#fix plag
+        path = path + [start]
+        if start == end:
+            return path
+        if not graph.has_key(start):
+            return None
+        shortest = None
+        for node in graph[start]:
+            if node not in path:
+                newpath = find_shortest_path(graph, node, end, path)
+                if newpath:
+                    if not shortest or len(newpath) < len(shortest):
+                        shortest = newpath
+        return shortest
 
 
 
+pa=[]
 
+pa=find_shortest_path(CB_SB_map,'C1','C9')
+print pa
 
-
+for i in pa:
+	print i
 
