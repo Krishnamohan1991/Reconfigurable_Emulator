@@ -53,7 +53,7 @@ operand1 = (input_port | output_port).setResultsName('op1')
 operand2 = (input_port | output_port).setResultsName('op2')
 operand3 = (input_port | output_port).setResultsName('op3')
 operand4 = (input_port | output_port).setResultsName('op4')
-op = (oneOf("& | ^")).setResultsName('function')
+op = (oneOf("AND OR XOR")).setResultsName('function')
 
 switchId1 = (oneOf("0 1 2")).setResultsName('switchID1')
 switchId2 = (oneOf("0 1 2")).setResultsName('switchID2')
