@@ -1,12 +1,19 @@
 from pyparsing import*
 from modules import*
 from fpga_dict import*
+import sys
 #ParserElement.setDefaultWhitespaceChars(' \t')
 
-
+#what happens if an object has already been configured and you write to reconfigure it
 
 i_consider_whitespaces_to_be_only = ' '
 ParserElement.setDefaultWhitespaceChars(i_consider_whitespaces_to_be_only)
+
+class InputOutputClashError(Exception):
+	def __init__(self,value):
+		self.value=value
+	def __str__(self):
+		return repr(self.value)
 
 def configureLUT(lutid,lutfunc,inp1,inp2,inp3,inp4,mux):
 	s=str(lutid)
@@ -37,15 +44,30 @@ def begins(cls):
 
 	elif cls[0]=='IO':
 		IOBlocks.configIO(IOobjectDictionary[cls.IOId],cls.IOId,cls.SBport0,cls.SBport1,cls.SBport2,cls.SBport3,cls.SBport4,cls.SBport5,cls.SBport6,cls.SBport7)
+	
+	elif cls[0]=='CB':
+
+		if((cls.CB_q1==cls.CB_x1) | (cls.CB_q1==cls.CB_x2) | (cls.CB_q1==cls.CB_x3) | (cls.CB_q1==cls.CB_x4) | (cls.CB_q1==cls.CB_q2)):
+			try:
+				raise InputOutputClashError(-999)
+				
+			except InputOutputClashError as e:
+				print 'EXCEPTION OCCURRED : output of CB connected to input line or two output lines of CB are connected to the same input line: ',e.value
+				sys.exit(1)
+				
+		else:
+			
+			connectionBlock.configCB(CBobjectDictionary[cls.CBId],cls.CBId,cls.CB_x1,cls.CB_x2,cls.CB_x3,cls.CB_x4,cls.CB_q1,cls.CB_q2)
+			
 
 	return 1
 
 
 
-input_port = (oneOf("I0 I1 I2 I3 I4 I5 I6 I7 I8 I9 I10 I11 I12 I13 I14 I15 Q1 Q2 Q3 Q4 Q5 Q6 Q7 Q8 Q9 Q10 Q11 Q12 Q13 Q14 Q15 Q16 Q17 Q18 Q19 Q20 Q21 Q22 Q23 Q24 Q25 Q26 Q27 Q28  Q29 Q30 Q31 Q32")).setResultsName('InputLine')
+input_port = (oneOf("I0 I1 I2 I3 I4 I5 I6 I7 I8 I9 I10 I11 I12 I13 I14 I15 Q00 Q01 Q02 Q03 Q04 Q05 Q06 Q07 Q10 Q11 Q12 Q13 Q14 Q15 Q16 Q17 Q20 Q21 Q22 Q23 Q24 Q25 Q26 Q27 Q30 Q31 Q32 Q33 Q34 Q35 Q36 Q37")).setResultsName('InputLine')
 
 #inputLines=(oneOf("I0 I1 I2 I3 I4 I5 I6 I7 I8 I9 I10 I11 I12 I13 I14 I15")).setResultsName('onlyInput')
-output_port = (oneOf("Q1 Q2 Q3 Q4 Q5 Q6 Q7 Q8 Q9 Q10 Q11 Q12 Q13 Q14 Q15 Q16 Q17 Q18 Q19 Q20 Q21 Q22 Q23 Q24 Q25 Q26 Q27 Q28 Q29 Q30 Q31 Q32")).setResultsName('LUTID')
+output_port = (oneOf("Q00 Q01 Q02 Q03 Q04 Q05 Q06 Q07 Q10 Q11 Q12 Q13 Q14 Q15 Q16 Q17 Q20 Q21 Q22 Q23 Q24 Q25 Q26 Q27 Q30 Q31 Q32 Q33 Q34 Q35 Q36 Q37")).setResultsName('LUTID')
 #operand= input_port | output_port
 
 
@@ -81,12 +103,12 @@ SBport7 = (oneOf("X I O")).setResultsName('SBport7')
 IOId = (oneOf("00 01 02 10 11 20 21 30 31 40 41 42")).setResultsName('IOId')
 
 CBId=(oneOf("00 01 02 03 10 11 12 13 20 21 22 23 30 31 32 33")).setResultsName('CBId')
-CB_x1=(oneOf("G0 G1 G2 G3 G4 G5 G6 G7")).setResultsName('CB_x1')
-CB_x2=(oneOf("G0 G1 G2 G3 G4 G5 G6 G7")).setResultsName('CB_x2')
-CB_x3=(oneOf("G0 G1 G2 G3 G4 G5 G6 G7")).setResultsName('CB_x3')
-CB_x4=(oneOf("G0 G1 G2 G3 G4 G5 G6 G7")).setResultsName('CB_x4')
-CB_q1=(oneOf("G0 G1 G2 G3 G4 G5 G6 G7")).setResultsName('CB_q1')
-CB_q2=(oneOf("G0 G1 G2 G3 G4 G5 G6 G7")).setResultsName('CB_q2')
+CB_x1=(oneOf("G0 G1 G2 G3 G4 G5 G6 G7 X")).setResultsName('CB_x1')
+CB_x2=(oneOf("G0 G1 G2 G3 G4 G5 G6 G7 X")).setResultsName('CB_x2')
+CB_x3=(oneOf("G0 G1 G2 G3 G4 G5 G6 G7 X")).setResultsName('CB_x3')
+CB_x4=(oneOf("G0 G1 G2 G3 G4 G5 G6 G7 X")).setResultsName('CB_x4')
+CB_q1=(oneOf("G0 G1 G2 G3 G4 G5 G6 G7 X")).setResultsName('CB_q1')
+CB_q2=(oneOf("G0 G1 G2 G3 G4 G5 G6 G7 X")).setResultsName('CB_q2')
 
 #config_code=(oneOf('IO' 'SB' 'CB')).setResultsName('configCode')
 
@@ -139,8 +161,27 @@ for test in scr_split:
 tests.close()
 
 
-#print lutobjectDictionary['Q7'].status
-#print lutobjectDictionary['Q1'].status
+print 'Q7 bits'
+print lutobjectDictionary['Q06'].bits()
+
+
+print SBobjectDictionary['00'].switchDict['A0B0']
+print SBobjectDictionary['00'].switchDict['A1B1']
+print SBobjectDictionary['00'].switchDict['A2B2']
+print SBobjectDictionary['00'].switchDict['A3B3']
+print SBobjectDictionary['00'].switchDict['A4B4']
+print SBobjectDictionary['00'].B
+print SBobjectDictionary['01'].D
+print SBobjectDictionary['00'].switchDict['B0D5']
+print SBobjectDictionary['01'].B
+print SBobjectDictionary['02'].D
+print CBobjectDictionary['00'].printCBconfig()
+
+
+
+
+
+'''
 slk= ["0","1","2","3","4","5","6","7"]
 print IOobjectDictionary['00'].ioConf
 m=''
@@ -156,12 +197,17 @@ print SBobjectDictionary['00'].B
 print SBobjectDictionary['00'].switchDict['A0B1']
 
 #print lutobjectDictionary['Q7'].outputPort
-print 'Q3 bits'
-print lutobjectDictionary['Q3'].bits() 
-print 'Q1 bits'
-print lutobjectDictionary['Q1'].bits()
-print 'Q7 bits'
-print lutobjectDictionary['Q7'].bits() 
-print 'Q8 bits'
-print lutobjectDictionary['Q5'].bits()
 
+print 'Q3 bits'
+print lutobjectDictionary['Q02'].bits() 
+print 'Q1 bits'
+print lutobjectDictionary['Q00'].bits()
+print 'Q7 bits'
+print lutobjectDictionary['Q06'].bits() 
+print 'Q8 bits'
+print lutobjectDictionary['Q04'].bits()
+print 'CB test'
+print CBobjectDictionary['00'].printCBconfig()
+print 'the new star'
+print getting_SB_line_status('00','left','q1')	
+'''
