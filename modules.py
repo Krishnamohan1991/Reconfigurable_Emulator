@@ -34,9 +34,7 @@ class lut(object):
 #creating objects for each LUT
 
 
-objectNames = ["Q1", "Q2", "Q3", "Q4", "Q5" ,"Q6", "Q7", "Q8" \
-	       ,"Q9" ,"Q10", "Q11", "Q12" ,"Q13", "Q14" \
-              ,"Q15", "Q16", "Q17", "Q18", "Q19", "Q20", "Q21" ,"Q22" ,"Q23", "Q24" ,"Q25", "Q26", "Q27", "Q28" ,"Q29", "Q30" ,"Q31", "Q32"]
+objectNames = ["Q00","Q01","Q02","Q03","Q04","Q05","Q06","Q07","Q10","Q11","Q12","Q13","Q14","Q15","Q16","Q17","Q20","Q21","Q22","Q23","Q24","Q25","Q26","Q27","Q30","Q31","Q32","Q33","Q34","Q35", "Q36","Q37"]
 lutobjectDictionary = {}
 for name in objectNames:
     lutobjectDictionary[name] = lut(name)
@@ -175,7 +173,7 @@ class switchBlock(object):
 		if(fromFace==toFace):
 			print 'raise exception cannot have connections in the same face'
 		else:
-			if(switchBlock.getFaceStatus(self,fromFace,fromFaceIndexnum)=='I'):
+			if(switchBlock.getFaceStatus(self,fromFace,fromFaceIndexnum)=='I' or switchBlock.getFaceStatus(self,fromFace,fromFaceIndexnum)=='Q'):
 				if(switchBlock.getFaceStatus(self,toFace,toFaceIndexnum)=='X'):
 					switchBlock.setFaceStatus(self,toFace,toFaceIndexnum,'I')
 					if(switchBlock.faceValue(self,fromFace)<switchBlock.faceValue(self,toFace)):
@@ -300,7 +298,135 @@ class connectionBlock(object):
 			     "x1_G6":'0',"x2_G6":'0',"x3_G6":'0',"x4_G6":'0',"q1_G6":'0',"q2_G6":'0',
 		             "x1_G7":'0',"x2_G7":'0',"x3_G7":'0',"x4_G7":'0',"q1_G7":'0',"q2_G7":'0'
 		            }
+	def getLineCode(self,line): #gives the value corresponding to the line code
+		if line=='G0':
+			return 0
+		elif line=='G1':
+			return 1
+		elif line=='G2':
+			return 2
+		elif line=='G3':
+			return 3
+		elif line=='G4':
+			return 4
+		elif line=='G5':
+			return 5
+		elif line=='G6':
+			return 6
+		else:
+			return 7
 
+	def getting_SB_line_status(self,cbId,LorR,port): #function that returns the state of a line running between the SB on either side of the current CB 
+		if(LorR=='left'):
+			direc=1
+		else:
+			direc=3
+		if CB_connect[cbId][direc+1]=='A':
+			return SBobjectDictionary[CB_connect[cbId][direc]].A[port]
+		elif CB_connect[cbId][direc+1]=='B':
+			return SBobjectDictionary[CB_connect[cbId][direc]].B[port]
+		elif CB_connect[cbId][direc+1]=='C':
+			return SBobjectDictionary[CB_connect[cbId][direc]].C[port]
+		else:
+			return SBobjectDictionary[CB_connect[cbId][direc]].D[port]	
+
+	def configCB(self,cbId,x1,x2,x3,x4,q1,q2):
+		self.cbId=cbId
+		self.CBstate=[x1,x2,x3,x4,q1,q2]
+		self.status=1
+		CBDictKeyx1=str('x1_'+x1)
+		CBDictKeyx2=str('x2_'+x2)
+		CBDictKeyx3=str('x3_'+x3)
+		CBDictKeyx4=str('x4_'+x4)
+		CBDictKeyq1=str('q1_'+q1)
+		CBDictKeyq2=str('q2_'+q2)
+		if x1!='X':
+			val=connectionBlock.getLineCode(self,x1)
+			leftSB=connectionBlock.getting_SB_line_status(self,cbId,'left',val)
+			rightSB=connectionBlock.getting_SB_line_status(self,cbId,'right',val)
+			if(leftSB=='I' and rightSB=='I'):
+				self.CBDict[CBDictKeyx1]='1'
+			else:
+				print 'no input sigal at %s '%x1
+		else: 
+			self.CBDict[CBDictKeyx1]='0'
+		if x2!='X':
+			val=connectionBlock.getLineCode(self,x1)
+			leftSB=connectionBlock.getting_SB_line_status(self,cbId,'left',val)
+			rightSB=connectionBlock.getting_SB_line_status(self,cbId,'right',val)
+			if(leftSB=='I' and rightSB=='I'):
+				self.CBDict[CBDictKeyx2]='1'
+			else:
+				print 'no input sigal at %s '%x2
+		else: 
+			self.CBDict[CBDictKeyx2]='0'
+		if x3!='X':
+			val=connectionBlock.getLineCode(self,x1)
+			leftSB=connectionBlock.getting_SB_line_status(self,cbId,'left',val)
+			rightSB=connectionBlock.getting_SB_line_status(self,cbId,'right',val)
+			if(leftSB=='I' and rightSB=='I'):
+				self.CBDict[CBDictKeyx3]='1'
+			else:
+				print 'no input sigal at %s '%x3
+		else: 
+			self.CBDict[CBDictKeyx3]='0'
+		if x4!='X':
+			val=connectionBlock.getLineCode(self,x1)
+			leftSB=connectionBlock.getting_SB_line_status(self,cbId,'left',val)
+			rightSB=connectionBlock.getting_SB_line_status(self,cbId,'right',val)
+			if(leftSB=='I' and rightSB=='I'):
+				self.CBDict[CBDictKeyx4]='1'
+			else:
+				print 'no input sigal at %s '%x4
+		else: 
+			self.CBDict[CBDictKeyx4]='0'
+		if q1!='X':
+			val=connectionBlock.getLineCode(self,q1)
+			leftSB=connectionBlock.getting_SB_line_status(self,cbId,'left',val)
+			rightSB=connectionBlock.getting_SB_line_status(self,cbId,'right',val)
+			if(leftSB=='X' and leftSB=='X'):
+				leftFace=CB_connect[cbId][2]
+				rightFace=CB_connect[cbId][4]
+				switchBlock.setFaceStatus(SBobjectDictionary[CB_connect[cbId][1]],leftFace,val,'Q')
+				switchBlock.setFaceStatus(SBobjectDictionary[CB_connect[cbId][3]],rightFace,val,'Q')
+				self.CBDict[CBDictKeyq1]='1'
+		else: 
+			self.CBDict[CBDictKeyq1]='0'
+		if q2!='X':
+			val=connectionBlock.getLineCode(self,q2)
+			leftSB=connectionBlock.getting_SB_line_status(self,cbId,'left',val)
+			rightSB=connectionBlock.getting_SB_line_status(self,cbId,'right',val)
+			if(leftSB=='X' and leftSB=='X'):
+				leftFace=CB_connect[cbId][2]
+				rightFace=CB_connect[cbId][4]
+				switchBlock.setFaceStatus(SBobjectDictionary[CB_connect[cbId][1]],leftFace,val,'Q')
+				switchBlock.setFaceStatus(SBobjectDictionary[CB_connect[cbId][3]],rightFace,val,'Q')
+				self.CBDict[CBDictKeyq2]='1'
+		else: 
+			self.CBDict[CBDictKeyq1]='0'
+
+	def Cbrouting(self,route):
+		pass
+
+	def printCBconfig(self):
+		dictKeylist=["x1_G0","x2_G0","x3_G0","x4_G0","q1_G0","q2_G0",
+			     "x1_G1","x2_G1","x3_G1","x4_G1","q1_G1","q2_G1",
+			     "x1_G2","x2_G2","x3_G2","x4_G2","q1_G2","q2_G2",
+		             "x1_G3","x2_G3","x3_G3","x4_G3","q1_G3","q2_G3",
+			     "x1_G4","x2_G4","x3_G4","x4_G4","q1_G4","q2_G4",
+			     "x1_G5","x2_G5","x3_G5","x4_G5","q1_G5","q2_G5",
+			     "x1_G6","x2_G6","x3_G6","x4_G6","q1_G6","q2_G6",
+		             "x1_G7","x2_G7","x3_G7","x4_G7","q1_G7","q2_G7"]
+		s=''
+		m=''
+		for k in dictKeylist:
+			m=m+' '+k
+		for i in dictKeylist:
+			s=s+self.CBDict[i]
+		print m
+		print s
+		return ''
+		
 
 
 
@@ -368,10 +494,26 @@ def find_shortest_path(graph, start, end, path=[]):	#fix plag
 
 
 pa=[]
+CB_codes=['C1','C2','C3','C4',
+
+	    'C5','C6','C7','C2',
+            
+	   'C7','C8','C9','C10',
+
+	   'C3','C10','C11','C12']
 
 pa=find_shortest_path(CB_SB_map,'C1','C9')
 print pa
 
+pa[0]
+
 for i in pa:
-	print i
+	if(i not in CB_codes ):
+		print '1'
+		
+
+
+
+
+
 
