@@ -168,7 +168,10 @@ class switchBlock(object):
 		self.status=1
 		toFaceIndexnum=int(toFaceIndex)
 		fromFaceIndexnum=int(fromFaceIndex)
-		switchKey= str(fromFace+fromFaceIndex+toFace+toFaceIndex)
+		if(switchBlock.faceValue(self,fromFace)<switchBlock.faceValue(self,toFace)):
+			switchKey= str(fromFace+fromFaceIndex+toFace+toFaceIndex)
+		else:
+			switchKey= str(toFace+toFaceIndex+fromFace+fromFaceIndex)
 		self.switchID=switchID
 		if(fromFace==toFace):
 			print 'raise exception cannot have connections in the same face'
@@ -178,7 +181,7 @@ class switchBlock(object):
 					switchBlock.setFaceStatus(self,toFace,toFaceIndexnum,'I')
 					if(switchBlock.faceValue(self,fromFace)<switchBlock.faceValue(self,toFace)):
 						SBobjectDictionary[switchID].switchDict[switchKey]="11"
-					else:
+					else:	
 						SBobjectDictionary[switchID].switchDict[switchKey]="10"
 					if(switchBlock.configSBNext(self,switchID,toFace,toFaceIndex)!='X'):
 						switchBlock.setFaceStatus(switchBlock.configSBNext(SBobjectDictionary[switchID],switchID,toFace,toFaceIndex),switchBlock.adjSBface(SBobjectDictionary[switchID],toFace),toFaceIndexnum,'I')
@@ -189,15 +192,15 @@ class switchBlock(object):
 			elif(switchBlock.getFaceStatus(self,fromFace,fromFaceIndexnum)=='O'):
 				if(switchBlock.getFaceStatus(self,toFace,toFaceIndexnum)=='X'):
 					switchBlock.setFaceStatus(self,toFace,toFaceIndexnum,'O')
-					if(switchBlock.configSBNext(self,switchID,toFace,toFaceIndex)!='X'):
-						switchBlock.setFaceStatus(switchBlock.configSBNext(SBobjectDictionary[switchID],switchID,toFace,toFaceIndex),switchBlock.adjSBface(SBobjectDictionary[switchID],toFace),toFaceIndexnum,'O')
+					#if(switchBlock.configSBNext(self,switchID,toFace,toFaceIndex)!='X'):
+					#	switchBlock.setFaceStatus(switchBlock.configSBNext(SBobjectDictionary[switchID],switchID,toFace,toFaceIndex),switchBlock.adjSBface(SBobjectDictionary[switchID],toFace),toFaceIndexnum,'O')
 					
 				else:
 					print 'both ports are signals:signal collission'
 				if(switchBlock.faceValue(self,fromFace)<switchBlock.faceValue(self,toFace)):
-					self.switchDict[switchKey]="11"
-				else:
 					self.switchDict[switchKey]="10"
+				else:
+					self.switchDict[switchKey]="11"
 
 
 			else:
@@ -384,29 +387,45 @@ class connectionBlock(object):
 			val=connectionBlock.getLineCode(self,q1)
 			leftSB=connectionBlock.getting_SB_line_status(self,cbId,'left',val)
 			rightSB=connectionBlock.getting_SB_line_status(self,cbId,'right',val)
-			if(leftSB=='X' and leftSB=='X'):
+			if(leftSB=='X' and rightSB=='X'):
 				leftFace=CB_connect[cbId][2]
 				rightFace=CB_connect[cbId][4]
 				switchBlock.setFaceStatus(SBobjectDictionary[CB_connect[cbId][1]],leftFace,val,'Q')
 				switchBlock.setFaceStatus(SBobjectDictionary[CB_connect[cbId][3]],rightFace,val,'Q')
 				self.CBDict[CBDictKeyq1]='1'
+			elif(leftSB=='O' and rightSB=='X'):
+				leftFace=CB_connect[cbId][2]
+				switchBlock.setFaceStatus(SBobjectDictionary[CB_connect[cbId][1]],leftFace,val,'Q')
+				self.CBDict[CBDictKeyq1]='1'
+			elif(leftSB=='X' and rightSB=='O'):		
+				rightFace=CB_connect[cbId][4]
+				switchBlock.setFaceStatus(SBobjectDictionary[CB_connect[cbId][3]],rightFace,val,'Q')
+				self.CBDict[CBDictKeyq1]='1'
+		
 		else: 
 			self.CBDict[CBDictKeyq1]='0'
 		if q2!='X':
 			val=connectionBlock.getLineCode(self,q2)
 			leftSB=connectionBlock.getting_SB_line_status(self,cbId,'left',val)
 			rightSB=connectionBlock.getting_SB_line_status(self,cbId,'right',val)
-			if(leftSB=='X' and leftSB=='X'):
+			if(leftSB=='X' and rightSB=='X'):
 				leftFace=CB_connect[cbId][2]
 				rightFace=CB_connect[cbId][4]
 				switchBlock.setFaceStatus(SBobjectDictionary[CB_connect[cbId][1]],leftFace,val,'Q')
 				switchBlock.setFaceStatus(SBobjectDictionary[CB_connect[cbId][3]],rightFace,val,'Q')
 				self.CBDict[CBDictKeyq2]='1'
+			elif(leftSB=='O' and rightSB=='X'):
+				leftFace=CB_connect[cbId][2]
+				switchBlock.setFaceStatus(SBobjectDictionary[CB_connect[cbId][1]],leftFace,val,'Q')
+				self.CBDict[CBDictKeyq2]='1'
+			elif(leftSB=='X' and rightSB=='O'):
+				rightFace=CB_connect[cbId][4]
+				switchBlock.setFaceStatus(SBobjectDictionary[CB_connect[cbId][3]],rightFace,val,'Q')
+				self.CBDict[CBDictKeyq2]='1'
 		else: 
 			self.CBDict[CBDictKeyq1]='0'
 
-	def Cbrouting(self,route):
-		pass
+	
 
 	def printCBconfig(self):
 		dictKeylist=["x1_G0","x2_G0","x3_G0","x4_G0","q1_G0","q2_G0",
@@ -423,7 +442,7 @@ class connectionBlock(object):
 			m=m+' '+k
 		for i in dictKeylist:
 			s=s+self.CBDict[i]
-		print m
+		#print m
 		print s
 		return ''
 		
@@ -452,15 +471,15 @@ CB_map_code={"00":'C1',"01":'C2',"02":'C3',"03":'C4',
 
 
 #CB_SB_map is the graphical representation of the CB and SB layout on the FPGA skeleton
-
+'''
 CB_SB_map={"SB00":['C1','SB01','C4','SB10'],
 	  "SB01":['SB00','SB02','SB11','C1','C5','C2'],
 	  "SB02":['SB01','SB12','C5','C6'],
-	  "SB10":['SB00','SB11','SB20','C4','C12'],
-	  "SB11":['SB01','SB21','SB12','SB10','C3','C7'],
+	  "SB10":['SB00','SB11','SB20','C4','C12','C3'],
+	  "SB11":['SB01','SB21','SB12','SB10','C3','C7','C2','C10'],
 	  "SB12":['SB02','SB22','SB11','C6','C8','C7'],
           "SB20":['SB10','SB21','C12','C11'],
-	  "SB21":['SB20','SB11','SB22','C11','C9'],
+	  "SB21":['SB20','SB11','SB22','C11','C9','C10'],
 	  "SB22":['SB12','SB21','C8','C9'],
 	  "C1":['SB00','SB01'],
 	  "C5":['SB01','SB02'],
@@ -475,22 +494,29 @@ CB_SB_map={"SB00":['C1','SB01','C4','SB10'],
 	  "C8":['SB12','SB22']
 	  }
 
+'''
 
-def find_shortest_path(graph, start, end, path=[]):	#fix plag
-        path = path + [start]
-        if start == end:
-            return path
-        if not graph.has_key(start):
-            return None
-        shortest = None
-        for node in graph[start]:
-            if node not in path:
-                newpath = find_shortest_path(graph, node, end, path)
-                if newpath:
-                    if not shortest or len(newpath) < len(shortest):
-                        shortest = newpath
-        return shortest
-
+CB_SB_map={"00":['C1','01','C4','10'],
+	  "01":['00','02','11','C1','C5','C2'],
+	  "02":['01','12','C5','C6'],
+	  "10":['00','11','20','C4','C12','C3'],
+	  "11":['01','21','12','10','C3','C7','C2','C10'],
+	  "12":['02','22','11','C6','C8','C7'],
+          "20":['10','21','C12','C11'],
+	  "21":['20','11','22','C11','C9','C10'],
+	  "22":['12','21','C8','C9'],
+	  "C1":['00','01'],
+	  "C5":['01','02'],
+	  "C4":['00','10'],
+	  "C2":['01','11'],
+	  "C6":['02','12'],
+	  "C12":['10','20'],
+	  "C3":['10','11'],
+	  "C7":['11','12'],
+	  "C10":['11','21'],
+	  "C9":['21','22'],
+	  "C8":['12','22']
+	  }
 
 
 pa=[]
@@ -502,6 +528,9 @@ CB_codes=['C1','C2','C3','C4',
 
 	   'C3','C10','C11','C12']
 
+
+
+'''
 pa=find_shortest_path(CB_SB_map,'C1','C9')
 print pa
 
@@ -511,7 +540,7 @@ for i in pa:
 	if(i not in CB_codes ):
 		print '1'
 		
-
+'''
 
 
 
