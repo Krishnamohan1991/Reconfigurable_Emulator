@@ -8,8 +8,7 @@ import sys
 
 i_consider_whitespaces_to_be_only = ' '
 ParserElement.setDefaultWhitespaceChars(i_consider_whitespaces_to_be_only)
-SBId=''
-SBFace=''
+
 
 class InputOutputClashError(Exception):
 	def __init__(self,value):
@@ -21,165 +20,23 @@ def configureLUT(lutid,lutfunc,inp1,inp2,inp3,inp4,mux):
 	s=str(lutid)
 	lut.lutConfig(lutobjectDictionary[s],s,lutfunc,inp1,inp2,inp3,inp4,mux)
 
-'''
-def configureLUT(lutid,lutfunc,inp1,inp2,inp3,inp4,mux):
-	s=str(lutid)
-	lut.lutConfig(lutobjectDictionary[s],s,lutfunc,inp1,inp2,inp3,inp4,mux)
-'''	
 
 
-def checkFreeSBPort(SBId,SBFace):
-	
-	counter=0
-	if(SBFace=='A'):
-		print 'ooooooooooooooo'
-		
-		while(SBobjectDictionary[SBId].A[counter] !='X'):
-			counter=counter+1
-	elif(SBFace=='B'):
-		while(SBobjectDictionary[SBId].B[counter] !='X'):
-			counter=counter+1
-	elif(SBFace=='C'):
-		while(SBobjectDictionary[SBId].C[counter] !='X'):
-			counter=counter+1
-	else:
-		while(SBobjectDictionary[SBId].D[counter] !='X'):
-			counter=counter+1
-	return counter
-
-def FindNextSBPos(currentSBId,nextSBId):
-	counterSB=0
-	
-	while(SB_connect[currentSBId][counterSB]!=SBobjectDictionary[nextSBId]):
-		counterSB=counterSB+1
-	
-	return counterSB
-	
-def ConfNextSBPos(currentSBId,currentSBFace,nextSBId,fromSBPortIndex,route,route_len,count,freeport):
-	
-	while((count+1)<(route_len-1)):
-		#freeport=ConfNextSBPos(route[count],route[count+1],fromSBPortIndex)
-		#freeport=checkFreeSBPort(currentSBId,currentSBFace)
-		nextSBId=route[count+1]	
-		nextSBIndex=FindNextSBPos(route[count],route[count+1])
-		if(nextSBIndex==0):
-			freeport=checkFreeSBPort(currentSBId,'A')
-			switchBlock.configSwitchBlock(SBobjectDictionary[currentSBId],currentSBId,currentSBFace,str(fromSBPortIndex),'A',str(freeport))
-			fromSBPortIndex=freeport
-			currentSBFace='C'
-			currentSBId=nextSBId
-			count=count+1
-			ConfNextSBPos(currentSBId,currentSBFace,nextSBId,fromSBPortIndex,route,route_len,count,freeport)
-		
-		elif(nextSBIndex==1):
-			freeport=checkFreeSBPort(currentSBId,'B')
-			switchBlock.configSwitchBlock(SBobjectDictionary[currentSBId],currentSBId,currentSBFace,str(fromSBPortIndex),'B',str(freeport))
-			fromSBPortIndex=freeport
-			currentSBFace='D'
-			currentSBId=nextSBId
-			count=count+1
-			ConfNextSBPos(currentSBId,currentSBFace,nextSBId,fromSBPortIndex,route,route_len,count,freeport)
-		
-		elif(nextSBIndex==2):
-			freeport=checkFreeSBPort(currentSBId,'C')
-			switchBlock.configSwitchBlock(SBobjectDictionary[currentSBId],currentSBId,currentSBFace,str(fromSBPortIndex),'C',str(freeport))
-			fromSBPortIndex=freeport
-			currentSBFace='A'
-			currentSBId=nextSBId
-			count=count+1
-			ConfNextSBPos(currentSBId,currentSBFace,nextSBId,fromSBPortIndex,route,route_len,count,freeport)
-		else:
-			freeport=checkFreeSBPort(currentSBId,'D')
-			switchBlock.configSwitchBlock(SBobjectDictionary[currentSBId],currentSBId,currentSBFace,str(fromSBPortIndex),'D',str(freeport))
-			fromSBPortIndex=freeport
-			currentSBFace='B'
-			currentSBId=nextSBId
-			count=count+1
-			ConfNextSBPos(currentSBId,currentSBFace,nextSBId,fromSBPortIndex,route,route_len,count,freeport)
-	currentport=freeport
-	return {'currentport':currentport,'currentSBId':currentSBId,'currentSBFace':currentSBFace}			
-			
-
-def connectRoute(route,fromCB,toCB):
-	s={}
-	route_len= len(route)
-	count=1
-	if CB_connect[fromCB][1]==route[1]:
-		SBId=CB_connect[fromCB][1]
-		SBFace=CB_connect[fromCB][2]
-		print SBId+'111'
-		fromSBPortIndex=checkFreeSBPort(SBId,SBFace)
-				
-	elif CB_connect[fromCB][3]==route[1]:
-		SBId=CB_connect[fromCB][3]
-		SBFace=CB_connect[fromCB][4]
-		print SBId
-		fromSBPortIndex=checkFreeSBPort(SBId,SBFace)
-
-	
-	#CBobjectDictionary[fromCB].configCB(fromCB,'X','X','X','X',q1,q2)
-	SBobjectDictionary[SBId].setFaceStatus(SBFace,fromSBPortIndex,'Q')
-	'''
-	while(count<(route_len-1)):
-		freeport=ConfNextSBPos(route[count],route[count+1],fromSBPortIndex)
-		fromSBPortIndex=freeport
-			
-		count=count+1
-	'''
-	print 'currentport currentSBId currentSBFace'
-	switch_adj_toCB=ConfNextSBPos(SBId,SBFace,route[count+1],fromSBPortIndex,route,route_len,count,0)
-
-	
-	print switch_adj_toCB
-	if CB_connect[toCB][1]==route[route_len-2]:
-		SBId2=CB_connect[toCB][1]
-		SBFace2=CB_connect[toCB][2]
-		print SBId2+'111'
-		toSBPortIndex=checkFreeSBPort(SBId2,SBFace2)
-				
-	elif CB_connect[toCB][3]==route[route_len-2]:
-		SBId2=CB_connect[toCB][3]
-		SBFace2=CB_connect[toCB][4]
-		print SBId2
-		toSBPortIndex=checkFreeSBPort(SBId2,SBFace2)
-
-	switchBlock.configSwitchBlock(SBobjectDictionary[route[route_len-2]],route[route_len-2],switch_adj_toCB['currentSBFace'],str(switch_adj_toCB['currentport']),SBFace2,str(toSBPortIndex))
-			
-def find_shortest_path(graph, start, end, path=[]):	#finding route using backtracking
-       	path = path + [start]
-	#print path
-        if start == end:
-            	return path
-        if not graph.has_key(start):
-            	return None
-        shortest = None
-        for node in graph[start]:
-            	if node not in path:
-                	newpath = find_shortest_path(graph, node, end, path)
-                	if newpath:
-                    		if not shortest or len(newpath) < len(shortest):
-                        		shortest = newpath
-        return shortest	
 
 def begins(cls):
 	
 	
-	'''
 	if(LUT_connect.get(cls.LUTID,0)):
-		configureLUT(cls.LUTID,LUT_function[cls.function],LUT_interconnect[cls.op1],LUT_interconnect[cls.op2],LUT_interconnect[cls.op3],LUT_interconnect[cls.op4],
-		cls.MUXswitch)
-	'''
-	if(LUT_connect.get(cls.LUTID,0)):
-		if(LUT_connect.has_key(cls.op1) and (LUT_connect[cls.op1][0]!=LUT_connect[cls.LUTID][0])):
-			fromCB=LUT_connect[cls.op1][1]
-			fromCBCode=str(CB_connect[fromCB][0])
+		if(LUT_connect.has_key(cls.op1) and (LUT_connect[cls.op1][0]!=LUT_connect[cls.LUTID][0])): #check if the input and output LUTs belong to the same group or not
+			fromCB=LUT_connect[cls.op1][1] #the CB from which the input signal is transmited
+			fromCBCode=str(CB_connect[fromCB][0]) #the code of the CB from which the input signal is transmited
 			print 'from name: %s code: %s'%(fromCB,fromCBCode)
-			toCB=LUT_connect[cls.LUTID][1]
-			toCBCode=str(CB_connect[toCB][0])
+			toCB=LUT_connect[cls.LUTID][1]  #CB at the output to which the output LUT is connected
+			toCBCode=str(CB_connect[toCB][0])    #CB code at the output to which the output LUT is connected
 			print 'to name: %s code: %s'%(toCB,toCBCode)
 			route=[]
-			route=find_shortest_path(CB_SB_map,fromCBCode,toCBCode)
-			connectRoute(route,fromCB,toCB)
+			route=find_shortest_path(CB_SB_map,fromCBCode,toCBCode) # calling function to find the shortest route
+			connectRoute(route,fromCB,toCB,cls.op1,cls.LUTID) #calling function which connects the from CB to the target CB
 			#connectRoute(route,route_len,fromCB,toCB)
 			print 'routing %s for %s'%(cls.op1,cls.LUTID)
 			print route
@@ -190,8 +47,10 @@ def begins(cls):
 			toCBCode=str(CB_connect[toCB][0])
 			route=[]
 			route=find_shortest_path(CB_SB_map,fromCBCode,toCBCode)
+			connectRoute(route,fromCB,toCB,cls.op2,cls.LUTID)
 			#route_len= len(route)
 			print 'routing %s for %s'%(cls.op2,cls.LUTID)
+			print route
 		if(LUT_connect.has_key(cls.op3) and (LUT_connect[cls.op3][0]!=LUT_connect[cls.LUTID][0])):
 			fromCB=LUT_connect[cls.op3][1]
 			toCB=LUT_connect[cls.LUTID][1]
@@ -199,8 +58,10 @@ def begins(cls):
 			toCBCode=str(CB_connect[toCB][0])
 			route=[]
 			route=find_shortest_path(CB_SB_map,fromCBCode,toCBCode)
+			connectRoute(route,fromCB,toCB,cls.op3,cls.LUTID)
 			#route_len= len(route)
 			print 'routing %s for %s'%(cls.op3,cls.LUTID)
+			print route
 		if(LUT_connect.has_key(cls.op4) and (LUT_connect[cls.op4][0]!=LUT_connect[cls.LUTID][0])):
 			fromCB=LUT_connect[cls.op4][1]
 			toCB=LUT_connect[cls.LUTID][1]
@@ -208,8 +69,10 @@ def begins(cls):
 			toCBCode=str(CB_connect[toCB][0])
 			route=[]
 			route=find_shortest_path(CB_SB_map,fromCBCode,toCBCode)
+			connectRoute(route,fromCB,toCB,cls.op4,cls.LUTID)
 			#route_len= len(route)
-			print 'routing %s for %s'%(cls.op4,cls.LUTID)		
+			print 'routing %s for %s'%(cls.op4,cls.LUTID)
+			print route
 		
 		configureLUT(cls.LUTID,LUT_function[cls.function],LUT_interconnect[cls.op1],LUT_interconnect[cls.op2],LUT_interconnect[cls.op3],LUT_interconnect[cls.op4],
 		cls.MUXswitch)
@@ -228,7 +91,7 @@ def begins(cls):
 	
 	elif cls[0]=='CB':
 
-		if((cls.CB_q1==cls.CB_x1) | (cls.CB_q1==cls.CB_x2) | (cls.CB_q1==cls.CB_x3) | (cls.CB_q1==cls.CB_x4) | (cls.CB_q1==cls.CB_q2)):
+		if(((cls.CB_q1==cls.CB_x1) | (cls.CB_q1==cls.CB_x2) | (cls.CB_q1==cls.CB_x3) | (cls.CB_q1==cls.CB_x4) | (cls.CB_q1==cls.CB_q2) and (cls.CB_q1!='X'))):#put inside config
 			try:
 				raise InputOutputClashError(-999)
 				
@@ -284,12 +147,12 @@ SBport7 = (oneOf("X I O")).setResultsName('SBport7')
 IOId = (oneOf("00 01 02 10 11 20 21 30 31 40 41 42")).setResultsName('IOId')
 
 CBId=(oneOf("00 01 02 03 10 11 12 13 20 21 22 23 30 31 32 33")).setResultsName('CBId')
-CB_x1=(oneOf("G0 G1 G2 G3 G4 G5 G6 G7 X")).setResultsName('CB_x1')
-CB_x2=(oneOf("G0 G1 G2 G3 G4 G5 G6 G7 X")).setResultsName('CB_x2')
-CB_x3=(oneOf("G0 G1 G2 G3 G4 G5 G6 G7 X")).setResultsName('CB_x3')
-CB_x4=(oneOf("G0 G1 G2 G3 G4 G5 G6 G7 X")).setResultsName('CB_x4')
-CB_q1=(oneOf("G0 G1 G2 G3 G4 G5 G6 G7 X")).setResultsName('CB_q1')
-CB_q2=(oneOf("G0 G1 G2 G3 G4 G5 G6 G7 X")).setResultsName('CB_q2')
+CB_x1=(oneOf("0 1 2 3 4 5 6 7 X")).setResultsName('CB_x1')
+CB_x2=(oneOf("0 1 2 3 4 5 6 7 X")).setResultsName('CB_x2')
+CB_x3=(oneOf("0 1 2 3 4 5 6 7 X")).setResultsName('CB_x3')
+CB_x4=(oneOf("0 1 2 3 4 5 6 7 X")).setResultsName('CB_x4')
+CB_q1=(oneOf("0 1 2 3 4 5 6 7 X")).setResultsName('CB_q1')
+CB_q2=(oneOf("0 1 2 3 4 5 6 7 X")).setResultsName('CB_q2')
 
 #config_code=(oneOf('IO' 'SB' 'CB')).setResultsName('configCode')
 
@@ -356,48 +219,26 @@ print SBobjectDictionary['01'].D
 print SBobjectDictionary['01'].switchDict['B0D5']
 print SBobjectDictionary['01'].B
 print SBobjectDictionary['02'].D
+print 'CBConfig'
 print CBobjectDictionary['00'].printCBconfig()
-print SBobjectDictionary['00'].A
-print checkFreeSBPort('00','A')
-print FindNextSBPos('00','01')
-print ''
-print ''
 
+print 'origin LUT status Q01'
+print lutobjectDictionary['Q01'].status
+print 'origin CB03 status and state'
+print CBobjectDictionary['03'].status
 print CBobjectDictionary['03'].CBstate
+
+print 'face A of SB10 and face B of SB10'
 print SBobjectDictionary['10'].A
 print SBobjectDictionary['10'].B
+print 'face D of SB11 and face C of SB11'
 print SBobjectDictionary['11'].D
 print SBobjectDictionary['11'].C
 
+print 'target CB23 status and state'
+print CBobjectDictionary['23'].status
+print CBobjectDictionary['23'].CBstate
 
-
-'''
-slk= ["0","1","2","3","4","5","6","7"]
-print IOobjectDictionary['00'].ioConf
-m=''
-for i in slk:
-	s= IOobjectDictionary['00'].ioDict[i]
-	m=m+s
-print 'IO bits are'
-print m
-print 'SB set bits'
-print SBobjectDictionary['00'].A
-print SBobjectDictionary['00'].B
-
-print SBobjectDictionary['00'].switchDict['A0B1']
-
-#print lutobjectDictionary['Q7'].outputPort
-
-print 'Q3 bits'
-print lutobjectDictionary['Q02'].bits() 
-print 'Q1 bits'
-print lutobjectDictionary['Q00'].bits()
-print 'Q7 bits'
-print lutobjectDictionary['Q06'].bits() 
-print 'Q8 bits'
-print lutobjectDictionary['Q04'].bits()
-print 'CB test'
-print CBobjectDictionary['00'].printCBconfig()
-print 'the new star'
-print getting_SB_line_status('00','left','q1')	
-'''
+print 'Q21 bits'
+print lutobjectDictionary['Q21'].bits()
+print lutobjectDictionary['Q21'].inputPort1
