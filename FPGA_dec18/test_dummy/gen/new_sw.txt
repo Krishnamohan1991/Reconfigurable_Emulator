@@ -1,0 +1,3 @@
+trial_bench.v
+new_switch.v
+value.v

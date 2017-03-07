@@ -1,0 +1,4 @@
+module new_switch(a,b,dir,enable);
+inout a,b;
+input dir,enable;
+reg 1

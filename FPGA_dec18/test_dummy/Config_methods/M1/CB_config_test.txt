@@ -1,0 +1,2 @@
+CB_config_behav.v
+testbench_CB_behav.v

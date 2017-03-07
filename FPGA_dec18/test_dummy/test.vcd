@@ -1,0 +1,56 @@
+$date
+	Sat Dec 10 02:18:55 2016
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module test_bench $end
+$var wire 1 ! B $end
+$var wire 1 " D $end
+$var wire 1 # C $end
+$var wire 1 $ A $end
+$var reg 1 % I1 $end
+$var reg 1 & I2 $end
+$var reg 1 ' I3 $end
+$var reg 1 ( in1 $end
+$scope module v1 $end
+$var wire 1 % in $end
+$var reg 1 $ out $end
+$upscope $end
+$scope module v2 $end
+$var wire 1 $ in $end
+$var reg 1 # out $end
+$upscope $end
+$scope module v3 $end
+$var wire 1 $ in $end
+$var reg 1 ) out $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+x)
+x(
+x'
+x&
+x%
+x$
+x#
+x"
+z!
+$end
+#4
+0'
+0&
+1%
+#6
+1$
+#8
+1"
+1)
+1#
+#9
+1(
