@@ -46,7 +46,7 @@ CB CB03(.x1(CLB_I0),.x2(CLB_I1),.x3(CLB_I2),.x4(CLB_I3),.q1(CLB_IQ1),.q2(CLB_IQ2
    .G0(SB1_SB4_0),.G1(SB1_SB4_1),.G2(SB1_SB4_2),.G3(SB1_SB4_3),.G4(SB1_SB4_4),.G5(SB1_SB4_5),.G6(SB1_SB4_6),.G7(SB1_SB4_7),.bit_in_CB(bit_in_CB),.clk(clk),.reset(reset),
    .cb_prgm_b(cb_prgm_b),.prgm_b(prgm_b),.cb_prgm_b_out(cb_prgm_b_out_3),.cb_prgm_b_in(cb_prgm_b_out_2));
 
-CLB CLB1(.I1(CLB_I1),.I2(CLB_I2),.I3(CLB_I3),.I4(CLB_I4),.I5(CLB_I5),.I6(CLB_I6),.I7(CLB_I7),.I8(CLB_I8),.I9(CLB_I9),.I10(CLB_I10),.I11(CLB_I11),
+CLB CLB00(.I1(CLB_I1),.I2(CLB_I2),.I3(CLB_I3),.I4(CLB_I4),.I5(CLB_I5),.I6(CLB_I6),.I7(CLB_I7),.I8(CLB_I8),.I9(CLB_I9),.I10(CLB_I10),.I11(CLB_I11),
 	.I12(CLB_I12),.I13(CLB_I13),.I14(CLB_I14),.I15(CLB_I15),.I0(CLB_I0),.IQ1(CLB_IQ1),.IQ2(CLB_IQ2),.IQ3(CLB_IQ3),.IQ4(CLB_IQ4),.IQ5(CLB_IQ5),
 	.IQ6(CLB_IQ6),.IQ7(CLB_IQ7),.IQ8(CLB_IQ8),.clk(clk),.reset(reset),.prgm_b(prgm_b),.bit_in(bit_in_CLB),.CLB_prgm_b(CLB_prgm_b),
 	.CLB_prgm_b_in(CLB_prgm_b_in),.CLB_prgm_b_out(CLB_prgm_b_out_1)); 
