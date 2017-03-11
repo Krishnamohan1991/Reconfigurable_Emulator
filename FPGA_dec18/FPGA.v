@@ -63,17 +63,18 @@ switch_block SB01(.bit_in(bit_in_SB),.clk(clk),.reset(reset),.prgm_b(prgm_b),.sb
                                  .C0(SB2_SB3_0),.C1(SB2_SB3_1),.C2(SB2_SB3_2),.C3(SB2_SB3_3),.C4(SB2_SB3_4),.C5(SB2_SB3_5),.C6(SB2_SB3_6),.C7(SB2_SB3_7),
                                  .D0(SB1_SB2_0),.D1(SB1_SB2_1),.D2(SB1_SB2_2),.D3(SB1_SB2_3),.D4(SB1_SB2_4),.D5(SB1_SB2_5),.D6(SB1_SB2_6),.D7(SB1_SB2_7));
 
-switch_block SB10(.bit_in(bit_in_SB_2),.clk(clk),.reset(reset),.prgm_b(prgm_b),.sb_prgm_b(sb_prgm_b_2),.sb_prgm_b_in(sb_prgm_b_out_2),.sb_prgm_b_out(sb_prgm_b_out_3),
+
+switch_block SB10(.bit_in(bit_in_SB_2),.clk(clk),.reset(reset),.prgm_b(prgm_b),.sb_prgm_b(sb_prgm_b_2),.sb_prgm_b_in(sb_prgm_b_in),.sb_prgm_b_out(sb_prgm_b_out_3),
+                                  .A0(SB1_SB4_0),.A1(SB1_SB4_1),.A2(SB1_SB4_2),.A3(SB1_SB4_3),.A4(SB1_SB4_4),.A5(SB1_SB4_5),.A6(SB1_SB4_6),.A7(SB1_SB4_7),
+                                 .B0(SB3_SB4_0),.B1(SB3_SB4_1),.B2(SB3_SB4_2),.B3(SB3_SB4_3),.B4(SB3_SB4_4),.B5(SB3_SB4_5),.B6(SB3_SB4_6),.B7(SB3_SB4_7),
+                                 .C0(SB4_VY2_0),.C1(SB4_VY2_1),.C2(SB4_VY2_2),.C3(SB4_VY2_3),.C4(SB4_VY2_4),.C5(SB4_VY2_5),.C6(SB4_VY2_6),.C7(SB4_VY2_7),
+                                 .D0(H1_0),.D1(H1_1),.D2(H1_2),.D3(H1_3),.D4(H1_4),.D5(H1_5),.D6(H1_6),.D7(H1_7));
+
+switch_block SB11(.bit_in(bit_in_SB_2),.clk(clk),.reset(reset),.prgm_b(prgm_b),.sb_prgm_b(sb_prgm_b_2),.sb_prgm_b_in(sb_prgm_b_out_3),.sb_prgm_b_out(sb_prgm_b_out_4),
                                  .A0(SB2_SB3_0),.A1(SB2_SB3_1),.A2(SB2_SB3_2),.A3(SB2_SB3_3),.A4(SB2_SB3_4),.A5(SB2_SB3_5),.A6(SB2_SB3_6),.A7(SB2_SB3_7),
                                  .B0(SB2_SB6_0),.B1(SB2_SB6_1),.B2(SB2_SB6_2),.B3(SB2_SB6_3),.B4(SB2_SB6_4),.B5(SB2_SB6_5),.B6(SB2_SB6_6),.B7(SB2_SB6_7),
                                  .C0(SB3_VY1_0),.C1(SB3_VY1_1),.C2(SB3_VY1_2),.C3(SB3_VY1_3),.C4(SB3_VY1_4),.C5(SB3_VY1_5),.C6(SB3_VY1_6),.C7(SB3_VY1_7),
-                                 .D0(SB4_SB3_0),.D1(SB4_SB3_1),.D2(SB4_SB3_2),.D3(SB4_SB3_3),.D4(SB4_SB3_4),.D5(SB4_SB3_5),.D6(SB4_SB3_6),.D7(SB4_SB3_7));
-
-switch_block SB11(.bit_in(bit_in_SB_2),.clk(clk),.reset(reset),.prgm_b(prgm_b),.sb_prgm_b(sb_prgm_b_2),.sb_prgm_b_in(sb_prgm_b_out_3),.sb_prgm_b_out(sb_prgm_b_out_4),
-                                  .A0(SB1_SB4_0),.A1(SB1_SB4_1),.A2(SB1_SB4_2),.A3(SB1_SB4_3),.A4(SB1_SB4_4),.A5(SB1_SB4_5),.A6(SB1_SB4_6),.A7(SB1_SB4_7),
-                                 .B0(SB4_SB3_0),.B1(SB4_SB3_1),.B2(SB4_SB3_2),.B3(SB4_SB3_3),.B4(SB4_SB3_4),.B5(SB4_SB3_5),.B6(SB4_SB3_6),.B7(SB4_SB3_7),
-                                 .C0(SB4_VY2_0),.C1(SB4_VY2_1),.C2(SB4_VY2_2),.C3(SB4_VY2_3),.C4(SB4_VY2_4),.C5(SB4_VY2_5),.C6(SB4_VY2_6),.C7(SB4_VY2_7),
-                                 .D0(H1_0),.D1(H1_1),.D2(H1_2),.D3(H1_3),.D4(H1_4),.D5(H1_5),.D6(H1_6),.D7(H1_7));
+                                 .D0(SB3_SB4_0),.D1(SB3_SB4_1),.D2(SB3_SB4_2),.D3(SB3_SB4_3),.D4(SB3_SB4_4),.D5(SB3_SB4_5),.D6(SB3_SB4_6),.D7(SB3_SB4_7));
 
 
 endmodule

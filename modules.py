@@ -27,7 +27,7 @@ class lut(object):
 
 	def bits(self):
 		
-		s=str(self.inputPort4+self.inputPort3+self.inputPort2+self.inputPort1+self.muxSwitch+self.lutTable)	
+		s=str(self.inputPort1+self.inputPort2+self.inputPort3+self.inputPort4+self.muxSwitch+self.lutTable)	
 		return s
 	
 #creating objects for each LUT
@@ -169,8 +169,10 @@ class switchBlock(object):
 		fromFaceIndexnum=int(fromFaceIndex)
 		if(switchBlock.faceValue(self,fromFace)<switchBlock.faceValue(self,toFace)):
 			switchKey= str(fromFace+fromFaceIndex+toFace+toFaceIndex)
+			print 'switchKey : %s'%switchKey
 		else:
 			switchKey= str(toFace+toFaceIndex+fromFace+fromFaceIndex)
+			print 'switchKey : %s'%switchKey
 		self.switchID=switchID
 		if(fromFace==toFace):
 			print 'raise exception cannot have connections in the same face'
@@ -204,8 +206,35 @@ class switchBlock(object):
 
 			else:
 				print 'no signal at from port'
+	def gen_SB_bits(self):
+		SB_switchList=["A0B0","A0B1","A0B2","A0B3","A0B4","A0B5","A0B6","A0B7","A0C0","A0C1","A0C2","A0C3","A0C4","A0C5","A0C6","A0C7","A0D0","A0D1","A0D2",
+"A0D3","A0D4","A0D5","A0D6","A0D7","A1B0","A1B1","A1B2","A1B3","A1B4","A1B5","A1B6","A1B7","A1C0","A1C1","A1C2","A1C3","A1C4","A1C5",
+"A1C6","A1C7","A1D0","A1D1","A1D2","A1D3","A1D4","A1D5","A1D6","A1D7","A2B0","A2B1","A2B2","A2B3","A2B4","A2B5","A2B6","A2B7","A2C0",
+"A2C1","A2C2","A2C3","A2C4","A2C5","A2C6","A2C7","A2D0","A2D1","A2D2","A2D3","A2D4","A2D5","A2D6","A2D7","A3B0","A3B1","A3B2","A3B3",
+"A3B4","A3B5","A3B6","A3B7","A3C0","A3C1","A3C2","A3C3","A3C4","A3C5","A3C6","A3C7","A3D0","A3D1","A3D2","A3D3","A3D4","A3D5","A3D6",
+"A3D7","A4B0","A4B1","A4B2","A4B3","A4B4","A4B5","A4B6","A4B7","A4C0","A4C1","A4C2","A4C3","A4C4","A4C5","A4C6","A4C7","A4D0","A4D1",
+"A4D2","A4D3","A4D4","A4D5","A4D6","A4D7","A5B0","A5B1","A5B2","A5B3","A5B4","A5B5","A5B6","A5B7","A5C0","A5C1","A5C2","A5C3","A5C4",
+"A5C5","A5C6","A5C7","A5D0","A5D1","A5D2","A5D3","A5D4","A5D5","A5D6","A5D7","A6B0","A6B1","A6B2","A6B3","A6B4","A6B5","A6B6","A6B7",
+"A6C0","A6C1","A6C2","A6C3","A6C4","A6C5","A6C6","A6C7","A6D0","A6D1","A6D2","A6D3","A6D4","A6D5","A6D6","A6D7","A7B0","A7B1","A7B2",
+"A7B3","A7B4","A7B5","A7B6","A7B7","A7C0","A7C1","A7C2","A7C3","A7C4","A7C5","A7C6","A7C7","A7D0","A7D1","A7D2","A7D3","A7D4","A7D5",
+"A7D6","A7D7","B0D0","B0D1","B0D2","B0D3","B0D4","B0D5","B0D6","B0D7","B0C0","B0C1","B0C2","B0C3","B0C4","B0C5","B0C6","B0C7","B1D0",
+"B1D1","B1D2","B1D3","B1D4","B1D5","B1D6","B1D7","B1C0","B1C1","B1C2","B1C3","B1C4","B1C5","B1C6","B1C7","B2D0","B2D1","B2D2","B2D3",
+"B2D4","B2D5","B2D6","B2D7","B2C0","B2C1","B2C2","B2C3","B2C4","B2C5","B2C6","B2C7","B3D0","B3D1","B3D2","B3D3","B3D4","B3D5","B3D6",
+"B3D7","B3C0","B3C1","B3C2","B3C3","B3C4","B3C5","B3C6","B3C7","B4D0","B4D1","B4D2","B4D3","B4D4","B4D5","B4D6","B4D7","B4C0","B4C1",
+"B4C2","B4C3","B4C4","B4C5","B4C6","B4C7","B5D0","B5D1","B5D2","B5D3","B5D4","B5D5","B5D6","B5D7","B5C0","B5C1","B5C2","B5C3","B5C4",
+"B5C5","B5C6","B5C7","B6D0","B6D1","B6D2","B6D3","B6D4","B6D5","B6D6","B6D7","B6C0","B6C1","B6C2","B6C3","B6C4","B6C5","B6C6","B6C7",
+"B7D0","B7D1","B7D2","B7D3","B7D4","B7D5","B7D6","B7D7","B7C0","B7C1","B7C2","B7C3","B7C4","B7C5","B7C6","B7C7","C0D0","C0D1","C0D2",
+"C0D3","C0D4","C0D5","C0D6","C0D7","C1D0","C1D1","C1D2","C1D3","C1D4","C1D5","C1D6","C1D7","C2D0","C2D1","C2D2","C2D3","C2D4","C2D5",
+"C2D6","C2D7","C3D0","C3D1","C3D2","C3D3","C3D4","C3D5","C3D6","C3D7","C4D0","C4D1","C4D2","C4D3","C4D4","C4D5","C4D6","C4D7","C5D0",
+"C5D1","C5D2","C5D3","C5D4","C5D5","C5D6","C5D7","C6D0","C6D1","C6D2","C6D3","C6D4","C6D5","C6D6","C6D7","C7D0","C7D1","C7D2","C7D3",
+"C7D4","C7D5","C7D6","C7D7"]
+		sb_bits=''
 
-
+		for i in SB_switchList:
+			sb_bits=sb_bits+self.switchDict[i]
+		print sb_bits
+		return '_'
+		
 		
 SBobjectNames = ["00", "01", "02", "10", "11", "12", "20", "21","22"]
 
@@ -288,6 +317,12 @@ IO_connect={"00":['00','A'],"01":['01','A'],"02":['02','A'],
 
 class connectionBlock(object):   #fix input and output port collission
 	def __init__(self,cbId):
+		self.x1='X'
+		self.x2='X'
+		self.x3='X'
+		self.x4='X'
+		self.q1='X'
+		self.q2='X'
 		self.CBstate=['X','X','X','X','X','X']
 		self.cbId=cbId
 		self.status=0
@@ -300,8 +335,7 @@ class connectionBlock(object):   #fix input and output port collission
 			     "x1_G6":'0',"x2_G6":'0',"x3_G6":'0',"x4_G6":'0',"q1_G6":'0',"q2_G6":'0',
 		             "x1_G7":'0',"x2_G7":'0',"x3_G7":'0',"x4_G7":'0',"q1_G7":'0',"q2_G7":'0'
 		            }
-
-	
+			
 
 	def getLineCode(self,line): #gives the value corresponding to the line code
 		if line=='0':
@@ -337,56 +371,62 @@ class connectionBlock(object):   #fix input and output port collission
 
 	def configCB(self,cbId,x1,x2,x3,x4,q1,q2):
 		self.cbId=cbId
-		self.CBstate=[x1,x2,x3,x4,q1,q2]
+		self.x1=x1
+		self.x2=x2
+		self.x3=x3
+		self.x4=x4
+		self.q1=q1
+		self.q2=q2
+		self.CBstate=[self.x1,self.x2,self.x3,self.x4,self.q1,self.q2]
 		self.status=1
-		CBDictKeyx1=str('x1_'+connectionBlock.getLineCode(self,x1))
-		CBDictKeyx2=str('x2_'+connectionBlock.getLineCode(self,x2))
-		CBDictKeyx3=str('x3_'+connectionBlock.getLineCode(self,x3))
-		CBDictKeyx4=str('x4_'+connectionBlock.getLineCode(self,x4))
-		CBDictKeyq1=str('q1_'+connectionBlock.getLineCode(self,q1))
-		CBDictKeyq2=str('q2_'+connectionBlock.getLineCode(self,q2))
-		if x1!='X':
-			val=int(x1)
+		CBDictKeyx1=str('x1_'+connectionBlock.getLineCode(self,self.x1))
+		CBDictKeyx2=str('x2_'+connectionBlock.getLineCode(self,self.x2))
+		CBDictKeyx3=str('x3_'+connectionBlock.getLineCode(self,self.x3))
+		CBDictKeyx4=str('x4_'+connectionBlock.getLineCode(self,self.x4))
+		CBDictKeyq1=str('q1_'+connectionBlock.getLineCode(self,self.q1))
+		CBDictKeyq2=str('q2_'+connectionBlock.getLineCode(self,self.q2))
+		if self.x1!='X':
+			val=int(self.x1)
 			leftSB=connectionBlock.getting_SB_line_status(self,cbId,'left',val)
 			rightSB=connectionBlock.getting_SB_line_status(self,cbId,'right',val)
 			if(leftSB=='I' and rightSB=='I'):
 				self.CBDict[CBDictKeyx1]='1'
 			else:
-				print 'no input sigal at %s '%x1
+				print 'no input sigal at port: %s of CBId: %s'%(self.x1,cbId)
 		else: 
-			self.CBDict[CBDictKeyx1]='0'
-		if x2!='X':
-			val=int(x2)
+			self.CBDict[CBDictKey.x1]='0'
+		if self.x2!='X':
+			val=int(self.x2)
 			leftSB=connectionBlock.getting_SB_line_status(self,cbId,'left',val)
 			rightSB=connectionBlock.getting_SB_line_status(self,cbId,'right',val)
 			if(leftSB=='I' and rightSB=='I'):
 				self.CBDict[CBDictKeyx2]='1'
 			else:
-				print 'no input sigal at %s '%x2
+				print 'no input sigal at port: %s of CBId: %s'%(self.x2,cbId)
 		else: 
 			self.CBDict[CBDictKeyx2]='0'
-		if x3!='X':
-			val=int(x3)
+		if self.x3!='X':
+			val=int(self.x3)
 			leftSB=connectionBlock.getting_SB_line_status(self,cbId,'left',val)
 			rightSB=connectionBlock.getting_SB_line_status(self,cbId,'right',val)
 			if(leftSB=='I' and rightSB=='I'):
 				self.CBDict[CBDictKeyx3]='1'
 			else:
-				print 'no input sigal at %s '%x3
+				print 'no input sigal at port: %s of CBId: %s'%(self.x3,cbId)
 		else: 
 			self.CBDict[CBDictKeyx3]='0'
-		if x4!='X':
-			val=int(x4)
+		if self.x4!='X':
+			val=int(self.x4)
 			leftSB=connectionBlock.getting_SB_line_status(self,cbId,'left',val)
 			rightSB=connectionBlock.getting_SB_line_status(self,cbId,'right',val)
 			if(leftSB=='I' and rightSB=='I'):
 				self.CBDict[CBDictKeyx4]='1'
 			else:
-				print 'no input sigal at %s '%x4
+				print 'no input sigal at port: %s of CBId: %s'%(self.x4,cbId)
 		else: 
 			self.CBDict[CBDictKeyx4]='0'
-		if q1!='X':
-			val=int(q1)
+		if self.q1!='X':
+			val=int(self.q1)
 			leftSB=connectionBlock.getting_SB_line_status(self,cbId,'left',val)
 			rightSB=connectionBlock.getting_SB_line_status(self,cbId,'right',val)
 			if(leftSB=='X' and rightSB=='X'):
@@ -395,6 +435,8 @@ class connectionBlock(object):   #fix input and output port collission
 				switchBlock.setFaceStatus(SBobjectDictionary[CB_connect[cbId][1]],leftFace,val,'Q')
 				switchBlock.setFaceStatus(SBobjectDictionary[CB_connect[cbId][3]],rightFace,val,'Q')
 				self.CBDict[CBDictKeyq1]='1'
+				print 'CBcode and output stats %s %s %s'%(cbId,self.CBDict[CBDictKeyq1],self.q1)
+				
 			elif(leftSB=='O' and rightSB=='X'):
 				leftFace=CB_connect[cbId][2]
 				switchBlock.setFaceStatus(SBobjectDictionary[CB_connect[cbId][1]],leftFace,val,'Q')
@@ -404,10 +446,11 @@ class connectionBlock(object):   #fix input and output port collission
 				switchBlock.setFaceStatus(SBobjectDictionary[CB_connect[cbId][3]],rightFace,val,'Q')
 				self.CBDict[CBDictKeyq1]='1'
 		
-		else: 
-			self.CBDict[CBDictKeyq1]='0'
-		if q2!='X':
-			val=int(q2)
+		#else: 
+		#	self.CBDict[CBDictKeyq1]='0'
+		#	print 'CBcode and output stZZZZ %s %s %s'%(cbId,self.CBDict[CBDictKeyq1],self.q1)
+		if self.q2!='X':
+			val=int(self.q2)
 			leftSB=connectionBlock.getting_SB_line_status(self,cbId,'left',val)
 			rightSB=connectionBlock.getting_SB_line_status(self,cbId,'right',val)
 			if(leftSB=='X' and rightSB=='X'):
@@ -416,6 +459,7 @@ class connectionBlock(object):   #fix input and output port collission
 				switchBlock.setFaceStatus(SBobjectDictionary[CB_connect[cbId][1]],leftFace,val,'Q')
 				switchBlock.setFaceStatus(SBobjectDictionary[CB_connect[cbId][3]],rightFace,val,'Q')
 				self.CBDict[CBDictKeyq2]='1'
+				print 'CBcode and output stats %s %s %s'%(cbId,CBDict[CBDictKeyq2],self.q2)
 			elif(leftSB=='O' and rightSB=='X'):
 				leftFace=CB_connect[cbId][2]
 				switchBlock.setFaceStatus(SBobjectDictionary[CB_connect[cbId][1]],leftFace,val,'Q')
@@ -424,8 +468,9 @@ class connectionBlock(object):   #fix input and output port collission
 				rightFace=CB_connect[cbId][4]
 				switchBlock.setFaceStatus(SBobjectDictionary[CB_connect[cbId][3]],rightFace,val,'Q')
 				self.CBDict[CBDictKeyq2]='1'
-		else: 
-			self.CBDict[CBDictKeyq1]='0'
+		#else: 
+		#	self.CBDict[CBDictKeyq2]='0'
+		#	print 'CBcode and output stZZZZ %s %s %s'%(cbId,self.CBDict[CBDictKeyq2],self.q2)
 
 	
 
@@ -445,8 +490,8 @@ class connectionBlock(object):   #fix input and output port collission
 		for i in dictKeylist:
 			s=s+self.CBDict[i]
 		#print m
-		print s
-		return ''
+		
+		return s
 		
 
 

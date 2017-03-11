@@ -205,6 +205,54 @@ for test in scr_split:
 tests.close()
 
 
+print SBobjectDictionary['00'].A
+print SBobjectDictionary['00'].C
+print 'SB00'
+print SBobjectDictionary['00'].switchDict['A0C0']
+print 'SB01 and SB00'
+print SBobjectDictionary['01'].gen_SB_bits()+"_"+SBobjectDictionary['00'].gen_SB_bits()
+#print 'SB01'
+#print SBobjectDictionary['01'].gen_SB_bits()
+print 'SB11 and SB10'
+print SBobjectDictionary['11'].gen_SB_bits()+"_"+SBobjectDictionary['10'].gen_SB_bits()
+#print 'SB11'
+#print SBobjectDictionary['11'].gen_SB_bits()
+'''
+print 'SB00'
+print SBobjectDictionary['00'].gen_SB_bits()
+print 'SB01'
+print SBobjectDictionary['01'].gen_SB_bits()
+print 'SB10'
+print SBobjectDictionary['10'].gen_SB_bits()
+print 'SB11'
+print SBobjectDictionary['11'].gen_SB_bits()
+'''
+k=''
+k=k+lutobjectDictionary['Q07'].bits()+'_'+lutobjectDictionary['Q06'].bits()+'_'+lutobjectDictionary['Q05'].bits()+'_'+lutobjectDictionary['Q04'].bits()\
++'_'+lutobjectDictionary['Q03'].bits()+'_'+lutobjectDictionary['Q02'].bits()+'_'+lutobjectDictionary['Q01'].bits()+'_'+lutobjectDictionary['Q00'].bits()
+print 'CLB00 config bits'
+print k
+
+print 'CB configuration'
+cb=''
+cb=cb+CBobjectDictionary['03'].printCBconfig()+'_'+CBobjectDictionary['02'].printCBconfig()+'_'+CBobjectDictionary['01'].printCBconfig()+'_'+CBobjectDictionary['00'].printCBconfig()
+print cb
+
+'''
+print SBobjectDictionary['00'].switchDict['A0C0']
+print SBobjectDictionary['00'].switchDict['A1C1']
+print SBobjectDictionary['00'].switchDict['A2C2']
+print SBobjectDictionary['00'].switchDict['A3C3']
+
+print 'SB 10'
+print SBobjectDictionary['10'].switchDict['A0B0']
+print SBobjectDictionary['10'].switchDict['A1B1']
+print SBobjectDictionary['10'].switchDict['A2B2']
+print SBobjectDictionary['10'].switchDict['A4B3']
+
+'''
+
+'''
 print 'Q7 bits'
 print lutobjectDictionary['Q06'].bits()
 
@@ -242,3 +290,5 @@ print CBobjectDictionary['23'].CBstate
 print 'Q21 bits'
 print lutobjectDictionary['Q21'].bits()
 print lutobjectDictionary['Q21'].inputPort1
+'''
+
