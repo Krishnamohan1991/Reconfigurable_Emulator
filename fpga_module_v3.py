@@ -9,7 +9,7 @@ import sys
 i_consider_whitespaces_to_be_only = ' '
 ParserElement.setDefaultWhitespaceChars(i_consider_whitespaces_to_be_only)
 
-
+LUTId=''
 class InputOutputClashError(Exception):
 	def __init__(self,value):
 		self.value=value
@@ -17,16 +17,21 @@ class InputOutputClashError(Exception):
 		return repr(self.value)
 
 def configureLUT(lutid,lutfunc,inp1,inp2,inp3,inp4,mux):
-	s=str(lutid)
-	lut.lutConfig(lutobjectDictionary[s],s,lutfunc,inp1,inp2,inp3,inp4,mux)
+	sux=str(lutid)
+	lutobjectDictionary[sux].lutConfig(sux,lutfunc,inp1,inp2,inp3,inp4,mux)
 
 
 
 
 def begins(cls):
 	
-	
 	if(LUT_connect.get(cls.LUTID,0)):
+		#LUTId=cls.LUTID
+		op1=cls.op1
+		op2=cls.op2
+		op3=cls.op3
+		op4=cls.op4
+		target_CB=LUT_connect[cls.LUTID][1] #its the ID of the connection block to which the currently programmed LUT is connected to
 		if(LUT_connect.has_key(cls.op1) and (LUT_connect[cls.op1][0]!=LUT_connect[cls.LUTID][0])): #check if the input and output LUTs belong to the same group or not
 			fromCB=LUT_connect[cls.op1][1] #the CB from which the input signal is transmited
 			fromCBCode=str(CB_connect[fromCB][0]) #the code of the CB from which the input signal is transmited
@@ -36,7 +41,9 @@ def begins(cls):
 			print 'to name: %s code: %s'%(toCB,toCBCode)
 			route=[]
 			route=find_shortest_path(CB_SB_map,fromCBCode,toCBCode) # calling function to find the shortest route
-			connectRoute(route,fromCB,toCB,cls.op1,cls.LUTID) #calling function which connects the from CB to the target CB
+			target_CB_port=connectRoute(route,fromCB,toCB,cls.op1,cls.LUTID) #calling function which connects the from CB to the target CB
+			if(target_CB_port!=999):
+				op1=CB_input_output_connect[target_CB][target_CB_port]
 			#connectRoute(route,route_len,fromCB,toCB)
 			print 'routing %s for %s'%(cls.op1,cls.LUTID)
 			print route
@@ -47,7 +54,9 @@ def begins(cls):
 			toCBCode=str(CB_connect[toCB][0])
 			route=[]
 			route=find_shortest_path(CB_SB_map,fromCBCode,toCBCode)
-			connectRoute(route,fromCB,toCB,cls.op2,cls.LUTID)
+			target_CB_port=connectRoute(route,fromCB,toCB,cls.op2,cls.LUTID)
+			if(target_CB_port!=999):
+				op2=CB_input_output_connect[target_CB][target_CB_port]
 			#route_len= len(route)
 			print 'routing %s for %s'%(cls.op2,cls.LUTID)
 			print route
@@ -58,7 +67,9 @@ def begins(cls):
 			toCBCode=str(CB_connect[toCB][0])
 			route=[]
 			route=find_shortest_path(CB_SB_map,fromCBCode,toCBCode)
-			connectRoute(route,fromCB,toCB,cls.op3,cls.LUTID)
+			target_CB_port=connectRoute(route,fromCB,toCB,cls.op3,cls.LUTID)
+			if(target_CB_port!=999):
+				op3=CB_input_output_connect[target_CB][target_CB_port]
 			#route_len= len(route)
 			print 'routing %s for %s'%(cls.op3,cls.LUTID)
 			print route
@@ -69,12 +80,14 @@ def begins(cls):
 			toCBCode=str(CB_connect[toCB][0])
 			route=[]
 			route=find_shortest_path(CB_SB_map,fromCBCode,toCBCode)
-			connectRoute(route,fromCB,toCB,cls.op4,cls.LUTID)
+			target_CB_port=connectRoute(route,fromCB,toCB,cls.op4,cls.LUTID)
+			if(target_CB_port!=999):
+				op4=CB_input_output_connect[target_CB][target_CB_port]
 			#route_len= len(route)
 			print 'routing %s for %s'%(cls.op4,cls.LUTID)
 			print route
 		
-		configureLUT(cls.LUTID,LUT_function[cls.function],LUT_interconnect[cls.op1],LUT_interconnect[cls.op2],LUT_interconnect[cls.op3],LUT_interconnect[cls.op4],
+		configureLUT(cls.LUTID,LUT_function[cls.function],LUT_interconnect[op1],LUT_interconnect[op2],LUT_interconnect[op3],LUT_interconnect[op4],
 		cls.MUXswitch)
 
 		
@@ -176,7 +189,7 @@ config=OneOrMore(expression)
 
 counter=0
 
-tests=open("new_data.txt","r")
+tests=open("routing_test.txt","r")
 scr=tests.read()
 
 scr_split=scr.splitlines()
@@ -204,91 +217,66 @@ for test in scr_split:
 	
 tests.close()
 
+print 'from CB 03 state %s '%CBobjectDictionary['03'].CBstate
+print 'from SB 00 face A %s '%SBobjectDictionary['00'].A
+print 'from SB 00 face C %s '%SBobjectDictionary['00'].C
+print 'from SB 10 face A %s '%SBobjectDictionary['10'].A
+print 'from SB 10 face B %s '%SBobjectDictionary['10'].B
+print 'from SB 11 face D %s '%SBobjectDictionary['11'].D
+print 'from SB 11 face C %s '%SBobjectDictionary['11'].C
+print 'from CB 03 state  %s '%CBobjectDictionary['23'].CBstate
 
-print SBobjectDictionary['00'].A
-print SBobjectDictionary['00'].C
-print 'SB00'
-print SBobjectDictionary['00'].switchDict['A0C0']
-print 'SB01 and SB00'
-print SBobjectDictionary['01'].gen_SB_bits()+"_"+SBobjectDictionary['00'].gen_SB_bits()
-#print 'SB01'
-#print SBobjectDictionary['01'].gen_SB_bits()
-print 'SB11 and SB10'
-print SBobjectDictionary['11'].gen_SB_bits()+"_"+SBobjectDictionary['10'].gen_SB_bits()
-#print 'SB11'
-#print SBobjectDictionary['11'].gen_SB_bits()
+#####################################################printing bits######################################################################################
+
+CB_print_order=["33","32","31","30","23","22","21","20","13","12","11","10","03","02","01","00"]
+CB_bit_stream=''
+for i in CB_print_order:
+	CB_bit_stream=CB_bit_stream+CBobjectDictionary[i].printCBconfig()	
+
+
+SB_print_order = [ "22","21","20","12","11","10","02","01","00"]
+SB_bit_stream=''      
+for k in SB_print_order:
+	SB_bit_stream=SB_bit_stream+SBobjectDictionary[k].gen_SB_bits()
+
+IO_print_order=["42","41","40","31","30","21","20","11","10","02","01","00"]
+IO_bit_stream=''      
+for j in IO_print_order:  
+	IO_bit_stream=IO_bit_stream+IOobjectDictionary[j].printIObits()
+
+LUT_print_order=["Q37","Q36","Q35","Q34","Q33","Q32","Q31","Q30","Q27","Q26","Q25","Q24","Q22","Q22","Q21","Q20","Q17","Q16","Q15","Q14",
+"Q11","Q11","Q11","Q10","Q07","Q06","Q05","Q04","Q00","Q00","Q00","Q00"]
+LUT_bit_stream=''
+for lut in LUT_print_order:
+	LUT_bit_stream=LUT_bit_stream+lutobjectDictionary[lut].bits()
 '''
-print 'SB00'
-print SBobjectDictionary['00'].gen_SB_bits()
-print 'SB01'
-print SBobjectDictionary['01'].gen_SB_bits()
-print 'SB10'
-print SBobjectDictionary['10'].gen_SB_bits()
-print 'SB11'
-print SBobjectDictionary['11'].gen_SB_bits()
-'''
-k=''
-k=k+lutobjectDictionary['Q07'].bits()+'_'+lutobjectDictionary['Q06'].bits()+'_'+lutobjectDictionary['Q05'].bits()+'_'+lutobjectDictionary['Q04'].bits()\
-+'_'+lutobjectDictionary['Q03'].bits()+'_'+lutobjectDictionary['Q02'].bits()+'_'+lutobjectDictionary['Q01'].bits()+'_'+lutobjectDictionary['Q00'].bits()
-print 'CLB00 config bits'
-print k
+file=open('conf_bit_stream.txt','w')
+file.write("CB_config_stream[767:0]= 768'b"+CB_bit_stream+";\n")
+file.write("SB_config_stream[6911:0]= 6912'b"+SB_bit_stream+";\n")
+file.write("CLB_config_stream[1183:0]= 1184'b"+LUT_bit_stream+";\n")
+file.write("IO_config_stream[191:0]=192'b"+IO_bit_stream+";")
 
-print 'CB configuration'
-cb=''
-cb=cb+CBobjectDictionary['03'].printCBconfig()+'_'+CBobjectDictionary['02'].printCBconfig()+'_'+CBobjectDictionary['01'].printCBconfig()+'_'+CBobjectDictionary['00'].printCBconfig()
-print cb
-
-'''
-print SBobjectDictionary['00'].switchDict['A0C0']
-print SBobjectDictionary['00'].switchDict['A1C1']
-print SBobjectDictionary['00'].switchDict['A2C2']
-print SBobjectDictionary['00'].switchDict['A3C3']
-
-print 'SB 10'
-print SBobjectDictionary['10'].switchDict['A0B0']
-print SBobjectDictionary['10'].switchDict['A1B1']
-print SBobjectDictionary['10'].switchDict['A2B2']
-print SBobjectDictionary['10'].switchDict['A4B3']
-
+file.close()
 '''
 
+file=open('conf_bit_stream.txt','w')
+file.write(CB_bit_stream+"\n")
+file.write(SB_bit_stream+"\n")
+file.write(LUT_bit_stream+"\n")
+file.write(IO_bit_stream+"\n")
+
+file.close()
+###########################################################################################################################################################
 '''
-print 'Q7 bits'
-print lutobjectDictionary['Q06'].bits()
+#Total 16 CB blocks each having 48 bits
+print "CB_config_stream[767:0]= 768'b"+CB_bit_stream+";"
 
+#Total 9 SB blocks each having 768 bits
+print "SB_config_stream[6911:0]= 6912'b"+SB_bit_stream+";"
 
-print SBobjectDictionary['00'].switchDict['A0B0']
-print SBobjectDictionary['00'].switchDict['A1B1']
-print SBobjectDictionary['00'].switchDict['A2B2']
-print SBobjectDictionary['00'].switchDict['A3B3']
-print SBobjectDictionary['00'].switchDict['A4B4']
-print SBobjectDictionary['00'].B
-print SBobjectDictionary['01'].D
-print SBobjectDictionary['01'].switchDict['B0D5']
-print SBobjectDictionary['01'].B
-print SBobjectDictionary['02'].D
-print 'CBConfig'
-print CBobjectDictionary['00'].printCBconfig()
+#Total 32 LUTs each having 37 bits
+print "CLB_config_stream[1183:0]= 1184'b"+LUT_bit_stream+";"
 
-print 'origin LUT status Q01'
-print lutobjectDictionary['Q01'].status
-print 'origin CB03 status and state'
-print CBobjectDictionary['03'].status
-print CBobjectDictionary['03'].CBstate
-
-print 'face A of SB10 and face B of SB10'
-print SBobjectDictionary['10'].A
-print SBobjectDictionary['10'].B
-print 'face D of SB11 and face C of SB11'
-print SBobjectDictionary['11'].D
-print SBobjectDictionary['11'].C
-
-print 'target CB23 status and state'
-print CBobjectDictionary['23'].status
-print CBobjectDictionary['23'].CBstate
-
-print 'Q21 bits'
-print lutobjectDictionary['Q21'].bits()
-print lutobjectDictionary['Q21'].inputPort1
+#Total 12 IO blocks each having 16 bits
+print "IO_config_stream[191:0]=192'b"+IO_bit_stream+";"
 '''
-

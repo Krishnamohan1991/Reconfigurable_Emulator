@@ -1,0 +1,169 @@
+$date
+	Fri Mar 17 11:05:29 2017
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module FPGA_testbench $end
+$var wire 1 ! H00_0 $end
+$var wire 1 " H00_1 $end
+$var wire 1 # H00_2 $end
+$var wire 1 $ H00_3 $end
+$var wire 1 % H00_4 $end
+$var wire 1 & H00_5 $end
+$var wire 1 ' H00_6 $end
+$var wire 1 ( H00_7 $end
+$var wire 1 ) H01_0 $end
+$var wire 1 * H01_1 $end
+$var wire 1 + H01_2 $end
+$var wire 1 , H01_3 $end
+$var wire 1 - H01_4 $end
+$var wire 1 . H01_5 $end
+$var wire 1 / H01_6 $end
+$var wire 1 0 H01_7 $end
+$var wire 1 1 H10_0 $end
+$var wire 1 2 H10_1 $end
+$var wire 1 3 H10_2 $end
+$var wire 1 4 H10_3 $end
+$var wire 1 5 H10_4 $end
+$var wire 1 6 H10_5 $end
+$var wire 1 7 H10_6 $end
+$var wire 1 8 H10_7 $end
+$var wire 1 9 H11_0 $end
+$var wire 1 : H11_1 $end
+$var wire 1 ; H11_2 $end
+$var wire 1 < H11_3 $end
+$var wire 1 = H11_4 $end
+$var wire 1 > H11_5 $end
+$var wire 1 ? H11_6 $end
+$var wire 1 @ H11_7 $end
+$var wire 1 A H20_0 $end
+$var wire 1 B H20_1 $end
+$var wire 1 C H20_2 $end
+$var wire 1 D H20_3 $end
+$var wire 1 E H20_4 $end
+$var wire 1 F H20_5 $end
+$var wire 1 G H20_6 $end
+$var wire 1 H H20_7 $end
+$var wire 1 I H21_0 $end
+$var wire 1 J H21_1 $end
+$var wire 1 K H21_2 $end
+$var wire 1 L H21_3 $end
+$var wire 1 M H21_4 $end
+$var wire 1 N H21_5 $end
+$var wire 1 O H21_6 $end
+$var wire 1 P H21_7 $end
+$var wire 1 Q V00_0 $end
+$var wire 1 R V00_1 $end
+$var wire 1 S V00_2 $end
+$var wire 1 T V00_3 $end
+$var wire 1 U V00_4 $end
+$var wire 1 V V00_5 $end
+$var wire 1 W V00_6 $end
+$var wire 1 X V00_7 $end
+$var wire 1 Y V01_0 $end
+$var wire 1 Z V01_1 $end
+$var wire 1 [ V01_2 $end
+$var wire 1 \ V01_3 $end
+$var wire 1 ] V01_4 $end
+$var wire 1 ^ V01_5 $end
+$var wire 1 _ V01_6 $end
+$var wire 1 ` V01_7 $end
+$var wire 1 a V02_0 $end
+$var wire 1 b V02_1 $end
+$var wire 1 c V02_2 $end
+$var wire 1 d V02_3 $end
+$var wire 1 e V02_4 $end
+$var wire 1 f V02_5 $end
+$var wire 1 g V02_6 $end
+$var wire 1 h V02_7 $end
+$var wire 1 i V10_0 $end
+$var wire 1 j V10_1 $end
+$var wire 1 k V10_2 $end
+$var wire 1 l V10_3 $end
+$var wire 1 m V10_4 $end
+$var wire 1 n V10_5 $end
+$var wire 1 o V10_6 $end
+$var wire 1 p V10_7 $end
+$var wire 1 q V11_0 $end
+$var wire 1 r V11_1 $end
+$var wire 1 s V11_2 $end
+$var wire 1 t V11_3 $end
+$var wire 1 u V11_4 $end
+$var wire 1 v V11_5 $end
+$var wire 1 w V11_6 $end
+$var wire 1 x V11_7 $end
+$var wire 1 y V12_0 $end
+$var wire 1 z V12_1 $end
+$var wire 1 { V12_2 $end
+$var wire 1 | V12_3 $end
+$var wire 1 } V12_4 $end
+$var wire 1 ~ V12_5 $end
+$var wire 1 !" V12_6 $end
+$var wire 1 "" V12_7 $end
+$var integer 32 #" CB_count [31:0] $end
+$var integer 32 $" CB_counter [31:0] $end
+$var integer 32 %" CLB_count [31:0] $end
+$var integer 32 &" CLB_counter [31:0] $end
+$var reg 1 '" CLB_prgm_b $end
+$var reg 1 (" CLB_prgm_b_in $end
+$var reg 1 )" H00 $end
+$var reg 1 *" H01 $end
+$var reg 1 +" H02 $end
+$var reg 1 ," H03 $end
+$var integer 32 -" IO_count [31:0] $end
+$var integer 32 ." IO_counter [31:0] $end
+$var integer 32 /" SB_count [31:0] $end
+$var integer 32 0" SB_count_2 [31:0] $end
+$var integer 32 1" SB_counter [31:0] $end
+$var integer 32 2" SB_counter_2 [31:0] $end
+$var reg 1 3" V00 $end
+$var reg 1 4" V01 $end
+$var reg 1 5" V02 $end
+$var reg 1 6" V03 $end
+$var reg 1 7" cb_prgm_b $end
+$var reg 1 8" cb_prgm_b_in $end
+$var reg 1 9" clk $end
+$var reg 1 :" io_prgm_b $end
+$var reg 1 ;" io_prgm_b_in $end
+$var reg 1 <" prgm_b $end
+$var reg 1 =" reset $end
+$var reg 1 >" sb_prgm_b $end
+$var reg 1 ?" sb_prgm_b_2 $end
+$var reg 1 @" sb_prgm_b_in $end
+$scope module v1 $end
+$var wire 1 A" in $end
+$var reg 1 B" out $end
+$upscope $end
+$scope module v2 $end
+$var wire 1 C" in $end
+$var reg 1 D" out $end
+$upscope $end
+$scope module v3 $end
+$var wire 1 E" in $end
+$var reg 1 F" out $end
+$upscope $end
+$scope module v4 $end
+$var wire 1 G" in $end
+$var reg 1 H" out $end
+$upscope $end
+$scope module v5 $end
+$var wire 1 I" in $end
+$var reg 1 J" out $end
+$upscope $end
+$scope module v6 $end
+$var wire 1 K" in $end
+$var reg 1 L" out $end
+$upscope $end
+$scope module v7 $end
+$var wire 1 M" in $end
+$var reg 1 N" out $end
+$upscope $end
+$scope module v8 $end
+$var wire 1 O" in $end
+$var reg 1 P" out $end
+$upscope $end
+$upscope $end

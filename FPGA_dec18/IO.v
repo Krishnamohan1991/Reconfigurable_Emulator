@@ -22,9 +22,9 @@ input bit_in,prgm_b,io_prgm_b,io_prgm_b_in,clk,reset;
               
  wire [1:0]G2_S2; wire [1:0]G7_S7; 
               
- wire [1:0]G3_S3; wire [1:0]A3_B4; 
+ wire [1:0]G3_S3; 
               
- wire [1:0]G4_S4; wire [1:0]A4_B5; 
+ wire [1:0]G4_S4;
 
 
 

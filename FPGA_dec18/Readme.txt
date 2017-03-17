@@ -2,7 +2,7 @@ Commands to run the verilog code
 
 Open cmd prompt in the folder location and run the following commands
 
-1) iverilog -o test.vvp -c new_design.txt  --> creates a vvp file named 'test.vvp'
+1) iverilog -o test.vvp -c FPGA_modules.txt  --> creates a vvp file named 'test.vvp'
 2) vvp test.vvp  --> execute the vvp file ehich creates a .vcd file named 'test.vcd'
 3) gtkwave test.vcd --> use gtkwave to monitor the signals from each module based on the inputs 
 			specified in the test bench

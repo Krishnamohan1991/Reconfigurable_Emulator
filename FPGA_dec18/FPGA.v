@@ -7,7 +7,7 @@ module FPGA(V00_0,V00_1,V00_2,V00_3,V00_4,V00_5,V00_6,V00_7,V01_0,V01_1,V01_2,V0
             clk,reset,prgm_b,CLB_prgm_b,cb_prgm_b,sb_prgm_b,sb_prgm_b_2,bit_in_CLB,bit_in_CB,sb_prgm_b_in,cb_prgm_b_in,CLB_prgm_b_in,bit_in_SB,bit_in_SB_2,
 		io_prgm_b,bit_in_IO,io_prgm_b_in);
 
-input clk,reset,prgm_b,clb_prgm_b,cb_prgm_b,bit_in_CLB,bit_in_CB,CLB_prgm_b,CLB_prgm_b_in,cb_prgm_b_in,sb_prgm_b_in,io_prgm_b_in,bit_in_SB,
+input clk,reset,prgm_b,bit_in_CLB,bit_in_CB,CLB_prgm_b,CLB_prgm_b_in,cb_prgm_b,cb_prgm_b_in,sb_prgm_b_in,io_prgm_b_in,bit_in_SB,
 	io_prgm_b,sb_prgm_b,bit_in_SB_2,sb_prgm_b_2,bit_in_IO;
 
 inout V00_0,V00_1,V00_2,V00_3,V00_4,V00_5,V00_6,V00_7,V01_0,V01_1,V01_2,V01_3,V01_4,V01_5,V01_6,V01_7,
@@ -110,11 +110,11 @@ IO_block IO10(.bit_in(bit_in_IO),.clk(clk),.reset(reset),.prgm_b(prgm_b),.io_prg
 IO_block IO11(.bit_in(bit_in_IO),.clk(clk),.reset(reset),.prgm_b(prgm_b),.io_prgm_b(io_prgm_b),.io_prgm_b_in(io_prgm_b_out_10),.io_prgm_b_out(io_prgm_b_out_11),.G0(H01_0),.G1(H01_1),.G2(H01_2),.G3(H01_3),.G4(H01_4),.G5(H01_5),.G6(H01_6),.G7(H01_0),.S0(IO11_SB02_0),.S1(IO11_SB02_1),.S2(IO11_SB02_2),.S3(IO11_SB02_3),.S4(IO11_SB02_4),.S5(IO11_SB02_5),
 .S6(IO11_SB02_6),.S7(IO11_SB02_7));
 
-IO_block IO20(.bit_in(bit_in_IO),.clk(clk),.reset(reset),.prgm_b(prgm_b),.io_prgm_b(io_prgm_b),.io_prgm_b_in(io_prgm_b_out_11),.io_prgm_b_out(io_prgm_b_out_20),.G0(H10_0),.G1(H10_1),.G2(H10_2),.G3(H10_3),.G4(H10_4),.G5(H10_5),.G6(H10_6),.G7(H10_0),.S0(IO20_SB20_0),.S1(IO20_SB20_1),.S2(IO20_SB20_2),.S3(IO20_SB20_3),.S4(IO20_SB20_4),.S5(IO20_SB20_5),
-.S6(IO20_SB20_6),.S7(IO20_SB20_7));
+IO_block IO20(.bit_in(bit_in_IO),.clk(clk),.reset(reset),.prgm_b(prgm_b),.io_prgm_b(io_prgm_b),.io_prgm_b_in(io_prgm_b_out_11),.io_prgm_b_out(io_prgm_b_out_20),.G0(H10_0),.G1(H10_1),.G2(H10_2),.G3(H10_3),.G4(H10_4),.G5(H10_5),.G6(H10_6),.G7(H10_7),.S0(IO20_SB10_0),.S1(IO20_SB10_1),.S2(IO20_SB10_2),.S3(IO20_SB10_3),.S4(IO20_SB10_4),.S5(IO20_SB10_5),
+.S6(IO20_SB10_6),.S7(IO20_SB10_7));
 
-IO_block IO21(.bit_in(bit_in_IO),.clk(clk),.reset(reset),.prgm_b(prgm_b),.io_prgm_b(io_prgm_b),.io_prgm_b_in(io_prgm_b_out_20),.io_prgm_b_out(io_prgm_b_out_21),.G0(H10_0),.G1(H10_1),.G2(H10_2),.G3(H10_3),.G4(H10_4),.G5(H10_5),.G6(H10_6),.G7(H10_0),.S0(IO21_SB22_0),.S1(IO21_SB22_1),.S2(IO21_SB22_2),.S3(IO21_SB22_3),.S4(IO21_SB22_4),.S5(IO21_SB22_5),
-.S6(IO21_SB22_6),.S7(IO21_SB22_7));
+IO_block IO21(.bit_in(bit_in_IO),.clk(clk),.reset(reset),.prgm_b(prgm_b),.io_prgm_b(io_prgm_b),.io_prgm_b_in(io_prgm_b_out_20),.io_prgm_b_out(io_prgm_b_out_21),.G0(H11_0),.G1(H11_1),.G2(H11_2),.G3(H11_3),.G4(H11_4),.G5(H11_5),.G6(H11_6),.G7(H11_0),.S0(IO21_SB12_0),.S1(IO21_SB12_1),.S2(IO21_SB12_2),.S3(IO21_SB12_3),.S4(IO21_SB12_4),.S5(IO21_SB12_5),
+.S6(IO21_SB12_6),.S7(IO21_SB12_7));
 
 IO_block IO30(.bit_in(bit_in_IO),.clk(clk),.reset(reset),.prgm_b(prgm_b),.io_prgm_b(io_prgm_b),.io_prgm_b_in(io_prgm_b_out_21),.io_prgm_b_out(io_prgm_b_out_30),.G0(H20_0),.G1(H20_1),.G2(H20_2),.G3(H20_3),.G4(H20_4),.G5(H20_5),.G6(H20_6),.G7(H20_0),.S0(IO30_SB20_0),.S1(IO30_SB20_1),.S2(IO30_SB20_2),.S3(IO30_SB20_3),.S4(IO30_SB20_4),.S5(IO30_SB20_5),
 .S6(IO30_SB20_6),.S7(IO30_SB20_7));
@@ -122,13 +122,13 @@ IO_block IO30(.bit_in(bit_in_IO),.clk(clk),.reset(reset),.prgm_b(prgm_b),.io_prg
 IO_block IO31(.bit_in(bit_in_IO),.clk(clk),.reset(reset),.prgm_b(prgm_b),.io_prgm_b(io_prgm_b),.io_prgm_b_in(io_prgm_b_out_30),.io_prgm_b_out(io_prgm_b_out_31),.G0(H21_0),.G1(H21_1),.G2(H21_2),.G3(H21_3),.G4(H21_4),.G5(H21_5),.G6(H21_6),.G7(H21_0),.S0(IO31_SB22_0),.S1(IO31_SB22_1),.S2(IO31_SB22_2),.S3(IO31_SB22_3),.S4(IO31_SB22_4),.S5(IO31_SB22_5),
 .S6(IO31_SB22_6),.S7(IO31_SB22_7));
 
-IO_block IO40(.bit_in(bit_in_IO),.clk(clk),.reset(reset),.prgm_b(prgm_b),.io_prgm_b(io_prgm_b),.io_prgm_b_in(io_prgm_b_out_31),.io_prgm_b_out(io_prgm_b_out_40),.G0(V10_0),.G1(V10_1),.G2(V10_2),.G3(V10_3),.G4(V10_4),.G5(V10_5),.G6(V10_6),.G7(V10_0),.S0(IO40_SB20_0),.S1(IO40_SB20_1),.S2(IO40_SB20_2),.S3(IO40_SB20_3),.S4(IO40_SB20_4),.S5(IO40_SB20_5),
+IO_block IO40(.bit_in(bit_in_IO),.clk(clk),.reset(reset),.prgm_b(prgm_b),.io_prgm_b(io_prgm_b),.io_prgm_b_in(io_prgm_b_out_31),.io_prgm_b_out(io_prgm_b_out_40),.G0(V10_0),.G1(V10_1),.G2(V10_2),.G3(V10_3),.G4(V10_4),.G5(V10_5),.G6(V10_6),.G7(V10_7),.S0(IO40_SB20_0),.S1(IO40_SB20_1),.S2(IO40_SB20_2),.S3(IO40_SB20_3),.S4(IO40_SB20_4),.S5(IO40_SB20_5),
 .S6(IO40_SB20_6),.S7(IO40_SB20_7));
 
-IO_block IO41(.bit_in(bit_in_IO),.clk(clk),.reset(reset),.prgm_b(prgm_b),.io_prgm_b(io_prgm_b),.io_prgm_b_in(io_prgm_b_out_40),.io_prgm_b_out(io_prgm_b_out_41),.G0(V11_0),.G1(V11_1),.G2(V11_2),.G3(V11_3),.G4(V11_4),.G5(V11_5),.G6(V11_6),.G7(V11_0),.S0(IO41_SB21_0),.S1(IO41_SB21_1),.S2(IO41_SB21_2),.S3(IO41_SB21_3),.S4(IO41_SB21_4),.S5(IO41_SB21_5),
+IO_block IO41(.bit_in(bit_in_IO),.clk(clk),.reset(reset),.prgm_b(prgm_b),.io_prgm_b(io_prgm_b),.io_prgm_b_in(io_prgm_b_out_40),.io_prgm_b_out(io_prgm_b_out_41),.G0(V11_0),.G1(V11_1),.G2(V11_2),.G3(V11_3),.G4(V11_4),.G5(V11_5),.G6(V11_6),.G7(V11_7),.S0(IO41_SB21_0),.S1(IO41_SB21_1),.S2(IO41_SB21_2),.S3(IO41_SB21_3),.S4(IO41_SB21_4),.S5(IO41_SB21_5),
 .S6(IO41_SB21_6),.S7(IO41_SB21_7));
 
-IO_block IO42(.bit_in(bit_in_IO),.clk(clk),.reset(reset),.prgm_b(prgm_b),.io_prgm_b(io_prgm_b),.io_prgm_b_in(io_prgm_b_out_41),.io_prgm_b_out(io_prgm_b_out_42),.G0(V12_0),.G1(V12_1),.G2(V12_2),.G3(V12_3),.G4(V12_4),.G5(V12_5),.G6(V12_6),.G7(V12_0),.S0(IO42_SB22_0),.S1(IO42_SB22_1),.S2(IO42_SB22_2),.S3(IO42_SB22_3),.S4(IO42_SB22_4),.S5(IO42_SB22_5),
+IO_block IO42(.bit_in(bit_in_IO),.clk(clk),.reset(reset),.prgm_b(prgm_b),.io_prgm_b(io_prgm_b),.io_prgm_b_in(io_prgm_b_out_41),.io_prgm_b_out(io_prgm_b_out_42),.G0(V12_0),.G1(V12_1),.G2(V12_2),.G3(V12_3),.G4(V12_4),.G5(V12_5),.G6(V12_6),.G7(V12_7),.S0(IO42_SB22_0),.S1(IO42_SB22_1),.S2(IO42_SB22_2),.S3(IO42_SB22_3),.S4(IO42_SB22_4),.S5(IO42_SB22_5),
 .S6(IO42_SB22_6),.S7(IO42_SB22_7));
 //
 
@@ -183,6 +183,7 @@ CB CB11_3(.x1(CLB11_I0),.x2(CLB11_I1),.x3(CLB11_I2),.x4(CLB11_I3),.q1(CLB11_IQ0)
 
 //CLB Blocks
 
+
 CLB CLB00(.I0(CLB00_I0),.I1(CLB00_I1),.I2(CLB00_I2),.I3(CLB00_I3),.I4(CLB00_I4),.I5(CLB00_I5),.I6(CLB00_I6),.I7(CLB00_I7),.I8(CLB00_I8),.I9(CLB00_I9),.I10(CLB00_I10),.I11(CLB00_I11),
 	.I12(CLB00_I12),.I13(CLB00_I13),.I14(CLB00_I14),.I15(CLB00_I15),.IQ1(CLB00_IQ1),.IQ2(CLB00_IQ2),.IQ3(CLB00_IQ3),.IQ4(CLB00_IQ4),.IQ5(CLB00_IQ5),
 	.IQ6(CLB00_IQ6),.IQ7(CLB00_IQ7),.IQ8(CLB00_IQ8),.clk(clk),.reset(reset),.prgm_b(prgm_b),.bit_in(bit_in_CLB),.CLB_prgm_b(CLB_prgm_b),
@@ -204,6 +205,8 @@ CLB CLB11(.I0(CLB11_I0),.I1(CLB11_I1),.I2(CLB11_I2),.I3(CLB11_I3),.I4(CLB11_I4),
 	.CLB_prgm_b_in(CLB_prgm_b_out_CLB10),.CLB_prgm_b_out(CLB_prgm_b_out_CLB11)); 
 
 //
+
+//switch blocks
 
 switch_block SB00(.bit_in(bit_in_SB),.clk(clk),.reset(reset),.prgm_b(prgm_b),.sb_prgm_b(sb_prgm_b),.sb_prgm_b_in(sb_prgm_b_in),.sb_prgm_b_out(sb_prgm_b_out_SB00),
                                  .A0(IO00_SB00_0),.A1(IO00_SB00_1),.A2(IO00_SB00_2),.A3(IO00_SB00_3),.A4(IO00_SB00_4),.A5(IO00_SB00_5),.A6(IO00_SB00_6),.A7(IO00_SB00_7),
@@ -259,7 +262,7 @@ switch_block SB22(.bit_in(bit_in_SB),.clk(clk),.reset(reset),.prgm_b(prgm_b),.sb
                                  .B0(IO31_SB22_0),.B1(IO31_SB22_1),.B2(IO31_SB22_2),.B3(IO31_SB22_3),.B4(IO31_SB22_4),.B5(IO31_SB22_5),.B6(IO31_SB22_6),.B7(IO31_SB22_7),
                                  .C0(IO42_SB22_0),.C1(IO42_SB22_1),.C2(IO42_SB22_2),.C3(IO42_SB22_3),.C4(IO42_SB22_4),.C5(IO42_SB22_5),.C6(IO42_SB22_6),.C7(IO42_SB22_7),
                                  .D0(SB21_SB22_0),.D1(SB21_SB22_1),.D2(SB21_SB22_2),.D3(SB21_SB22_3),.D4(SB21_SB22_4),.D5(SB21_SB22_5),.D6(SB21_SB22_6),.D7(SB21_SB22_7));
-
+//
 
 
 endmodule

@@ -1,20 +1,20 @@
 
-	module IO_config_behav(bit_in,prgm_b,clk,reset,io_prgm_b,G0_S0,G1_S1,G2_S2,G3_S3,G4_S4,G5_S5,G6_S6,G7_S7,io_prgm_b_in,io_prgm_b_out);
+module IO_config_behav(bit_in,prgm_b,clk,reset,io_prgm_b,G0_S0,G1_S1,G2_S2,G3_S3,G4_S4,G5_S5,G6_S6,G7_S7,io_prgm_b_in,io_prgm_b_out);
 
-	input bit_in,prgm_b,io_prgm_b,io_prgm_b_in,clk,reset;
+input bit_in,prgm_b,io_prgm_b,io_prgm_b_in,clk,reset;
 
-	output reg io_prgm_b_out;
+output reg io_prgm_b_out;
 
-	reg [3:0] count;
+reg [3:0] count;
 
 
 
-	output reg [1:0]G0_S0;output reg [1:0]G1_S1;output reg [1:0]G2_S2;output reg [1:0]G3_S3;
-	output reg [1:0]G4_S4;output reg [1:0]G5_S5;output reg [1:0]G6_S6;output reg [1:0]G7_S7;
+output reg [1:0]G0_S0;output reg [1:0]G1_S1;output reg [1:0]G2_S2;output reg [1:0]G3_S3;
+output reg [1:0]G4_S4;output reg [1:0]G5_S5;output reg [1:0]G6_S6;output reg [1:0]G7_S7;
 	
   initial begin
 
-	count[3:0]=10'b0000;
+	count[3:0]=4'b0000;
 
 	io_prgm_b_out=1'b0;
 
@@ -55,10 +55,6 @@ always @(posedge clk or posedge reset)
 		end  //ends
 
 	end //else ends
-
-
-
-	
 
 	end	 //first if ends
 
@@ -104,9 +100,8 @@ end //always block ends
 
 	end
 
-	end
-
-	end
+  end
+end
 
 	
 

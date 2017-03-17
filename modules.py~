@@ -3,12 +3,13 @@ class lut(object):
 	def __init__(self,outputp):
 		self.lutTable='0000000000000000'
 		self.muxSwitch='1'
-		self.outputPort=outputp
+		self.outputPort=outputp    #contains the code of the LUT which is giving the output
 		self.inputPort1='00000'
 		self.inputPort2='00000'
 		self.inputPort3='00000'
 		self.inputPort4='00000'
 		self.status=0
+		self.LUTID=''
 
 	def lutConfig(self,LUTID,function,input1,input2,input3,input4,muxSw):
 		#print LUTID,
@@ -22,13 +23,15 @@ class lut(object):
 		self.inputPort3=input3
 		self.inputPort4=input4
 		self.status=1
+		self.LUTID=LUTID
 		
 		return LUTID
 
 	def bits(self):
-		
-		s=str(self.inputPort1+self.inputPort2+self.inputPort3+self.inputPort4+self.muxSwitch+self.lutTable)	
-		return s
+		lut_config_bits=''
+		lut_config_bits=str(self.inputPort1+self.inputPort2+self.inputPort3+self.inputPort4+self.muxSwitch+self.lutTable)	
+		return lut_config_bits
+
 	
 #creating objects for each LUT
 
@@ -169,10 +172,10 @@ class switchBlock(object):
 		fromFaceIndexnum=int(fromFaceIndex)
 		if(switchBlock.faceValue(self,fromFace)<switchBlock.faceValue(self,toFace)):
 			switchKey= str(fromFace+fromFaceIndex+toFace+toFaceIndex)
-			print 'switchKey : %s'%switchKey
+			#print 'switchKey : %s'%switchKey
 		else:
 			switchKey= str(toFace+toFaceIndex+fromFace+fromFaceIndex)
-			print 'switchKey : %s'%switchKey
+			#print 'switchKey : %s'%switchKey
 		self.switchID=switchID
 		if(fromFace==toFace):
 			print 'raise exception cannot have connections in the same face'
@@ -205,7 +208,7 @@ class switchBlock(object):
 
 
 			else:
-				print 'no signal at from port'
+				print 'no signal at from port switchID: %s,fromFace: %s port: %s'%(switchID,fromFace,fromFaceIndexnum)
 	def gen_SB_bits(self):
 		SB_switchList=["A0B0","A0B1","A0B2","A0B3","A0B4","A0B5","A0B6","A0B7","A0C0","A0C1","A0C2","A0C3","A0C4","A0C5","A0C6","A0C7","A0D0","A0D1","A0D2",
 "A0D3","A0D4","A0D5","A0D6","A0D7","A1B0","A1B1","A1B2","A1B3","A1B4","A1B5","A1B6","A1B7","A1C0","A1C1","A1C2","A1C3","A1C4","A1C5",
@@ -232,18 +235,18 @@ class switchBlock(object):
 
 		for i in SB_switchList:
 			sb_bits=sb_bits+self.switchDict[i]
-		print sb_bits
-		return '_'
+	return sb_bits
+		
 		
 		
 SBobjectNames = ["00", "01", "02", "10", "11", "12", "20", "21","22"]
-
-
-
-	       
+       
 SBobjectDictionary = {}
 for name in SBobjectNames:
     SBobjectDictionary[name] = switchBlock(name)
+
+
+
 
 #SB_connect keyvalue: SBId  values: objects opposite to faces A,B,C,D of the keyed SB... X represents no SB
 
@@ -285,6 +288,7 @@ class IOBlocks(object):
 		self.ioConf[5]=pt5;
 		self.ioConf[6]=pt6;
 		self.ioConf[7]=pt7;
+		#self.IODict={'0':'00','1':'00','2':'00','3':'00','4':'00','5':'00','6':'00','7':'00'}
 		ptrs=[pt0,pt1,pt2,pt3,pt4,pt5,pt6,pt7]
 		for m in range(0,8):
 			index_m=str(m)
@@ -293,10 +297,18 @@ class IOBlocks(object):
 		
 		index=0
 		for i in ptrs:
-			if index<8:
+			if index<8:  #setting the adjacent SB ports to I or O based on each IO block
 				switchBlock.setFaceStatus(SBobjectDictionary[IO_connect[ioId][0]],IO_connect[ioId][1],index,i)
 				index=index+1
-
+	def printIObits(self):
+		IO_switch_list=['0','1','2','3','4','5','6','7']
+		bits=''
+		for switch in IO_switch_list:
+			bits=bits+self.ioDict[switch]
+		return bits
+			
+		
+	
 	
 
 IOobjectNames = ["00", "01", "02", "10", "11", "20", "21","30","31","40","41","42"]
@@ -394,7 +406,7 @@ class connectionBlock(object):   #fix input and output port collission
 			else:
 				print 'no input sigal at port: %s of CBId: %s'%(self.x1,cbId)
 		else: 
-			self.CBDict[CBDictKey.x1]='0'
+			self.CBDict[CBDictKeyx1]='0'	
 		if self.x2!='X':
 			val=int(self.x2)
 			leftSB=connectionBlock.getting_SB_line_status(self,cbId,'left',val)
@@ -425,6 +437,7 @@ class connectionBlock(object):   #fix input and output port collission
 				print 'no input sigal at port: %s of CBId: %s'%(self.x4,cbId)
 		else: 
 			self.CBDict[CBDictKeyx4]='0'
+		
 		if self.q1!='X':
 			val=int(self.q1)
 			leftSB=connectionBlock.getting_SB_line_status(self,cbId,'left',val)
@@ -437,18 +450,22 @@ class connectionBlock(object):   #fix input and output port collission
 				self.CBDict[CBDictKeyq1]='1'
 				print 'CBcode and output stats %s %s %s'%(cbId,self.CBDict[CBDictKeyq1],self.q1)
 				
-			elif(leftSB=='O' and rightSB=='X'):
+			elif(leftSB=='O' and rightSB=='X'): #think about this case
 				leftFace=CB_connect[cbId][2]
-				switchBlock.setFaceStatus(SBobjectDictionary[CB_connect[cbId][1]],leftFace,val,'Q')
+				switchBlock.setFaceStatus(SBobjectDictionary[CB_connect[cbId][1]],leftFace,val,'O') #think about this case
 				self.CBDict[CBDictKeyq1]='1'
 			elif(leftSB=='X' and rightSB=='O'):		
 				rightFace=CB_connect[cbId][4]
-				switchBlock.setFaceStatus(SBobjectDictionary[CB_connect[cbId][3]],rightFace,val,'Q')
+				switchBlock.setFaceStatus(SBobjectDictionary[CB_connect[cbId][3]],rightFace,val,'O')
 				self.CBDict[CBDictKeyq1]='1'
+			elif(leftSB=='O' and rightSB=='O'):
+				print 'cannot connect: output line already in use: Error in CB: %s'%cbId
 		
-		else: 
-			self.CBDict[CBDictKeyq1]='0'
-			print 'CBcode and output stZZZZ %s %s %s'%(cbId,self.CBDict[CBDictKeyq1],self.q1)
+		
+		#else: 
+		#	self.CBDict[CBDictKeyq1]='0'
+		#	print 'CBcode and output stZZZZ %s %s %s'%(cbId,self.CBDict[CBDictKeyq1],self.q1)
+		
 		if self.q2!='X':
 			val=int(self.q2)
 			leftSB=connectionBlock.getting_SB_line_status(self,cbId,'left',val)
@@ -459,7 +476,7 @@ class connectionBlock(object):   #fix input and output port collission
 				switchBlock.setFaceStatus(SBobjectDictionary[CB_connect[cbId][1]],leftFace,val,'Q')
 				switchBlock.setFaceStatus(SBobjectDictionary[CB_connect[cbId][3]],rightFace,val,'Q')
 				self.CBDict[CBDictKeyq2]='1'
-				print 'CBcode and output stats %s %s %s'%(cbId,CBDict[CBDictKeyq2],self.q2)
+				print 'CBcode and output stats %s %s %s'%(cbId,self.CBDict[CBDictKeyq2],self.q2)
 			elif(leftSB=='O' and rightSB=='X'):
 				leftFace=CB_connect[cbId][2]
 				switchBlock.setFaceStatus(SBobjectDictionary[CB_connect[cbId][1]],leftFace,val,'Q')
@@ -468,11 +485,15 @@ class connectionBlock(object):   #fix input and output port collission
 				rightFace=CB_connect[cbId][4]
 				switchBlock.setFaceStatus(SBobjectDictionary[CB_connect[cbId][3]],rightFace,val,'Q')
 				self.CBDict[CBDictKeyq2]='1'
-		else: 
-			self.CBDict[CBDictKeyq2]='0'
-			print 'CBcode and output stZZZZ %s %s %s'%(cbId,self.CBDict[CBDictKeyq2],self.q2)
+		#else: 
+		#	self.CBDict[CBDictKeyq2]='0'
+		#	print 'CBcode and output stZZZZ %s %s %s'%(cbId,self.CBDict[CBDictKeyq2],self.q2)
 
-	
+		
+		
+		#else: 
+		#	self.CBDict[CBDictKeyq2]='0'
+		#	print 'CBcode and output stZZZZ %s %s %s'%(cbId,self.CBDict[CBDictKeyq2],self.q2)
 
 	def printCBconfig(self):
 		dictKeylist=["x1_G0","x2_G0","x3_G0","x4_G0","q1_G0","q2_G0",
@@ -576,19 +597,19 @@ CB_codes=['C1','C2','C3','C4',
 	   'C3','C10','C11','C12']
 
 
-##########################################routing logic begins##########################################################################
+##########################################routing logic begins#######################################################################################################################
 def checkFreeSBPort_CBconnect(SBId,SBFace,x1,x2,x3,x4,CBId):   #function checks for the index corresponding to free ports on a side of the switch block -- free ports have their status as 'X'
 	flag=1
 	counter=0
 	if(SBFace=='A'):
 		while(flag and counter<8):
-			if(SBobjectDictionary[SBId].A[counter] =='X'):
+			if(SBobjectDictionary[SBId].A[counter] =='X'):  #check if any port in face A of the switch block adjacent to the from CB is free and its not connected to any of the inputs of the CB
 				if(CBobjectDictionary[CBId].CBstate[0]!=str(counter) and CBobjectDictionary[CBId].CBstate[1]!=str(counter) and CBobjectDictionary[CBId].CBstate[2]!=str(counter) and CBobjectDictionary[CBId].CBstate[3]!=str(counter)):
 					
 					flag=0
 			else:
 				counter=counter+1
-				print counter	
+				#print counter	
 							
 	elif(SBFace=='B'):
 		while(flag and counter<8):
@@ -728,8 +749,8 @@ def connectRoute(route,fromCB,toCB,originLUT,targetLUT):  #function connects fro
 				x2=CBobjectDictionary[fromCB].CBstate[1]
 				x3=CBobjectDictionary[fromCB].CBstate[2]
 				x4=CBobjectDictionary[fromCB].CBstate[3]
-				CBobjectDictionary[fromCB].CBstate[4]=fromSBPortIndex
-				print 'q1111111: and freeindez %s  %s'%(CBobjectDictionary[fromCB].CBstate[4],fromSBPortIndex)
+				fromSBPortIndex=int(CBobjectDictionary[fromCB].CBstate[4])
+				#print 'q1111111: and freeindez %s  %s'%(CBobjectDictionary[fromCB].CBstate[4],fromSBPortIndex)
 				q2=CBobjectDictionary[fromCB].CBstate[5]
 				CBobjectDictionary[fromCB].configCB(fromCB,x1,x2,x3,x4,CBobjectDictionary[fromCB].CBstate[4],q2)
 				SBobjectDictionary[SBId].setFaceStatus(SBFace,fromSBPortIndex,'Q')
@@ -739,8 +760,8 @@ def connectRoute(route,fromCB,toCB,originLUT,targetLUT):  #function connects fro
 				x3=CBobjectDictionary[fromCB].CBstate[2]
 				x4=CBobjectDictionary[fromCB].CBstate[3]
 				q1=CBobjectDictionary[fromCB].CBstate[4]
-				CBobjectDictionary[fromCB].CBstate[5]=fromSBPortIndex
-				print 'q22222 right and portindex : %s %s'%(CBobjectDictionary[fromCB].CBstate[5],fromSBPortIndex)
+				fromSBPortIndex=int(CBobjectDictionary[fromCB].CBstate[5])
+				#print 'q22222 right and portindex : %s %s'%(CBobjectDictionary[fromCB].CBstate[5],fromSBPortIndex)
 				CBobjectDictionary[fromCB].configCB(fromCB,x1,x2,x3,x4,q1,CBobjectDictionary[fromCB].CBstate[5])
 				SBobjectDictionary[SBId].setFaceStatus(SBFace,fromSBPortIndex,'Q')
 			else:
@@ -767,22 +788,22 @@ def connectRoute(route,fromCB,toCB,originLUT,targetLUT):  #function connects fro
 	if CB_connect[toCB][1]==route[route_len-2]:
 		SBId2=CB_connect[toCB][1]
 		SBFace2=CB_connect[toCB][2]
-		print SBId2+'111'
+		#print SBId2+'111'
 		toSBPortIndex=checkFreeSBPort(SBId2,SBFace2)
 				
 	elif CB_connect[toCB][3]==route[route_len-2]:
 		SBId2=CB_connect[toCB][3]
 		SBFace2=CB_connect[toCB][4]
-		print SBId2
+		#print SBId2
 		toSBPortIndex=checkFreeSBPort(SBId2,SBFace2)
 
 	switchBlock.configSwitchBlock(SBobjectDictionary[route[route_len-2]],route[route_len-2],switch_adj_toCB['currentSBFace'],str(switch_adj_toCB['currentport']),SBFace2,str(toSBPortIndex))
-	print 'gafoooooosh'
+	
 	i_count=0
 
 	while(CBobjectDictionary[toCB].CBstate[i_count] !='X'):
 		i_count=i_count+1
-		print 'icount %s'%i_count
+		#print 'icount %s'%i_count
 
 	if(i_count==4):
 		print 'no free port on the target CB'
@@ -795,16 +816,20 @@ def connectRoute(route,fromCB,toCB,originLUT,targetLUT):  #function connects fro
 			x3=CBobjectDictionary[toCB].CBstate[2]
 			x4=CBobjectDictionary[toCB].CBstate[3]
 			if(x1=='X'):
-				x1=CBobjectDictionary[toCB].CBstate[0]=toSBPortIndex
+				x1=CBobjectDictionary[toCB].CBstate[0]=str(toSBPortIndex)
+				return 0
 			
 			elif(x2=='X'):
-				x2=CBobjectDictionary[toCB].CBstate[1]=toSBPortIndex
+				x2=CBobjectDictionary[toCB].CBstate[1]=str(toSBPortIndex)
+				return 1
 			
 			elif(x3=='X'):
-				x3=CBobjectDictionary[toCB].CBstate[2]=toSBPortIndex
+				x3=CBobjectDictionary[toCB].CBstate[2]=str(toSBPortIndex)
+				return 2
 			
 			elif(x4=='X'):
-				x4=CBobjectDictionary[toCB].CBstate[3]=toSBPortIndex
+				x4=CBobjectDictionary[toCB].CBstate[3]=str(toSBPortIndex)
+				return 3
 			
 			
 			q1=CBobjectDictionary[toCB].CBstate[4]
@@ -813,38 +838,7 @@ def connectRoute(route,fromCB,toCB,originLUT,targetLUT):  #function connects fro
 		
 		else:
 			print 'incorrect origin LUT or target CB'
-	'''
-	while(CBobjectDictionary[fromCB].CBstate[i] !='X'):
-		i_count=i_count+1
-	if(i_count==4):
-		print 'no free port on the target CB'
-	else:	
-		outputCB=''
-		if((CB_connect[toCB][5]==targetLUT) or CB_connect[toCB][6]==targetLUT):
-			if(toSBPortIndex==0 ):
-				x1=CBobjectDictionary[toCB].CBstate[0]=toSBPortIndex
-			else:
-				x1=CBobjectDictionary[toCB].CBstate[0]
-			if(toSBPortIndex==1):
-				x2=CBobjectDictionary[toCB].CBstate[1]=toSBPortIndex
-			else:
-				x2=CBobjectDictionary[toCB].CBstate[1]
-			if(toSBPortIndex==2):
-				x3=CBobjectDictionary[toCB].CBstate[2]=toSBPortIndex
-			else:
-				x3=CBobjectDictionary[toCB].CBstate[2]
-			if(toSBPortIndex==3):
-				x4=CBobjectDictionary[toCB].CBstate[3]=toSBPortIndex
-			else:
-				x4=CBobjectDictionary[toCB].CBstate[3]
-			
-			q1=CBobjectDictionary[toCB].CBstate[4]
-			q2=CBobjectDictionary[toCB].CBstate[5]
-			CBobjectDictionary[toCB].configCB(toCB,x1,x2,x3,x4,q1,q2)
-		
-		else:
-			print 'incorrect origin LUT or target CB'
-		'''	
+			return 999
 	
 			
 def find_shortest_path(graph, start, end, path=[]):	#finding route using backtracking
@@ -864,4 +858,8 @@ def find_shortest_path(graph, start, end, path=[]):	#finding route using backtra
         return shortest	
 
 ##########################################routing logic ends##########################################################################
+
+
+
+
 
