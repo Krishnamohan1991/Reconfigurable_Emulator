@@ -249,7 +249,7 @@ LUT_print_order=["Q37","Q36","Q35","Q34","Q33","Q32","Q31","Q30","Q27","Q26","Q2
 LUT_bit_stream=''
 for lut in LUT_print_order:
 	LUT_bit_stream=LUT_bit_stream+lutobjectDictionary[lut].bits()
-'''
+
 file=open('conf_bit_stream.txt','w')
 file.write("CB_config_stream[767:0]= 768'b"+CB_bit_stream+";\n")
 file.write("SB_config_stream[6911:0]= 6912'b"+SB_bit_stream+";\n")
@@ -257,15 +257,16 @@ file.write("CLB_config_stream[1183:0]= 1184'b"+LUT_bit_stream+";\n")
 file.write("IO_config_stream[191:0]=192'b"+IO_bit_stream+";")
 
 file.close()
-'''
 
+'''
 file=open('conf_bit_stream.txt','w')
-file.write(CB_bit_stream)
-file.write(SB_bit_stream)
-file.write(LUT_bit_stream)
-file.write(IO_bit_stream)
+file.write(CB_bit_stream+"\n")
+file.write(SB_bit_stream+"\n")
+file.write(LUT_bit_stream+"\n")
+file.write(IO_bit_stream+"\n")
 
 file.close()
+'''
 ###########################################################################################################################################################
 '''
 #Total 16 CB blocks each having 48 bits
