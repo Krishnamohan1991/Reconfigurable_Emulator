@@ -121,10 +121,10 @@ def begins(cls):
 
 
 
-input_port = (oneOf("I0 I1 I2 I3 I4 I5 I6 I7 I8 I9 I10 I11 I12 I13 I14 I15 Q00 Q01 Q02 Q03 Q04 Q05 Q06 Q07 Q10 Q11 Q12 Q13 Q14 Q15 Q16 Q17 Q20 Q21 Q22 Q23 Q24 Q25 Q26 Q27 Q30 Q31 Q32 Q33 Q34 Q35 Q36 Q37")).setResultsName('InputLine')
+input_port = (oneOf("I0 I1 I2 I3 I4 I5 I6 I7 I8 I9 I10 I11 I12 I13 I14 I15 Q00_0 Q00_1 Q00_2 Q00_3 Q00_4 Q00_5 Q00_6 Q00_7 Q01_0 Q01_1 Q01_2 Q01_3 Q01_4 Q01_5 Q01_6 Q01_7 Q11_0 Q11_1 Q11_2 Q11_3 Q11_4 Q11_5 Q11_6 Q11_7 Q10_0 Q10_1 Q10_2 Q10_3 Q10_4 Q10_5 Q10_6 Q10_7")).setResultsName('InputLine')
 
 #inputLines=(oneOf("I0 I1 I2 I3 I4 I5 I6 I7 I8 I9 I10 I11 I12 I13 I14 I15")).setResultsName('onlyInput')
-output_port = (oneOf("Q00 Q01 Q02 Q03 Q04 Q05 Q06 Q07 Q10 Q11 Q12 Q13 Q14 Q15 Q16 Q17 Q20 Q21 Q22 Q23 Q24 Q25 Q26 Q27 Q30 Q31 Q32 Q33 Q34 Q35 Q36 Q37")).setResultsName('LUTID')
+output_port = (oneOf("Q00_0 Q00_1 Q00_2 Q00_3 Q00_4 Q00_5 Q00_6 Q00_7 Q10 Q01_1 Q01_2 Q01_3 Q01_4 Q01_5 Q01_6 Q01_7 Q11_0 Q11_1 Q11_2 Q11_3 Q11_4 Q11_5 Q11_6 Q11_7 Q10_0 Q10_1 Q10_2 Q10_3 Q10_4 Q10_5 Q10_6 Q10_7")).setResultsName('LUTID')
 #operand= input_port | output_port
 
 
@@ -159,7 +159,7 @@ SBport6 = (oneOf("X I O")).setResultsName('SBport6')
 SBport7 = (oneOf("X I O")).setResultsName('SBport7')
 IOId = (oneOf("00 01 02 10 11 20 21 30 31 40 41 42")).setResultsName('IOId')
 
-CBId=(oneOf("00 01 02 03 10 11 12 13 20 21 22 23 30 31 32 33")).setResultsName('CBId')
+CBId=(oneOf("00_0 00_1 00_2 00_3 01_0 01_1 01_2 01_3 11_0 11_1 11_2 11_3 10_0 10_1 10_2 10_3")).setResultsName('CBId')
 CB_x1=(oneOf("0 1 2 3 4 5 6 7 X")).setResultsName('CB_x1')
 CB_x2=(oneOf("0 1 2 3 4 5 6 7 X")).setResultsName('CB_x2')
 CB_x3=(oneOf("0 1 2 3 4 5 6 7 X")).setResultsName('CB_x3')
@@ -216,7 +216,7 @@ for test in scr_split:
 #counter+=1
 	
 tests.close()
-
+'''
 print 'from CB 03 state %s '%CBobjectDictionary['03'].CBstate
 print 'from SB 00 face A %s '%SBobjectDictionary['00'].A
 print 'from SB 00 face C %s '%SBobjectDictionary['00'].C
@@ -231,9 +231,10 @@ print 'from CB 23 state  %s '%CBobjectDictionary['23'].printCBconfig()
 print 'from IO 00 state  %s '%IOobjectDictionary['00'].ioConf
 
 print 'from IO 00 state  %s '%IOobjectDictionary['00'].printIObits()
+'''
 #####################################################printing bits######################################################################################
 
-CB_print_order=["23","22","21","20","33","32","31","30","13","12","11","10","03","02","01","00"]
+CB_print_order=["11_3","11_2","11_1","11_0","10_3","10_2","10_1","10_0","01_3","01_2","01_1","01_0","00_3","00_2","00_1","00_0"]
 CB_bit_stream=''
 for i in CB_print_order:
 	CB_bit_stream=CB_bit_stream+CBobjectDictionary[i].printCBconfig()	
@@ -249,8 +250,8 @@ IO_bit_stream=''
 for j in IO_print_order:  
 	IO_bit_stream=IO_bit_stream+IOobjectDictionary[j].printIObits()
 
-LUT_print_order=["Q27","Q26","Q25","Q24","Q22","Q22","Q21","Q20","Q37","Q36","Q35","Q34","Q33","Q32","Q31","Q30","Q17","Q16","Q15","Q14",
-"Q11","Q11","Q11","Q10","Q07","Q06","Q05","Q04","Q00","Q00","Q00","Q00"]
+LUT_print_order=["Q11_7","Q11_6","Q11_5","Q11_4","Q11_2","Q11_2","Q11_1","Q11_0","Q10_7","Q10_6","Q10_5","Q10_4","Q10_3","Q10_2","Q10_1","Q10_0","Q01_7","Q01_6","Q01_5","Q01_4",
+"Q01_3","Q01_2","Q01_1","Q01_0","Q00_7","Q00_6","Q00_5","Q00_4","Q00_3","Q00_2","Q00_1","Q00_0"]
 LUT_bit_stream=''
 for lut in LUT_print_order:
 	LUT_bit_stream=LUT_bit_stream+lutobjectDictionary[lut].bits()

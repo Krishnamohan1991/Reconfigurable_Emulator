@@ -36,7 +36,8 @@ class lut(object):
 #creating objects for each LUT
 
 
-objectNames = ["Q00","Q01","Q02","Q03","Q04","Q05","Q06","Q07","Q10","Q11","Q12","Q13","Q14","Q15","Q16","Q17","Q20","Q21","Q22","Q23","Q24","Q25","Q26","Q27","Q30","Q31","Q32","Q33","Q34","Q35", "Q36","Q37"]
+objectNames = ["Q11_7","Q11_6","Q11_5","Q11_4","Q11_2","Q11_2","Q11_1","Q11_0","Q10_7","Q10_6","Q10_5","Q10_4","Q10_3","Q10_2","Q10_1","Q10_0","Q01_7","Q01_6","Q01_5","Q01_4",
+"Q01_3","Q01_2","Q01_1","Q01_0","Q00_7","Q00_6","Q00_5","Q00_4","Q00_3","Q00_2","Q00_1","Q00_0"]
 lutobjectDictionary = {}
 for name in objectNames:
     lutobjectDictionary[name] = lut(name)
@@ -517,7 +518,7 @@ class connectionBlock(object):   #fix input and output port collission
 
 
 
-CB_objects=["00", "01", "02", "03","10", "11", "12", "13" ,"20", "21", "22","23","30","31","32","33"]
+CB_objects=["00_0","00_1","00_2","00_3","01_0","01_1","01_2","01_3","11_0","11_1","11_2","11_3","10_0","10_1","10_2","10_3"]
 
 CBobjectDictionary = {}
 for name in CB_objects:
@@ -528,13 +529,13 @@ for name in CB_objects:
 SB_Map_code = {"00":"SB00", "01":"SB01", "02":"SB02", "10":"SB10", "11":"SB11", "12":"SB12", "20":"SB20", "21":"SB21","22":"SB22"}
 	       
 #CB_Map_code key:CB code ----values:code representing the CB on the CB_SB_map dictionary
-CB_map_code={"00":'C1',"01":'C2',"02":'C3',"03":'C4',
+CB_map_code={"00_0":'C1',"00_1":'C2',"00_2":'C3',"00_3":'C4',
 
-	    "10":'C5',"11":'C6',"12":'C7',"13":'C2',
+	    "01_0":'C5',"01_1":'C6',"01_2":'C7',"01_3":'C2',
             
-	    "20":'C7',"21":'C8',"22":'C9',"23":'C10',
+	    "11_0":'C7',"11_1":'C8',"11_2":'C9',"11_3":'C10',
 
-	    "30":'C3',"31":'C10',"32":'C11',"33":'C12'}
+	    "10_0":'C3',"10_1":'C10',"10_2":'C11',"10_3":'C12'}
 
 
 
@@ -564,7 +565,7 @@ CB_SB_map={"SB00":['C1','SB01','C4','SB10'],
 
 '''
 
-CB_SB_map={"00":['C1','01','C4','10'],
+CB_SB_map={"00":['C1','01','C4','10'],         #00, 01,02 ETC REPRESENTS THE SB and C4,C1 etc. represent the unique value for Switch blocks
 	  "01":['00','02','11','C1','C5','C2'],
 	  "02":['01','12','C5','C6'],
 	  "10":['00','11','20','C4','C12','C3'],
