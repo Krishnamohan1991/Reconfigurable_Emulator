@@ -224,11 +224,16 @@ print 'from SB 10 face A %s '%SBobjectDictionary['10'].A
 print 'from SB 10 face B %s '%SBobjectDictionary['10'].B
 print 'from SB 11 face D %s '%SBobjectDictionary['11'].D
 print 'from SB 11 face C %s '%SBobjectDictionary['11'].C
-print 'from CB 03 state  %s '%CBobjectDictionary['23'].CBstate
+print 'from CB 23 state  %s '%CBobjectDictionary['23'].CBstate
+print 'from CB 23 state  %s '%CBobjectDictionary['23'].printCBconfig()
 
+
+print 'from IO 00 state  %s '%IOobjectDictionary['00'].ioConf
+
+print 'from IO 00 state  %s '%IOobjectDictionary['00'].printIObits()
 #####################################################printing bits######################################################################################
 
-CB_print_order=["33","32","31","30","23","22","21","20","13","12","11","10","03","02","01","00"]
+CB_print_order=["23","22","21","20","33","32","31","30","13","12","11","10","03","02","01","00"]
 CB_bit_stream=''
 for i in CB_print_order:
 	CB_bit_stream=CB_bit_stream+CBobjectDictionary[i].printCBconfig()	
@@ -244,7 +249,7 @@ IO_bit_stream=''
 for j in IO_print_order:  
 	IO_bit_stream=IO_bit_stream+IOobjectDictionary[j].printIObits()
 
-LUT_print_order=["Q37","Q36","Q35","Q34","Q33","Q32","Q31","Q30","Q27","Q26","Q25","Q24","Q22","Q22","Q21","Q20","Q17","Q16","Q15","Q14",
+LUT_print_order=["Q27","Q26","Q25","Q24","Q22","Q22","Q21","Q20","Q37","Q36","Q35","Q34","Q33","Q32","Q31","Q30","Q17","Q16","Q15","Q14",
 "Q11","Q11","Q11","Q10","Q07","Q06","Q05","Q04","Q00","Q00","Q00","Q00"]
 LUT_bit_stream=''
 for lut in LUT_print_order:

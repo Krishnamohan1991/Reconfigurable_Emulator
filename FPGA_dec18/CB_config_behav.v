@@ -53,7 +53,7 @@ always @(posedge clk or posedge reset)
 		
 	else begin
 		count[5:0]=count[5:0]+1'b1; 
-		if(count[5:0]==6'b110000)  //96 => 1100000
+		if(count[5:0]==6'b110001)  // MAKE IT 48+1 ??
 		begin
 			cb_prgm_b_out=1'b1;
 			count[5:0]=6'b000000;

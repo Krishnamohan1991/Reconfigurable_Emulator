@@ -1,4 +1,4 @@
-module interconnect_unit(I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I0,CLB_prgm_b,interconnect_switch,prgm_b,IQ1,IQ2,IQ3,IQ4,IQ5,IQ6,IQ7,IQ8,lut_inp);
+module interconnect_unit(I0,I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,CLB_prgm_b,interconnect_switch,prgm_b,IQ1,IQ2,IQ3,IQ4,IQ5,IQ6,IQ7,IQ8,lut_inp);
 input I0,I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,CLB_prgm_b,I16,prgm_b,IQ1,IQ2,IQ3,IQ4,IQ5,IQ6,IQ7,IQ8;
 input [4:0] interconnect_switch;
 output reg lut_inp;

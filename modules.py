@@ -293,7 +293,7 @@ class IOBlocks(object):
 		for m in range(0,8):
 			index_m=str(m)
 			self.ioDict[index_m]=IOBlocks.setIOBits(self,self.ioConf[m],m)
-			#print IOBlocks.setIOBits(self,self.ioConf[m],m)
+			print "switch id: %s switch index: %s"%(self.ioId,self.ioDict[index_m])
 		
 		index=0
 		for i in ptrs:
@@ -817,24 +817,36 @@ def connectRoute(route,fromCB,toCB,originLUT,targetLUT):  #function connects fro
 			x4=CBobjectDictionary[toCB].CBstate[3]
 			if(x1=='X'):
 				x1=CBobjectDictionary[toCB].CBstate[0]=str(toSBPortIndex)
+				q1=CBobjectDictionary[toCB].CBstate[4]
+				q2=CBobjectDictionary[toCB].CBstate[5]
+				CBobjectDictionary[toCB].configCB(toCB,x1,x2,x3,x4,q1,q2)
 				return 0
 			
 			elif(x2=='X'):
 				x2=CBobjectDictionary[toCB].CBstate[1]=str(toSBPortIndex)
+				q1=CBobjectDictionary[toCB].CBstate[4]
+				q2=CBobjectDictionary[toCB].CBstate[5]
+				CBobjectDictionary[toCB].configCB(toCB,x1,x2,x3,x4,q1,q2)
 				return 1
 			
 			elif(x3=='X'):
 				x3=CBobjectDictionary[toCB].CBstate[2]=str(toSBPortIndex)
+				q1=CBobjectDictionary[toCB].CBstate[4]
+				q2=CBobjectDictionary[toCB].CBstate[5]
+				CBobjectDictionary[toCB].configCB(toCB,x1,x2,x3,x4,q1,q2)
 				return 2
 			
 			elif(x4=='X'):
 				x4=CBobjectDictionary[toCB].CBstate[3]=str(toSBPortIndex)
+				q1=CBobjectDictionary[toCB].CBstate[4]
+				q2=CBobjectDictionary[toCB].CBstate[5]
+				CBobjectDictionary[toCB].configCB(toCB,x1,x2,x3,x4,q1,q2)
 				return 3
 			
-			
-			q1=CBobjectDictionary[toCB].CBstate[4]
-			q2=CBobjectDictionary[toCB].CBstate[5]
-			CBobjectDictionary[toCB].configCB(toCB,x1,x2,x3,x4,q1,q2)
+			#cout<<"moo point"
+			#q1=CBobjectDictionary[toCB].CBstate[4]
+			#q2=CBobjectDictionary[toCB].CBstate[5]
+			#CBobjectDictionary[toCB].configCB(toCB,x1,x2,x3,x4,q1,q2)
 		
 		else:
 			print 'incorrect origin LUT or target CB'

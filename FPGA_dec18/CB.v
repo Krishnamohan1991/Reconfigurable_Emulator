@@ -23,34 +23,61 @@ config_cb_behav CBehav(.bit_in(bit_in_CB),.prgm_b(prgm_b),.clk(clk),.reset(reset
 .x4_G4(x4_G4),.x4_G5(x4_G5),.x4_G6(x4_G6),.x4_G7(x4_G7),.x5_G4(x5_G4),.x5_G5(x5_G5),.x5_G6(x5_G6),.x5_G7(x5_G7),
 .q1_G4(q1_G4),.q1_G5(q1_G5),.q1_G6(q1_G6),.q1_G7(q1_G7),.q2_G4(q2_G4),.q2_G5(q2_G5),.q2_G6(q2_G6),.q2_G7(q2_G7),.x3_G4(x3_G4),.x3_G5(x3_G5),.x3_G6(x3_G6),.x3_G7(x3_G7));
 
-unidir_switch CA1(.port1(G0),.port2(x1),.enable(x1_G0));    unidir_switch  CB1(.port1(G1),.port2(x1),.enable(x1_G1));  
-unidir_switch CA2(.port1(G0),.port2(x2),.enable(x2_G0));    unidir_switch CB2(.port1(G1),.port2(x2),.enable(x2_G1));  
-unidir_switch CA3(.port1(G0),.port2(x3),.enable(x3_G0));    unidir_switch CB3(.port1(G1),.port2(x3),.enable(x3_G1));  
-unidir_switch CA4(.port1(G0),.port2(x4),.enable(x4_G0));    unidir_switch CB4(.port1(G1),.port2(x4),.enable(x4_G1));  
-unidir_switch CA6(.port1(q2),.port2(G0),.enable(q2_G0));    unidir_switch CB6(.port1(q2),.port2(G1),.enable(q2_G1));  
-unidir_switch CA7(.port1(q1),.port2(G0),.enable(q1_G0));    unidir_switch CB7(.port1(q1),.port2(G1),.enable(q1_G1));  
+unidir_switch G0_x1(.port1(G0),.port2(x1),.enable(x1_G0));    unidir_switch G1_x1(.port1(G1),.port2(x1),.enable(x1_G1));  
+                                                                             
+unidir_switch G0_x2(.port1(G0),.port2(x2),.enable(x2_G0));    unidir_switch G1_x2(.port1(G1),.port2(x2),.enable(x2_G1));  
+                                                                         
+unidir_switch G0_x3(.port1(G0),.port2(x3),.enable(x3_G0));      unidir_switch G1_x3(.port1(G1),.port2(x3),.enable(x3_G1));  
+                                                                         
+unidir_switch G0_x4(.port1(G0),.port2(x4),.enable(x4_G0));    unidir_switch G1_x4(.port1(G1),.port2(x4),.enable(x4_G1));  
+                                                                         
+unidir_switch G0_q2(.port1(q2),.port2(G0),.enable(q2_G0));    unidir_switch G1_q2(.port1(q2),.port2(G1),.enable(q2_G1));  
+                                                                            
+unidir_switch G0_q1(.port1(q1),.port2(G0),.enable(q1_G0));    unidir_switch G1_q1(.port1(q1),.port2(G1),.enable(q1_G1));  
+
  
-unidir_switch CC1(.port1(G2),.port2(x1),.enable(x1_G2));   unidir_switch CD1(.port1(G3),.port2(x1),.enable(x1_G3));
-unidir_switch CC2(.port1(G2),.port2(x2),.enable(x2_G2));   unidir_switch CD2(.port1(G3),.port2(x2),.enable(x2_G3));
-unidir_switch CC3(.port1(G2),.port2(x3),.enable(x3_G2));   unidir_switch CD3(.port1(G3),.port2(x3),.enable(x3_G3));
-unidir_switch CC4(.port1(G2),.port2(x4),.enable(x4_G2));   unidir_switch CD4(.port1(G3),.port2(x4),.enable(x4_G3));
-unidir_switch CC6(.port1(q2),.port2(G2),.enable(q2_G2));   unidir_switch CD6(.port1(q2),.port2(G3),.enable(q2_G3));
-unidir_switch CC7(.port1(q1),.port2(G2),.enable(q1_G2));   unidir_switch CD7(.port1(q1),.port2(G3),.enable(q1_G3));
 
-unidir_switch CA10(.port1(G4),.port2(x1),.enable(x1_G4));   unidir_switch CB10(.port1(G5),.port2(x1),.enable(x1_G5));  
-unidir_switch CA11(.port1(G4),.port2(x2),.enable(x2_G4));   unidir_switch CB11(.port1(G5),.port2(x2),.enable(x2_G5));  
- unidir_switch CA8(.port1(G4),.port2(x3),.enable(x3_G4));    unidir_switch CB8(.port1(G5),.port2(x3),.enable(x3_G5));  
- unidir_switch CA9(.port1(G4),.port2(x4),.enable(x4_G4));    unidir_switch CB9(.port1(G5),.port2(x4),.enable(x4_G5));  
-unidir_switch CA12(.port1(q1),.port2(G4),.enable(q1_G4));   unidir_switch CB12(.port1(q1),.port2(G5),.enable(q1_G5));  
-unidir_switch SA13(.port1(q2),.port2(G4),.enable(q2_G4));   unidir_switch CB13(.port1(q2),.port2(G5),.enable(q2_G5));  
+unidir_switch G2_x1(.port1(G2),.port2(x1),.enable(x1_G2));   unidir_switch G3_x1(.port1(G3),.port2(x1),.enable(x1_G3));
+                                                                      
+unidir_switch G2_x2(.port1(G2),.port2(x2),.enable(x2_G2));   unidir_switch G3_x2(.port1(G3),.port2(x2),.enable(x2_G3));
+                                                                      
+unidir_switch G2_x3(.port1(G2),.port2(x3),.enable(x3_G2));   unidir_switch G3_x3(.port1(G3),.port2(x3),.enable(x3_G3));
+                                                                      
+unidir_switch G2_x4(.port1(G2),.port2(x4),.enable(x4_G2));   unidir_switch G3_x4(.port1(G3),.port2(x4),.enable(x4_G3));
+                                                                      
+unidir_switch G2_q2(.port1(q2),.port2(G2),.enable(q2_G2));   unidir_switch G3_q2(.port1(q2),.port2(G3),.enable(q2_G3));
+                                                                      
+unidir_switch G2_q1(.port1(q1),.port2(G2),.enable(q1_G2));   unidir_switch G3_q1(.port1(q1),.port2(G3),.enable(q1_G3));
 
 
- unidir_switch CC8(.port1(G6),.port2(x1),.enable(x1_G6));   unidir_switch CD8(.port1(G7),.port2(x1),.enable(x1_G7));
- unidir_switch CC9(.port1(G6),.port2(x2),.enable(x2_G6));   unidir_switch CD9(.port1(G7),.port2(x2),.enable(x2_G7));
-unidir_switch CC10(.port1(G6),.port2(x3),.enable(x3_G6));  unidir_switch CD10(.port1(G7),.port2(x3),.enable(x3_G7));
-unidir_switch CC11(.port1(G6),.port2(x4),.enable(x4_G6));  unidir_switch CD11(.port1(G7),.port2(x4),.enable(x4_G7));
-unidir_switch CC12(.port1(q1),.port2(G6),.enable(q1_G6));  unidir_switch CD12(.port1(q1),.port2(G7),.enable(q1_G7));
-unidir_switch CC13(.port1(q2),.port2(G6),.enable(q2_G6));  unidir_switch CD13(.port1(q2),.port2(G7),.enable(q2_G7));
+
+unidir_switch G4_x1(.port1(G4),.port2(x1),.enable(x1_G4));   unidir_switch G5_x1(.port1(G5),.port2(x1),.enable(x1_G5));  
+                                                            
+unidir_switch G4_x2(.port1(G4),.port2(x2),.enable(x2_G4));   unidir_switch G5_x2(.port1(G5),.port2(x2),.enable(x2_G5));  
+                                                            
+unidir_switch G4_x3(.port1(G4),.port2(x3),.enable(x3_G4));    unidir_switch G5_x3(.port1(G5),.port2(x3),.enable(x3_G5));  
+                                                            
+unidir_switch G4_x4(.port1(G4),.port2(x4),.enable(x4_G4));    unidir_switch G5_x4(.port1(G5),.port2(x4),.enable(x4_G5));  
+                                                            
+unidir_switch G4_q1(.port1(q1),.port2(G4),.enable(q1_G4));   unidir_switch G5_q1(.port1(q1),.port2(G5),.enable(q1_G5));  
+                                                            
+unidir_switch G4_q2(.port1(q2),.port2(G4),.enable(q2_G4));   unidir_switch G5_q2(.port1(q2),.port2(G5),.enable(q2_G5));  
+
+
+
+
+
+unidir_switch G6_x1 (.port1(G6),.port2(x1),.enable(x1_G6));   unidir_switch G7_x1(.port1(G7),.port2(x1),.enable(x1_G7));
+                                                                           
+unidir_switch G6_x2 (.port1(G6),.port2(x2),.enable(x2_G6));   unidir_switch G7_x2(.port1(G7),.port2(x2),.enable(x2_G7));
+                                                                           
+unidir_switch G6_x3(.port1(G6),.port2(x3),.enable(x3_G6));  unidir_switch G7_x3(.port1(G7),.port2(x3),.enable(x3_G7));
+                                                                           
+unidir_switch G6_x4(.port1(G6),.port2(x4),.enable(x4_G6));  unidir_switch G7_x4(.port1(G7),.port2(x4),.enable(x4_G7));
+                                                                           
+unidir_switch G6_q1(.port1(q1),.port2(G6),.enable(q1_G6));  unidir_switch G7_q1(.port1(q1),.port2(G7),.enable(q1_G7));
+                                                                           
+unidir_switch G6_q2(.port1(q2),.port2(G6),.enable(q2_G6));  unidir_switch G7_q2(.port1(q2),.port2(G7),.enable(q2_G7));
 
  
 

@@ -5,7 +5,7 @@ input bit_in,prgm_b,io_prgm_b,io_prgm_b_in,clk,reset;
 
 output reg io_prgm_b_out;
 
-reg [3:0] count;
+reg [4:0] count;
 
 
 
@@ -14,7 +14,7 @@ output reg [1:0]G4_S4;output reg [1:0]G5_S5;output reg [1:0]G6_S6;output reg [1:
 	
   initial begin
 
-	count[3:0]=4'b0000;
+	count[4:0]=5'b00000;
 
 	io_prgm_b_out=1'b0;
 
@@ -41,15 +41,15 @@ always @(posedge clk or posedge reset)
 
 	else begin
 
-		count[3:0]=count[3:0]+1'b1; 
+		count[4:0]=count[4:0]+1'b1; 
 
-		if(count[3:0]==4'b1111)
+		if(count[4:0]==5'b10001)
 
 		begin
 
 			io_prgm_b_out= 1'b1;
 
-			count[3:0]=4'b0000;
+			count[4:0]=5'b0000;
 
 			
 		end  //ends

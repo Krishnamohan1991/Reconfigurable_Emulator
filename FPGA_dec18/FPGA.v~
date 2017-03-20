@@ -178,30 +178,30 @@ CB CB11_2(.x1(CLB11_I8),.x2(CLB11_I9),.x3(CLB11_I10),.x4(CLB11_I11),.q1(CLB11_IQ
    .G0(SB21_SB22_0),.G1(SB21_SB22_1),.G2(SB21_SB22_2),.G3(SB21_SB22_3),.G4(SB21_SB22_4),.G5(SB21_SB22_5),.G6(SB21_SB22_6),.G7(SB21_SB22_7),.bit_in_CB(bit_in_CB),.clk(clk),.reset(reset),.cb_prgm_b(cb_prgm_b),.prgm_b(prgm_b),.cb_prgm_b_out(cb_prgm_b_out_11_2),.cb_prgm_b_in(cb_prgm_b_out_11_1));
 
 CB CB11_3(.x1(CLB11_I0),.x2(CLB11_I1),.x3(CLB11_I2),.x4(CLB11_I3),.q1(CLB11_IQ0),.q2(CLB11_IQ1),
-   .G0(SB11_SB21_0),.G1(SB11_SB21_1),.G2(SB11_SB21_2),.G3(SB11_SB21_3),.G4(SB11_SB21_4),.G5(SB11_SB21_5),.G6(SB11_SB21_6),.G7(SB11_SB21_7),.bit_in_CB(bit_in_CB),.clk(clk),.reset(reset),.cb_prgm_b(cb_prgm_b),.prgm_b(prgm_b),.cb_prgm_b_out(cb_prgm_b_out_3),.cb_prgm_b_in(cb_prgm_b_out_2));
+   .G0(SB11_SB21_0),.G1(SB11_SB21_1),.G2(SB11_SB21_2),.G3(SB11_SB21_3),.G4(SB11_SB21_4),.G5(SB11_SB21_5),.G6(SB11_SB21_6),.G7(SB11_SB21_7),.bit_in_CB(bit_in_CB),.clk(clk),.reset(reset),.cb_prgm_b(cb_prgm_b),.prgm_b(prgm_b),.cb_prgm_b_out(cb_prgm_b_out_3),.cb_prgm_b_in(cb_prgm_b_out_11_2));
 //
 
 //CLB Blocks
 
 
 CLB CLB00(.I0(CLB00_I0),.I1(CLB00_I1),.I2(CLB00_I2),.I3(CLB00_I3),.I4(CLB00_I4),.I5(CLB00_I5),.I6(CLB00_I6),.I7(CLB00_I7),.I8(CLB00_I8),.I9(CLB00_I9),.I10(CLB00_I10),.I11(CLB00_I11),
-	.I12(CLB00_I12),.I13(CLB00_I13),.I14(CLB00_I14),.I15(CLB00_I15),.IQ1(CLB00_IQ1),.IQ2(CLB00_IQ2),.IQ3(CLB00_IQ3),.IQ4(CLB00_IQ4),.IQ5(CLB00_IQ5),
-	.IQ6(CLB00_IQ6),.IQ7(CLB00_IQ7),.IQ8(CLB00_IQ8),.clk(clk),.reset(reset),.prgm_b(prgm_b),.bit_in(bit_in_CLB),.CLB_prgm_b(CLB_prgm_b),
+	.I12(CLB00_I12),.I13(CLB00_I13),.I14(CLB00_I14),.I15(CLB00_I15),.IQ1(CLB00_IQ0),.IQ2(CLB00_IQ1),.IQ3(CLB00_IQ2),.IQ4(CLB00_IQ3),.IQ5(CLB00_IQ4),
+	.IQ6(CLB00_IQ5),.IQ7(CLB00_IQ6),.IQ8(CLB00_IQ7),.clk(clk),.reset(reset),.prgm_b(prgm_b),.bit_in(bit_in_CLB),.CLB_prgm_b(CLB_prgm_b),
 	.CLB_prgm_b_in(CLB_prgm_b_in),.CLB_prgm_b_out(CLB_prgm_b_out_CLB00)); 
 
 CLB CLB01(.I0(CLB01_I0),.I1(CLB01_I1),.I2(CLB01_I2),.I3(CLB01_I3),.I4(CLB01_I4),.I5(CLB01_I5),.I6(CLB01_I6),.I7(CLB01_I7),.I8(CLB01_I8),.I9(CLB01_I9),.I10(CLB01_I10),.I11(CLB01_I11),
-	.I12(CLB01_I12),.I13(CLB01_I13),.I14(CLB01_I14),.I15(CLB01_I15),.IQ1(CLB01_IQ1),.IQ2(CLB01_IQ2),.IQ3(CLB01_IQ3),.IQ4(CLB01_IQ4),.IQ5(CLB01_IQ5),
-	.IQ6(CLB01_IQ6),.IQ7(CLB01_IQ7),.IQ8(CLB01_IQ8),.clk(clk),.reset(reset),.prgm_b(prgm_b),.bit_in(bit_in_CLB),.CLB_prgm_b(CLB_prgm_b),
+	.I12(CLB01_I12),.I13(CLB01_I13),.I14(CLB01_I14),.I15(CLB01_I15),.IQ1(CLB01_IQ0),.IQ2(CLB01_IQ1),.IQ3(CLB01_IQ2),.IQ4(CLB01_IQ3),.IQ5(CLB01_IQ4),
+	.IQ6(CLB01_IQ5),.IQ7(CLB01_IQ6),.IQ8(CLB01_IQ7),.clk(clk),.reset(reset),.prgm_b(prgm_b),.bit_in(bit_in_CLB),.CLB_prgm_b(CLB_prgm_b),
 	.CLB_prgm_b_in(CLB_prgm_b_out_CLB00),.CLB_prgm_b_out(CLB_prgm_b_out_CLB01));
 
 CLB CLB10(.I0(CLB10_I0),.I1(CLB10_I1),.I2(CLB10_I2),.I3(CLB10_I3),.I4(CLB10_I4),.I5(CLB10_I5),.I6(CLB10_I6),.I7(CLB10_I7),.I8(CLB10_I8),.I9(CLB10_I9),.I10(CLB10_I10),.I11(CLB10_I11),
-	.I12(CLB10_I12),.I13(CLB10_I13),.I14(CLB10_I14),.I15(CLB10_I15),.IQ1(CLB10_IQ1),.IQ2(CLB10_IQ2),.IQ3(CLB10_IQ3),.IQ4(CLB10_IQ4),.IQ5(CLB10_IQ5),
-	.IQ6(CLB10_IQ6),.IQ7(CLB10_IQ7),.IQ8(CLB10_IQ8),.clk(clk),.reset(reset),.prgm_b(prgm_b),.bit_in(bit_in_CLB),.CLB_prgm_b(CLB_prgm_b),
+	.I12(CLB10_I12),.I13(CLB10_I13),.I14(CLB10_I14),.I15(CLB10_I15),.IQ1(CLB10_IQ0),.IQ2(CLB10_IQ1),.IQ3(CLB10_IQ2),.IQ4(CLB10_IQ3),.IQ5(CLB10_IQ4),
+	.IQ6(CLB10_IQ5),.IQ7(CLB10_IQ6),.IQ8(CLB10_IQ7),.clk(clk),.reset(reset),.prgm_b(prgm_b),.bit_in(bit_in_CLB),.CLB_prgm_b(CLB_prgm_b),
 	.CLB_prgm_b_in(CLB_prgm_b_out_CLB01),.CLB_prgm_b_out(CLB_prgm_b_out_CLB10));
 
 CLB CLB11(.I0(CLB11_I0),.I1(CLB11_I1),.I2(CLB11_I2),.I3(CLB11_I3),.I4(CLB11_I4),.I5(CLB11_I5),.I6(CLB11_I6),.I7(CLB11_I7),.I8(CLB11_I8),.I9(CLB11_I9),.I10(CLB11_I10),.I11(CLB11_I11),
-	.I12(CLB11_I12),.I13(CLB11_I13),.I14(CLB11_I14),.I15(CLB11_I15),.IQ1(CLB11_IQ1),.IQ2(CLB11_IQ2),.IQ3(CLB11_IQ3),.IQ4(CLB11_IQ4),.IQ5(CLB11_IQ5),
-	.IQ6(CLB11_IQ6),.IQ7(CLB11_IQ7),.IQ8(CLB11_IQ8),.clk(clk),.reset(reset),.prgm_b(prgm_b),.bit_in(bit_in_CLB),.CLB_prgm_b(CLB_prgm_b),
+	.I12(CLB11_I12),.I13(CLB11_I13),.I14(CLB11_I14),.I15(CLB11_I15),.IQ1(CLB11_IQ0),.IQ2(CLB11_IQ1),.IQ3(CLB11_IQ2),.IQ4(CLB11_IQ3),.IQ5(CLB11_IQ4),
+	.IQ6(CLB11_IQ5),.IQ7(CLB11_IQ6),.IQ8(CLB11_IQ7),.clk(clk),.reset(reset),.prgm_b(prgm_b),.bit_in(bit_in_CLB),.CLB_prgm_b(CLB_prgm_b),
 	.CLB_prgm_b_in(CLB_prgm_b_out_CLB10),.CLB_prgm_b_out(CLB_prgm_b_out_CLB11)); 
 
 //
