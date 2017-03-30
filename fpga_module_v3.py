@@ -33,10 +33,12 @@ def begins(cls):
 		op4=cls.op4
 		target_CB=LUT_connect[cls.LUTID][1] #its the ID of the connection block to which the currently programmed LUT is connected to
 		if(LUT_connect.has_key(cls.op1) and (LUT_connect[cls.op1][0]!=LUT_connect[cls.LUTID][0])): #check if the input and output LUTs belong to the same group or not
+			print "INPUT 1"			
 			fromCB=LUT_connect[cls.op1][1] #the CB from which the input signal is transmited
 			fromCBCode=str(CB_connect[fromCB][0]) #the code of the CB from which the input signal is transmited
 			print 'from name: %s code: %s'%(fromCB,fromCBCode)
 			toCB=LUT_connect[cls.LUTID][1]  #CB at the output to which the output LUT is connected
+			print "LUTID= %s to CB= %s "%(cls.LUTID,toCB)
 			toCBCode=str(CB_connect[toCB][0])    #CB code at the output to which the output LUT is connected
 			print 'to name: %s code: %s'%(toCB,toCBCode)
 			route=[]
@@ -45,9 +47,10 @@ def begins(cls):
 			if(target_CB_port!=999):
 				op1=CB_input_output_connect[target_CB][target_CB_port]
 			#connectRoute(route,route_len,fromCB,toCB)
-			print 'routing %s for %s'%(cls.op1,cls.LUTID)
+			print 'routing %s for %s input1'%(cls.op1,cls.LUTID)
 			print route
 		if(LUT_connect.has_key(cls.op2) and (LUT_connect[cls.op2][0]!=LUT_connect[cls.LUTID][0])):	#look intro sort & heap sort
+			print "INPUT 2"
 			fromCB=LUT_connect[cls.op2][1]
 			fromCBCode=str(CB_connect[fromCB][0])
 			toCB=LUT_connect[cls.LUTID][1]
@@ -57,10 +60,12 @@ def begins(cls):
 			target_CB_port=connectRoute(route,fromCB,toCB,cls.op2,cls.LUTID)
 			if(target_CB_port!=999):
 				op2=CB_input_output_connect[target_CB][target_CB_port]
+				#print "oppppp2 %s"%op2
 			#route_len= len(route)
-			print 'routing %s for %s'%(cls.op2,cls.LUTID)
+			print 'routing %s for %s input2'%(cls.op2,cls.LUTID)
 			print route
 		if(LUT_connect.has_key(cls.op3) and (LUT_connect[cls.op3][0]!=LUT_connect[cls.LUTID][0])):
+			print "INPUT 3"
 			fromCB=LUT_connect[cls.op3][1]
 			toCB=LUT_connect[cls.LUTID][1]
 			fromCBCode=str(CB_connect[fromCB][0])
@@ -71,9 +76,10 @@ def begins(cls):
 			if(target_CB_port!=999):
 				op3=CB_input_output_connect[target_CB][target_CB_port]
 			#route_len= len(route)
-			print 'routing %s for %s'%(cls.op3,cls.LUTID)
+			print 'routing %s for %s input3'%(cls.op3,cls.LUTID)
 			print route
 		if(LUT_connect.has_key(cls.op4) and (LUT_connect[cls.op4][0]!=LUT_connect[cls.LUTID][0])):
+			print "INPUT 4"
 			fromCB=LUT_connect[cls.op4][1]
 			toCB=LUT_connect[cls.LUTID][1]
 			fromCBCode=str(CB_connect[fromCB][0])
@@ -84,7 +90,7 @@ def begins(cls):
 			if(target_CB_port!=999):
 				op4=CB_input_output_connect[target_CB][target_CB_port]
 			#route_len= len(route)
-			print 'routing %s for %s'%(cls.op4,cls.LUTID)
+			print 'routing %s for %s input4'%(cls.op4,cls.LUTID)
 			print route
 		
 		configureLUT(cls.LUTID,LUT_function[cls.function],LUT_interconnect[op1],LUT_interconnect[op2],LUT_interconnect[op3],LUT_interconnect[op4],
@@ -189,7 +195,7 @@ config=OneOrMore(expression)
 
 counter=0
 
-tests=open("routing_test.txt","r")
+tests=open("Test2.txt","r")
 scr=tests.read()
 
 scr_split=scr.splitlines()
@@ -216,22 +222,24 @@ for test in scr_split:
 #counter+=1
 	
 tests.close()
-'''
-print 'from CB 03 state %s '%CBobjectDictionary['03'].CBstate
+
+print 'from CB 00_3 state %s '%CBobjectDictionary['00_3'].CBstate
 print 'from SB 00 face A %s '%SBobjectDictionary['00'].A
 print 'from SB 00 face C %s '%SBobjectDictionary['00'].C
 print 'from SB 10 face A %s '%SBobjectDictionary['10'].A
 print 'from SB 10 face B %s '%SBobjectDictionary['10'].B
 print 'from SB 11 face D %s '%SBobjectDictionary['11'].D
 print 'from SB 11 face C %s '%SBobjectDictionary['11'].C
-print 'from CB 23 state  %s '%CBobjectDictionary['23'].CBstate
-print 'from CB 23 state  %s '%CBobjectDictionary['23'].printCBconfig()
+print 'from SB 21 face A %s '%SBobjectDictionary['21'].A
+print 'from SB 21 face B %s '%SBobjectDictionary['21'].B
+print 'from CB 11_2 state  %s '%CBobjectDictionary['11_2'].CBstate
+print 'from CB 11_2 state  %s '%CBobjectDictionary['11_2'].printCBconfig()
 
 
 print 'from IO 00 state  %s '%IOobjectDictionary['00'].ioConf
 
 print 'from IO 00 state  %s '%IOobjectDictionary['00'].printIObits()
-'''
+
 #####################################################printing bits######################################################################################
 
 CB_print_order=["11_3","11_2","11_1","11_0","10_3","10_2","10_1","10_0","01_3","01_2","01_1","01_0","00_3","00_2","00_1","00_0"]
