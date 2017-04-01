@@ -17,8 +17,8 @@ class InputOutputClashError(Exception):
 		return repr(self.value)
 
 def configureLUT(lutid,lutfunc,inp1,inp2,inp3,inp4,mux):
-	sux=str(lutid)
-	lutobjectDictionary[sux].lutConfig(sux,lutfunc,inp1,inp2,inp3,inp4,mux)
+	LUT_ID=str(lutid)
+	lutobjectDictionary[LUT_ID].lutConfig(LUT_ID,lutfunc,inp1,inp2,inp3,inp4,mux)
 
 
 
@@ -35,7 +35,7 @@ def begins(cls):
 		if(LUT_connect.has_key(cls.op1) and (LUT_connect[cls.op1][0]!=LUT_connect[cls.LUTID][0])): #check if the input and output LUTs belong to the same group or not
 			print "INPUT 1"			
 			fromCB=LUT_connect[cls.op1][1] #the CB from which the input signal is transmited
-			fromCBCode=str(CB_connect[fromCB][0]) #the code of the CB from which the input signal is transmited
+			fromCBCode=str(CB_connect[fromCB][0]) #the global code of the CB from which the input signal to be routed originates
 			print 'from name: %s code: %s'%(fromCB,fromCBCode)
 			toCB=LUT_connect[cls.LUTID][1]  #CB at the output to which the output LUT is connected
 			print "LUTID= %s to CB= %s "%(cls.LUTID,toCB)
@@ -43,7 +43,9 @@ def begins(cls):
 			print 'to name: %s code: %s'%(toCB,toCBCode)
 			route=[]
 			route=find_shortest_path(CB_SB_map,fromCBCode,toCBCode) # calling function to find the shortest route
-			target_CB_port=connectRoute(route,fromCB,toCB,cls.op1,cls.LUTID) #calling function which connects the from CB to the target CB
+			target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.op1,cls.LUTID)
+			#last_SB_to_CB=connectRoute(route,fromCB,toCB,cls.op1,cls.LUTID) #calling function which connects the from CB to the target CB
+			#target_CB_port=conf_lastSB(last_SB_to_CB['currentSBId'],last_SB_to_CB['currentSBFace'],last_SB_to_CB['currentport'],toCB,route,cls.LUTID)
 			if(target_CB_port!=999):
 				op1=CB_input_output_connect[target_CB][target_CB_port]
 			#connectRoute(route,route_len,fromCB,toCB)
@@ -57,7 +59,9 @@ def begins(cls):
 			toCBCode=str(CB_connect[toCB][0])
 			route=[]
 			route=find_shortest_path(CB_SB_map,fromCBCode,toCBCode)
-			target_CB_port=connectRoute(route,fromCB,toCB,cls.op2,cls.LUTID)
+			#last_SB_to_CB=connectRoute(route,fromCB,toCB,cls.op2,cls.LUTID) #calling function which connects the from CB to the target CB
+			#target_CB_port=conf_lastSB(last_SB_to_CB['currentSBId'],last_SB_to_CB['currentSBFace'],last_SB_to_CB['currentport'],toCB,route,cls.LUTID)
+			target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.op2,cls.LUTID)
 			if(target_CB_port!=999):
 				op2=CB_input_output_connect[target_CB][target_CB_port]
 				#print "oppppp2 %s"%op2
@@ -72,7 +76,9 @@ def begins(cls):
 			toCBCode=str(CB_connect[toCB][0])
 			route=[]
 			route=find_shortest_path(CB_SB_map,fromCBCode,toCBCode)
-			target_CB_port=connectRoute(route,fromCB,toCB,cls.op3,cls.LUTID)
+			#last_SB_to_CB=connectRoute(route,fromCB,toCB,cls.op3,cls.LUTID) #calling function which connects the from CB to the target CB
+			#target_CB_port=conf_lastSB(last_SB_to_CB['currentSBId'],last_SB_to_CB['currentSBFace'],last_SB_to_CB['currentport'],toCB,route,cls.LUTID)
+			target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.op3,cls.LUTID)
 			if(target_CB_port!=999):
 				op3=CB_input_output_connect[target_CB][target_CB_port]
 			#route_len= len(route)
@@ -86,13 +92,15 @@ def begins(cls):
 			toCBCode=str(CB_connect[toCB][0])
 			route=[]
 			route=find_shortest_path(CB_SB_map,fromCBCode,toCBCode)
-			target_CB_port=connectRoute(route,fromCB,toCB,cls.op4,cls.LUTID)
+			#last_SB_to_CB=connectRoute(route,fromCB,toCB,cls.op4,cls.LUTID) #calling function which connects the from CB to the target CB
+			#target_CB_port=conf_lastSB(last_SB_to_CB['currentSBId'],last_SB_to_CB['currentSBFace'],last_SB_to_CB['currentport'],toCB,route,cls.LUTID)
+			target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.op4,cls.LUTID)
 			if(target_CB_port!=999):
 				op4=CB_input_output_connect[target_CB][target_CB_port]
 			#route_len= len(route)
 			print 'routing %s for %s input4'%(cls.op4,cls.LUTID)
 			print route
-		
+		print'lutid %s inpu1 %s input2 %s input3 %s input4 %s'%(cls.LUTID,op1,op2,op3,op4)
 		configureLUT(cls.LUTID,LUT_function[cls.function],LUT_interconnect[op1],LUT_interconnect[op2],LUT_interconnect[op3],LUT_interconnect[op4],
 		cls.MUXswitch)
 
@@ -101,7 +109,7 @@ def begins(cls):
 	elif cls[0]=="SB":
 		toFace=cls.toFace
 		fromFace=cls.fromFace
-		switchid=str(cls.switchID1+cls.switchID2)
+		switchid=cls.switchID
 		
 		switchBlock.configSwitchBlock(SBobjectDictionary[switchid],switchid,fromFace,cls.fromFaceIndex,toFace,cls.toFaceIndex)
 
@@ -127,7 +135,7 @@ def begins(cls):
 
 
 
-input_port = (oneOf("I0 I1 I2 I3 I4 I5 I6 I7 I8 I9 I10 I11 I12 I13 I14 I15 Q00_0 Q00_1 Q00_2 Q00_3 Q00_4 Q00_5 Q00_6 Q00_7 Q01_0 Q01_1 Q01_2 Q01_3 Q01_4 Q01_5 Q01_6 Q01_7 Q11_0 Q11_1 Q11_2 Q11_3 Q11_4 Q11_5 Q11_6 Q11_7 Q10_0 Q10_1 Q10_2 Q10_3 Q10_4 Q10_5 Q10_6 Q10_7")).setResultsName('InputLine')
+input_port = (oneOf("I0 I1 I2 I3 I4 I5 I6 I7 I8 I9 I10 I11 I12 I13 I14 I15 Q00_0 Q00_1 Q00_2 Q00_3 Q00_4 Q00_5 Q00_6 Q00_7 Q01_0 Q01_1 Q01_2 Q01_3 Q01_4 Q01_5 Q01_6 Q01_7 Q10_0 Q10_1 Q10_2 Q10_3 Q10_4 Q10_5 Q10_6 Q10_7 Q11_0 Q11_1 Q11_2 Q11_3 Q11_4 Q11_5 Q11_6 Q11_7")).setResultsName('InputLine')
 
 #inputLines=(oneOf("I0 I1 I2 I3 I4 I5 I6 I7 I8 I9 I10 I11 I12 I13 I14 I15")).setResultsName('onlyInput')
 output_port = (oneOf("Q00_0 Q00_1 Q00_2 Q00_3 Q00_4 Q00_5 Q00_6 Q00_7 Q10 Q01_1 Q01_2 Q01_3 Q01_4 Q01_5 Q01_6 Q01_7 Q11_0 Q11_1 Q11_2 Q11_3 Q11_4 Q11_5 Q11_6 Q11_7 Q10_0 Q10_1 Q10_2 Q10_3 Q10_4 Q10_5 Q10_6 Q10_7")).setResultsName('LUTID')
@@ -140,8 +148,8 @@ operand3 = (input_port | output_port).setResultsName('op3')
 operand4 = (input_port | output_port).setResultsName('op4')
 op = (oneOf("AND OR XOR")).setResultsName('function')
 
-switchId1 = (oneOf("0 1 2")).setResultsName('switchID1')
-switchId2 = (oneOf("0 1 2")).setResultsName('switchID2')
+switchId = (oneOf("00 01 02 10 11 12 20 21 22")).setResultsName('switchID')
+#switchId2 = (oneOf("0 1 2")).setResultsName('switchID2')
 fromFace=(oneOf("A B C D")).setResultsName('fromFace')
 toFace=(oneOf("A B C D")).setResultsName('toFace')
 toFaceIndex=(oneOf("0 1 2 3 4 5 6 7")).setResultsName('toFaceIndex')
@@ -185,7 +193,7 @@ io_rhs= SBport0 + comma + SBport1 + comma + SBport2 + comma + SBport3 + comma + 
 cb_rhs= CB_x1 + comma + CB_x2 + comma + CB_x3 + comma + CB_x4 + comma + CB_q1 + comma + CB_q2
 	
 expression = output_port + equal + op + bopen + lut_rhs + bclose + sqopen + MUXswitch + sqclose | \
-             config_code + bopen + switchId1 + switchId2 + bclose + equal + bopen + fromFace + fromFaceIndex + comma + toFace + toFaceIndex + bclose | \
+             config_code + bopen + switchId+ bclose + equal + bopen + fromFace + fromFaceIndex + comma + toFace + toFaceIndex + bclose | \
 	     config_code + bopen + IOId + bclose + equal + sqopen + io_rhs + sqclose | \
 	     config_code + bopen + CBId + bclose + equal + sqopen + cb_rhs + sqclose
 
