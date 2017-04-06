@@ -35,7 +35,7 @@ class lut(object):
 #creating objects for each LUT
 
 
-objectNames = ["Q11_7","Q11_6","Q11_5","Q11_4","Q11_2","Q11_2","Q11_1","Q11_0","Q10_7","Q10_6","Q10_5","Q10_4","Q10_3","Q10_2","Q10_1","Q10_0","Q01_7","Q01_6","Q01_5","Q01_4",
+objectNames = ["Q11_7","Q11_6","Q11_5","Q11_4","Q11_3","Q11_2","Q11_1","Q11_0","Q10_7","Q10_6","Q10_5","Q10_4","Q10_3","Q10_2","Q10_1","Q10_0","Q01_7","Q01_6","Q01_5","Q01_4",
 "Q01_3","Q01_2","Q01_1","Q01_0","Q00_7","Q00_6","Q00_5","Q00_4","Q00_3","Q00_2","Q00_1","Q00_0"]
 lutobjectDictionary = {}
 for name in objectNames:
@@ -167,8 +167,10 @@ class switchBlock(object):
 				if(switchBlock.getFaceStatus(self,toFace,toFaceIndexnum)=='X'):
 					switchBlock.setFaceStatus(self,toFace,toFaceIndexnum,'I')
 					if(switchBlock.faceValue(self,fromFace)<switchBlock.faceValue(self,toFace)):
+						print 'switch ID %s fromFace %s fromFaceIndex %s toFace %s toFaceIndex %s switchKey %s'%(switchID,fromFace,fromFaceIndex,toFace,toFaceIndex,switchKey)
 						SBobjectDictionary[switchID].switchDict[switchKey]="11"
 					else:	
+						print 'switch ID %s fromFace %s fromFaceIndex %s toFace %s toFaceIndex %s switchKey %s'%(switchID,fromFace,fromFaceIndex,toFace,toFaceIndex,switchKey)
 						SBobjectDictionary[switchID].switchDict[switchKey]="10"
 					if(switchBlock.configSBNext(self,switchID,toFace,toFaceIndex)!='X'):
 						switchBlock.setFaceStatus(switchBlock.configSBNext(SBobjectDictionary[switchID],switchID,toFace,toFaceIndex),switchBlock.adjSBface(SBobjectDictionary[switchID],toFace),toFaceIndexnum,'I')
@@ -721,10 +723,14 @@ def conf_lastSB(SBId,fromSBFace,fromSBPortIndex,toCB,route,targetLUT):  #kp the 
 
 	while(CBobjectDictionary[toCB].CBstate[i_count] !='X'):
 		i_count=i_count+1
+		if(i_count==4):
+			break
+		print "i counnnntttt %s"%i_count
 		#print 'icount %s'%i_count
 	#if(1==2):
 	#	print "ooo"
 	if(i_count==4):
+		i_count=i_count*0
 		print 'no free port on the target CB'
 	else:	
 		
@@ -772,9 +778,20 @@ def routing(route,fromCB,fromCBCode,toCB,toCBCode,originLUT,targetLUT):
 			x4=CBobjectDictionary[fromCB].CBstate[3]
 			if(q1!='X'):
 				fromSBPortIndex=int(CBobjectDictionary[fromCB].CBstate[4])
+				print 'fromSBPortIndexxxxxxx %s'%fromSBPortIndex
+				q2=CBobjectDictionary[fromCB].CBstate[5]
+				CBobjectDictionary[fromCB].configCB(fromCB,x1,x2,x3,x4,CBobjectDictionary[fromCB].CBstate[4],q2)
+				SBobjectDictionary[SBId].setFaceStatus(SBFace,fromSBPortIndex,'Q')
+				print 'strating SB %s %s port %s'%(SBId,SBFace,fromSBPortIndex)
+				target_CB_port=conf_lastSB(SBId,fromSBFace,fromSBPortIndex,toCB,route,targetLUT)
 			else:
 				fromSBPortIndex=checkFreeSBPort_CBconnect(SBId,SBFace,x1,x2,x3,x4,fromCB)
 				CBobjectDictionary[fromCB].CBstate[4]=str(fromSBPortIndex)
+				q2=CBobjectDictionary[fromCB].CBstate[5]
+				CBobjectDictionary[fromCB].configCB(fromCB,x1,x2,x3,x4,CBobjectDictionary[fromCB].CBstate[4],q2)
+				SBobjectDictionary[SBId].setFaceStatus(SBFace,fromSBPortIndex,'Q')
+				print 'strating SB %s %s port %s'%(SBId,SBFace,fromSBPortIndex)
+				target_CB_port=conf_lastSB(SBId,fromSBFace,fromSBPortIndex,toCB,route,targetLUT)
 				#fromSBPortIndex=checkFreeSBPort(SBId,SBFace)   #kp
 			#print 'q1111111: and freeindez %s  %s'%(CBobjectDictionary[fromCB].CBstate[4],fromSBPortIndex)
 				q2=CBobjectDictionary[fromCB].CBstate[5]
@@ -791,6 +808,10 @@ def routing(route,fromCB,fromCBCode,toCB,toCBCode,originLUT,targetLUT):
 			q1=CBobjectDictionary[fromCB].CBstate[4]
 			if(q2!='X'):
 				fromSBPortIndex=int(CBobjectDictionary[fromCB].CBstate[5])
+				CBobjectDictionary[fromCB].configCB(fromCB,x1,x2,x3,x4,q1,CBobjectDictionary[fromCB].CBstate[5])
+				SBobjectDictionary[SBId].setFaceStatus(SBFace,fromSBPortIndex,'Q')
+				print 'strating SB %s %s port %s'%(SBId,SBFace,fromSBPortIndex)
+				target_CB_port=conf_lastSB(SBId,fromSBFace,fromSBPortIndex,toCB,route,targetLUT)
 			else:
 			   	fromSBPortIndex=checkFreeSBPort_CBconnect(SBId,SBFace,x1,x2,x3,x4,fromCB)
 				CBobjectDictionary[fromCB].CBstate[5]=str(fromSBPortIndex)

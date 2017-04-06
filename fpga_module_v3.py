@@ -146,7 +146,7 @@ operand1 = (input_port | output_port).setResultsName('op1')
 operand2 = (input_port | output_port).setResultsName('op2')
 operand3 = (input_port | output_port).setResultsName('op3')
 operand4 = (input_port | output_port).setResultsName('op4')
-op = (oneOf("AND OR XOR")).setResultsName('function')
+op = (oneOf("AND OR XOR HADD_SUM HADD_CARRY")).setResultsName('function')
 
 switchId = (oneOf("00 01 02 10 11 12 20 21 22")).setResultsName('switchID')
 #switchId2 = (oneOf("0 1 2")).setResultsName('switchID2')
@@ -203,7 +203,7 @@ config=OneOrMore(expression)
 
 counter=0
 
-tests=open("Test2.txt","r")
+tests=open("Test6.txt","r")
 scr=tests.read()
 
 scr_split=scr.splitlines()
@@ -231,6 +231,7 @@ for test in scr_split:
 	
 tests.close()
 
+# For Test 2
 print 'from CB 00_3 state %s '%CBobjectDictionary['00_3'].CBstate
 print 'from SB 00 face A %s '%SBobjectDictionary['00'].A
 print 'from SB 00 face C %s '%SBobjectDictionary['00'].C
@@ -247,6 +248,21 @@ print 'from CB 11_2 state  %s '%CBobjectDictionary['11_2'].printCBconfig()
 print 'from IO 00 state  %s '%IOobjectDictionary['00'].ioConf
 
 print 'from IO 00 state  %s '%IOobjectDictionary['00'].printIObits()
+
+
+
+print 'from CB 00_3 state %s '%CBobjectDictionary['00_3'].CBstate
+print 'from SB 00 face A %s '%SBobjectDictionary['00'].A
+print 'from SB 00 face C %s '%SBobjectDictionary['00'].C
+print 'from SB 10 face A %s '%SBobjectDictionary['10'].A
+print 'from SB 10 face B %s '%SBobjectDictionary['10'].B
+print 'from SB 11 face D %s '%SBobjectDictionary['11'].D
+print 'from SB 11 face B %s '%SBobjectDictionary['11'].B
+print 'from SB 12 face D %s '%SBobjectDictionary['12'].D
+print 'from SB 12 face C %s '%SBobjectDictionary['12'].C
+print 'from CB 11_1 state  %s '%CBobjectDictionary['11_1'].CBstate
+print 'from CB 11_1 state  %s '%CBobjectDictionary['11_1'].printCBconfig()
+print 'from SB 22 face A %s '%SBobjectDictionary['22'].A
 
 #####################################################printing bits######################################################################################
 

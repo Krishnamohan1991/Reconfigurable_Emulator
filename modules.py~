@@ -12,8 +12,7 @@ class lut(object):
 		self.LUTID=''
 
 	def lutConfig(self,LUTID,function,input1,input2,input3,input4,muxSw):
-		#print LUTID,
-		#print self
+		
 		
 		self.lutTable=function
 		self.muxSwitch=muxSw
@@ -36,7 +35,8 @@ class lut(object):
 #creating objects for each LUT
 
 
-objectNames = ["Q00","Q01","Q02","Q03","Q04","Q05","Q06","Q07","Q10","Q11","Q12","Q13","Q14","Q15","Q16","Q17","Q20","Q21","Q22","Q23","Q24","Q25","Q26","Q27","Q30","Q31","Q32","Q33","Q34","Q35", "Q36","Q37"]
+objectNames = ["Q11_7","Q11_6","Q11_5","Q11_4","Q11_3","Q11_2","Q11_1","Q11_0","Q10_7","Q10_6","Q10_5","Q10_4","Q10_3","Q10_2","Q10_1","Q10_0","Q01_7","Q01_6","Q01_5","Q01_4",
+"Q01_3","Q01_2","Q01_1","Q01_0","Q00_7","Q00_6","Q00_5","Q00_4","Q00_3","Q00_2","Q00_1","Q00_0"]
 lutobjectDictionary = {}
 for name in objectNames:
     lutobjectDictionary[name] = lut(name)
@@ -131,24 +131,7 @@ class switchBlock(object):
 		else:
 			adjface='B'
 		return adjface
-	'''	
-	def configSBNext(self,switchID,toFace,toFaceIndex):
-		
-		if toFace=='A':
-			
-			index=0
-			state=switchBlock.getFaceStatus(SB_connect[switchID][0],switchBlock.adjSBface(self,toFace),toFaceIndex)
-		elif toFace=='B':
-			index=1
-			state=switchBlock.getFaceStatus(SB_connect[switchID][1],switchBlock.adjSBface(self,toFace),toFaceIndex)
-		elif toFace=='C':
-			index=2
-			state=switchBlock.getFaceStatus(SB_connect[switchID][2],switchBlock.adjSBface(self,toFace),toFaceIndex)
-		else:
-			index=3
-			state=switchBlock.getFaceStatus(SB_connect[switchID][3],switchBlock.adjSBface(self,toFace),toFaceIndex)
-		return state
-	'''
+	
 	def configSBNext(self,switchID,toFace,toFaceIndex):
 		
 		if toFace=='A':
@@ -184,8 +167,10 @@ class switchBlock(object):
 				if(switchBlock.getFaceStatus(self,toFace,toFaceIndexnum)=='X'):
 					switchBlock.setFaceStatus(self,toFace,toFaceIndexnum,'I')
 					if(switchBlock.faceValue(self,fromFace)<switchBlock.faceValue(self,toFace)):
+						print 'switch ID %s fromFace %s fromFaceIndex %s toFace %s toFaceIndex %s switchKey %s'%(switchID,fromFace,fromFaceIndex,toFace,toFaceIndex,switchKey)
 						SBobjectDictionary[switchID].switchDict[switchKey]="11"
 					else:	
+						print 'switch ID %s fromFace %s fromFaceIndex %s toFace %s toFaceIndex %s switchKey %s'%(switchID,fromFace,fromFaceIndex,toFace,toFaceIndex,switchKey)
 						SBobjectDictionary[switchID].switchDict[switchKey]="10"
 					if(switchBlock.configSBNext(self,switchID,toFace,toFaceIndex)!='X'):
 						switchBlock.setFaceStatus(switchBlock.configSBNext(SBobjectDictionary[switchID],switchID,toFace,toFaceIndex),switchBlock.adjSBface(SBobjectDictionary[switchID],toFace),toFaceIndexnum,'I')
@@ -293,7 +278,7 @@ class IOBlocks(object):
 		for m in range(0,8):
 			index_m=str(m)
 			self.ioDict[index_m]=IOBlocks.setIOBits(self,self.ioConf[m],m)
-			print "switch id: %s switch index: %s"%(self.ioId,self.ioDict[index_m])
+			#print "switch id: %s switch index: %s"%(self.ioId,self.ioDict[index_m])
 		
 		index=0
 		for i in ptrs:
@@ -517,7 +502,7 @@ class connectionBlock(object):   #fix input and output port collission
 
 
 
-CB_objects=["00", "01", "02", "03","10", "11", "12", "13" ,"20", "21", "22","23","30","31","32","33"]
+CB_objects=["00_0","00_1","00_2","00_3","01_0","01_1","01_2","01_3","11_0","11_1","11_2","11_3","10_0","10_1","10_2","10_3"]
 
 CBobjectDictionary = {}
 for name in CB_objects:
@@ -528,13 +513,13 @@ for name in CB_objects:
 SB_Map_code = {"00":"SB00", "01":"SB01", "02":"SB02", "10":"SB10", "11":"SB11", "12":"SB12", "20":"SB20", "21":"SB21","22":"SB22"}
 	       
 #CB_Map_code key:CB code ----values:code representing the CB on the CB_SB_map dictionary
-CB_map_code={"00":'C1',"01":'C2',"02":'C3',"03":'C4',
+CB_map_code={"00_0":'C1',"00_1":'C2',"00_2":'C3',"00_3":'C4',
 
-	    "10":'C5',"11":'C6',"12":'C7',"13":'C2',
+	    "01_0":'C5',"01_1":'C6',"01_2":'C7',"01_3":'C2',
             
-	    "20":'C7',"21":'C8',"22":'C9',"23":'C10',
+	    "11_0":'C7',"11_1":'C8',"11_2":'C9',"11_3":'C10',
 
-	    "30":'C3',"31":'C10',"32":'C11',"33":'C12'}
+	    "10_0":'C3',"10_1":'C10',"10_2":'C11',"10_3":'C12'}
 
 
 
@@ -564,7 +549,7 @@ CB_SB_map={"SB00":['C1','SB01','C4','SB10'],
 
 '''
 
-CB_SB_map={"00":['C1','01','C4','10'],
+CB_SB_map={"00":['C1','01','C4','10'],         #00, 01,02 ETC REPRESENTS THE SB and C4,C1 etc. represent the unique value for Switch blocks
 	  "01":['00','02','11','C1','C5','C2'],
 	  "02":['01','12','C5','C6'],
 	  "10":['00','11','20','C4','C12','C3'],
@@ -601,6 +586,7 @@ CB_codes=['C1','C2','C3','C4',
 def checkFreeSBPort_CBconnect(SBId,SBFace,x1,x2,x3,x4,CBId):   #function checks for the index corresponding to free ports on a side of the switch block -- free ports have their status as 'X'
 	flag=1
 	counter=0
+	final=0
 	if(SBFace=='A'):
 		while(flag and counter<8):
 			if(SBobjectDictionary[SBId].A[counter] =='X'):  #check if any port in face A of the switch block adjacent to the from CB is free and its not connected to any of the inputs of the CB
@@ -635,222 +621,308 @@ def checkFreeSBPort_CBconnect(SBId,SBFace,x1,x2,x3,x4,CBId):   #function checks 
 					flag=0
 			else:
 				counter=counter+1
-	return counter
+	final=counter  #kp
+	counter=counter*0 
+	return final   
 
 
 
 def checkFreeSBPort(SBId,SBFace):   #function checks for the index corresponding to free ports on a side of the switch block -- free ports have their status as 'X'
 	
 	counter=0
+	free_port=0
 	if(SBFace=='A'):
 		
-		while(SBobjectDictionary[SBId].A[counter] !='X'):
-			counter=counter+1
-	elif(SBFace=='B'):
-		while(SBobjectDictionary[SBId].B[counter] !='X'):
-			counter=counter+1
-	elif(SBFace=='C'):
-		while(SBobjectDictionary[SBId].C[counter] !='X'):
-			counter=counter+1
-	else:
-		while(SBobjectDictionary[SBId].D[counter] !='X'):
+		while(1):
+			if(SBobjectDictionary[SBId].A[counter] !='X'):
 				counter=counter+1
-	return counter
+			else:
+				break;
+	elif(SBFace=='B'):
+		while(1):
+			if(SBobjectDictionary[SBId].B[counter] !='X'):
+				counter=counter+1
+			else:
+				break;
+	elif(SBFace=='C'):
+		while(1):
+			if(SBobjectDictionary[SBId].C[counter] !='X'):
+				counter=counter+1
+			else:
+				break;
+	else:
+		while(1):
+			if(SBobjectDictionary[SBId].D[counter] !='X'):
+				counter=counter+1
+			else:
+				break;
+	free_port=counter
+	counter=counter*0
+	if(free_port<8):
+		return free_port
+	else:
+		print 'problem'
+		return 999  #problem
+		
+		
+
+def SBFaceStatus(SBId,SBFace):   #kp added to help in bug
+	
+	if(SBFace=='A'):
+		
+		return 	SBobjectDictionary[SBId].A	
+	elif(SBFace=='B'):
+		return 	SBobjectDictionary[SBId].B
+	elif(SBFace=='C'):
+		return 	SBobjectDictionary[SBId].C
+	else:
+		return 	SBobjectDictionary[SBId].D
+	
 
 def FindNextSBPos(currentSBId,nextSBId): #uses the SB_connect dictionary to get the posotion of a switch block which is laocated facing a particular side of the SB
 	counterSB=0
+	if(SB_connect.has_key(currentSBId) and SB_connect.has_key(nextSBId)):
+		while(SB_connect[currentSBId][counterSB]!=SBobjectDictionary[nextSBId]):
+			counterSB=counterSB+1
 	
-	while(SB_connect[currentSBId][counterSB]!=SBobjectDictionary[nextSBId]):
-		counterSB=counterSB+1
-	
-	return counterSB
-	
-def ConfNextSBPos(currentSBId,currentSBFace,nextSBId,fromSBPortIndex,route,route_len,count,freeport):
-	
-	while((count+1)<(route_len-1)):
-		#freeport=ConfNextSBPos(route[count],route[count+1],fromSBPortIndex)
-		#freeport=checkFreeSBPort(currentSBId,currentSBFace)
-		nextSBId=route[count+1]	
-		nextSBIndex=FindNextSBPos(route[count],route[count+1])
-		if(nextSBIndex==0):
-			freeport=checkFreeSBPort(currentSBId,'A')
-			switchBlock.configSwitchBlock(SBobjectDictionary[currentSBId],currentSBId,currentSBFace,str(fromSBPortIndex),'A',str(freeport))
-			fromSBPortIndex=freeport
-			currentSBFace='C'
-			currentSBId=nextSBId
-			count=count+1
-			ConfNextSBPos(currentSBId,currentSBFace,nextSBId,fromSBPortIndex,route,route_len,count,freeport)
-		
-		elif(nextSBIndex==1):
-			freeport=checkFreeSBPort(currentSBId,'B')
-			switchBlock.configSwitchBlock(SBobjectDictionary[currentSBId],currentSBId,currentSBFace,str(fromSBPortIndex),'B',str(freeport))
-			fromSBPortIndex=freeport
-			currentSBFace='D'
-			currentSBId=nextSBId
-			count=count+1
-			ConfNextSBPos(currentSBId,currentSBFace,nextSBId,fromSBPortIndex,route,route_len,count,freeport)
-		
-		elif(nextSBIndex==2):
-			freeport=checkFreeSBPort(currentSBId,'C')
-			switchBlock.configSwitchBlock(SBobjectDictionary[currentSBId],currentSBId,currentSBFace,str(fromSBPortIndex),'C',str(freeport))
-			fromSBPortIndex=freeport
-			currentSBFace='A'
-			currentSBId=nextSBId
-			count=count+1
-			ConfNextSBPos(currentSBId,currentSBFace,nextSBId,fromSBPortIndex,route,route_len,count,freeport)
-		else:
-			freeport=checkFreeSBPort(currentSBId,'D')
-			switchBlock.configSwitchBlock(SBobjectDictionary[currentSBId],currentSBId,currentSBFace,str(fromSBPortIndex),'D',str(freeport))
-			fromSBPortIndex=freeport
-			currentSBFace='B'
-			currentSBId=nextSBId
-			count=count+1
-			ConfNextSBPos(currentSBId,currentSBFace,nextSBId,fromSBPortIndex,route,route_len,count,freeport)
-	currentport=freeport
-	return {'currentport':currentport,'currentSBId':currentSBId,'currentSBFace':currentSBFace}			
-			
-
-def connectRoute(route,fromCB,toCB,originLUT,targetLUT):  #function connects fromCB to tragetCB through all switch blocks
-	s={}
-	route_len= len(route)
-	count=1
-	if CB_connect[fromCB][1]==route[1]: #check if the next SB is to the left of the from CB
-		SBId=CB_connect[fromCB][1]
-		SBFace=CB_connect[fromCB][2]
-		x1=CBobjectDictionary[fromCB].CBstate[0]
-		x2=CBobjectDictionary[fromCB].CBstate[1]
-		x3=CBobjectDictionary[fromCB].CBstate[2]
-		x4=CBobjectDictionary[fromCB].CBstate[3]
-		
-		print SBId+'111'
-		fromSBPortIndex=checkFreeSBPort_CBconnect(SBId,SBFace,x1,x2,x3,x4,fromCB)
-		print 'from SBport index : %s'%fromSBPortIndex
-				
-	elif CB_connect[fromCB][3]==route[1]: #check if the next SB is to the right of the from CB
-		SBId=CB_connect[fromCB][3]
-		SBFace=CB_connect[fromCB][4]
-		print SBId
-		x1=CBobjectDictionary[fromCB].CBstate[0]
-		x2=CBobjectDictionary[fromCB].CBstate[1]
-		x3=CBobjectDictionary[fromCB].CBstate[2]
-		x4=CBobjectDictionary[fromCB].CBstate[3]
-		fromSBPortIndex=checkFreeSBPort_CBconnect(SBId,SBFace,x1,x2,x3,x4,fromCB)
-		print 'from SBport index : %s'%fromSBPortIndex
-	i=4
-	if(lutobjectDictionary[originLUT].status==1):
-		while(CBobjectDictionary[fromCB].CBstate[i] !='X'):
-			i=i+1
-		if(i==6):
-			print 'no free port on the startig CB'
-		else:	
-			outputCB=''
-			if(CB_connect[fromCB][5]==originLUT):
-				x1=CBobjectDictionary[fromCB].CBstate[0]
-				x2=CBobjectDictionary[fromCB].CBstate[1]
-				x3=CBobjectDictionary[fromCB].CBstate[2]
-				x4=CBobjectDictionary[fromCB].CBstate[3]
-				fromSBPortIndex=int(CBobjectDictionary[fromCB].CBstate[4])
-				#print 'q1111111: and freeindez %s  %s'%(CBobjectDictionary[fromCB].CBstate[4],fromSBPortIndex)
-				q2=CBobjectDictionary[fromCB].CBstate[5]
-				CBobjectDictionary[fromCB].configCB(fromCB,x1,x2,x3,x4,CBobjectDictionary[fromCB].CBstate[4],q2)
-				SBobjectDictionary[SBId].setFaceStatus(SBFace,fromSBPortIndex,'Q')
-			elif(CB_connect[fromCB][6]==originLUT):
-				x1=CBobjectDictionary[fromCB].CBstate[0]
-				x2=CBobjectDictionary[fromCB].CBstate[1]
-				x3=CBobjectDictionary[fromCB].CBstate[2]
-				x4=CBobjectDictionary[fromCB].CBstate[3]
-				q1=CBobjectDictionary[fromCB].CBstate[4]
-				fromSBPortIndex=int(CBobjectDictionary[fromCB].CBstate[5])
-				#print 'q22222 right and portindex : %s %s'%(CBobjectDictionary[fromCB].CBstate[5],fromSBPortIndex)
-				CBobjectDictionary[fromCB].configCB(fromCB,x1,x2,x3,x4,q1,CBobjectDictionary[fromCB].CBstate[5])
-				SBobjectDictionary[SBId].setFaceStatus(SBFace,fromSBPortIndex,'Q')
-			else:
-				print 'incorrect origin LUT or origin CB'
-			
+		return counterSB
 	else:
-		print 'cannot do routing.Input LUT is not producing any signal'	
-			
-				
-	#CBobjectDictionary[fromCB].configCB(fromCB,'X','X','X','X',q1,q2)
-	#SBobjectDictionary[SBId].setFaceStatus(SBFace,fromSBPortIndex,'Q') #relocated to within 
-	'''
-	while(count<(route_len-1)):
-		freeport=ConfNextSBPos(route[count],route[count+1],fromSBPortIndex)
-		fromSBPortIndex=freeport
-			
-		count=count+1
-	'''
-	print 'currentport currentSBId currentSBFace'
-	switch_adj_toCB=ConfNextSBPos(SBId,SBFace,route[count+1],fromSBPortIndex,route,route_len,count,0)
+		return 999
+
 
 	
-	print switch_adj_toCB
+
+def conf_lastSB(SBId,fromSBFace,fromSBPortIndex,toCB,route,targetLUT):  #kp the fuction that connects the last SB in the route to the target CB
+	count=0		
+	stats=[]
+	stats= SBFaceStatus(SBId,fromSBFace)
+	route_len=len(route)
+
+	
 	if CB_connect[toCB][1]==route[route_len-2]:
-		SBId2=CB_connect[toCB][1]
+		#SBId2=CB_connect[toCB][1]
 		SBFace2=CB_connect[toCB][2]
 		#print SBId2+'111'
-		toSBPortIndex=checkFreeSBPort(SBId2,SBFace2)
+		toSBPortIndex=checkFreeSBPort(SBId,SBFace2)
+		#conf_lastSB(route[route_len-2],switch_adj_toCB['currentSBFace'],str(toSBPortIndex),SBFace2)
 				
 	elif CB_connect[toCB][3]==route[route_len-2]:
-		SBId2=CB_connect[toCB][3]
+		#SBId2=CB_connect[toCB][3]
 		SBFace2=CB_connect[toCB][4]
 		#print SBId2
-		toSBPortIndex=checkFreeSBPort(SBId2,SBFace2)
-
-	switchBlock.configSwitchBlock(SBobjectDictionary[route[route_len-2]],route[route_len-2],switch_adj_toCB['currentSBFace'],str(switch_adj_toCB['currentport']),SBFace2,str(toSBPortIndex))
+		toSBPortIndex=checkFreeSBPort(SBId,SBFace2)		
+		#conf_lastSB(route[route_len-2],switch_adj_toCB['currentSBFace'],str(toSBPortIndex),SBFace2)	
+		
+	print "SBID= %s OriginSBFace= %s OriginSBIndex= %s TaretSBFace= %s SBIndex= %s"%(SBId,fromSBFace,fromSBPortIndex,SBFace2,toSBPortIndex) 
 	
+	#switchBlock.configSwitchBlock(SBobjectDictionary[route[route_len-2]],route[route_len-2],switch_adj_toCB['currentSBFace'],fromSBPortIndex,SBFace2,str(toSBPortIndex))
+	switchBlock.configSwitchBlock(SBobjectDictionary[SBId],SBId,fromSBFace,str(fromSBPortIndex),SBFace2,str(toSBPortIndex))
+		
 	i_count=0
+	final_CB_index=0
 
 	while(CBobjectDictionary[toCB].CBstate[i_count] !='X'):
 		i_count=i_count+1
+		if(i_count==4):
+			break
+		print "i counnnntttt %s"%i_count
 		#print 'icount %s'%i_count
-
+	#if(1==2):
+	#	print "ooo"
 	if(i_count==4):
+		i_count=i_count*0
 		print 'no free port on the target CB'
 	else:	
 		
 		outputCB=''
 		if((CB_connect[toCB][5]==targetLUT) or CB_connect[toCB][6]==targetLUT):
+			CBobjectDictionary[toCB].CBstate[i_count]=str(toSBPortIndex)
 			x1=CBobjectDictionary[toCB].CBstate[0]
 			x2=CBobjectDictionary[toCB].CBstate[1]
 			x3=CBobjectDictionary[toCB].CBstate[2]
 			x4=CBobjectDictionary[toCB].CBstate[3]
-			if(x1=='X'):
-				x1=CBobjectDictionary[toCB].CBstate[0]=str(toSBPortIndex)
-				q1=CBobjectDictionary[toCB].CBstate[4]
-				q2=CBobjectDictionary[toCB].CBstate[5]
-				CBobjectDictionary[toCB].configCB(toCB,x1,x2,x3,x4,q1,q2)
-				return 0
+			q1=CBobjectDictionary[toCB].CBstate[4]
+			q2=CBobjectDictionary[toCB].CBstate[5]
+			CBobjectDictionary[toCB].configCB(toCB,x1,x2,x3,x4,q1,q2)
+			final_CB_index=i_count
+			i_count=i_count*0
+			print'final CB Index from conf last CB %s'%final_CB_index
+			return final_CB_index
 			
-			elif(x2=='X'):
-				x2=CBobjectDictionary[toCB].CBstate[1]=str(toSBPortIndex)
-				q1=CBobjectDictionary[toCB].CBstate[4]
-				q2=CBobjectDictionary[toCB].CBstate[5]
-				CBobjectDictionary[toCB].configCB(toCB,x1,x2,x3,x4,q1,q2)
-				return 1
-			
-			elif(x3=='X'):
-				x3=CBobjectDictionary[toCB].CBstate[2]=str(toSBPortIndex)
-				q1=CBobjectDictionary[toCB].CBstate[4]
-				q2=CBobjectDictionary[toCB].CBstate[5]
-				CBobjectDictionary[toCB].configCB(toCB,x1,x2,x3,x4,q1,q2)
-				return 2
-			
-			elif(x4=='X'):
-				x4=CBobjectDictionary[toCB].CBstate[3]=str(toSBPortIndex)
-				q1=CBobjectDictionary[toCB].CBstate[4]
-				q2=CBobjectDictionary[toCB].CBstate[5]
-				CBobjectDictionary[toCB].configCB(toCB,x1,x2,x3,x4,q1,q2)
-				return 3
-			
-			#cout<<"moo point"
-			#q1=CBobjectDictionary[toCB].CBstate[4]
-			#q2=CBobjectDictionary[toCB].CBstate[5]
-			#CBobjectDictionary[toCB].configCB(toCB,x1,x2,x3,x4,q1,q2)
-		
 		else:
 			print 'incorrect origin LUT or target CB'
 			return 999
+
+
+def routing(route,fromCB,fromCBCode,toCB,toCBCode,originLUT,targetLUT):
+	route_len=len(route)
+	target_CB_port=999
+	count=1
+	if(lutobjectDictionary[originLUT].status!=1):
+		print'LUT %s has not been configured'%originLUT
+	if(route_len==3 and lutobjectDictionary[originLUT].status==1):
+		if CB_connect[fromCB][1]==route[1]: #check if the next SB is to the left of the origin-CB
+			SBId=CB_connect[fromCB][1]
+			fromSBFace=CB_connect[fromCB][2]
+		elif CB_connect[fromCB][3]==route[1]: #check if the next SB is to the right of the origin-CB
+			SBId=CB_connect[fromCB][3]
+			fromSBFace=CB_connect[fromCB][4]
+
+		q1=CBobjectDictionary[fromCB].CBstate[4]  
+		q2=CBobjectDictionary[fromCB].CBstate[5]
+		outputCB=''
+		if(CB_connect[fromCB][5]==originLUT):  #check if origin LUT is q1
+			x1=CBobjectDictionary[fromCB].CBstate[0]
+			x2=CBobjectDictionary[fromCB].CBstate[1]
+			x3=CBobjectDictionary[fromCB].CBstate[2]
+			x4=CBobjectDictionary[fromCB].CBstate[3]
+			if(q1!='X'):
+				fromSBPortIndex=int(CBobjectDictionary[fromCB].CBstate[4])
+				print 'fromSBPortIndexxxxxxx %s'%fromSBPortIndex
+				q2=CBobjectDictionary[fromCB].CBstate[5]
+				CBobjectDictionary[fromCB].configCB(fromCB,x1,x2,x3,x4,CBobjectDictionary[fromCB].CBstate[4],q2)
+				SBobjectDictionary[SBId].setFaceStatus(SBFace,fromSBPortIndex,'Q')
+				print 'strating SB %s %s port %s'%(SBId,SBFace,fromSBPortIndex)
+				target_CB_port=conf_lastSB(SBId,fromSBFace,fromSBPortIndex,toCB,route,targetLUT)
+			else:
+				fromSBPortIndex=checkFreeSBPort_CBconnect(SBId,SBFace,x1,x2,x3,x4,fromCB)
+				CBobjectDictionary[fromCB].CBstate[4]=str(fromSBPortIndex)
+				q2=CBobjectDictionary[fromCB].CBstate[5]
+				CBobjectDictionary[fromCB].configCB(fromCB,x1,x2,x3,x4,CBobjectDictionary[fromCB].CBstate[4],q2)
+				SBobjectDictionary[SBId].setFaceStatus(SBFace,fromSBPortIndex,'Q')
+				print 'strating SB %s %s port %s'%(SBId,SBFace,fromSBPortIndex)
+				target_CB_port=conf_lastSB(SBId,fromSBFace,fromSBPortIndex,toCB,route,targetLUT)
+				#fromSBPortIndex=checkFreeSBPort(SBId,SBFace)   #kp
+			#print 'q1111111: and freeindez %s  %s'%(CBobjectDictionary[fromCB].CBstate[4],fromSBPortIndex)
+				q2=CBobjectDictionary[fromCB].CBstate[5]
+				CBobjectDictionary[fromCB].configCB(fromCB,x1,x2,x3,x4,CBobjectDictionary[fromCB].CBstate[4],q2)
+				SBobjectDictionary[SBId].setFaceStatus(SBFace,fromSBPortIndex,'Q')
+				print 'strating SB %s %s port %s'%(SBId,SBFace,fromSBPortIndex)
+				target_CB_port=conf_lastSB(SBId,fromSBFace,fromSBPortIndex,toCB,route,targetLUT)
+				#switch_adj_toCB=ConfNextSBPos(SBId,SBFace,route[count+1],fromSBPortIndex,route,route_len,count,0)
+		if(CB_connect[fromCB][6]==originLUT):
+			x1=CBobjectDictionary[fromCB].CBstate[0]
+			x2=CBobjectDictionary[fromCB].CBstate[1]
+			x3=CBobjectDictionary[fromCB].CBstate[2]
+			x4=CBobjectDictionary[fromCB].CBstate[3]
+			q1=CBobjectDictionary[fromCB].CBstate[4]
+			if(q2!='X'):
+				fromSBPortIndex=int(CBobjectDictionary[fromCB].CBstate[5])
+				CBobjectDictionary[fromCB].configCB(fromCB,x1,x2,x3,x4,q1,CBobjectDictionary[fromCB].CBstate[5])
+				SBobjectDictionary[SBId].setFaceStatus(SBFace,fromSBPortIndex,'Q')
+				print 'strating SB %s %s port %s'%(SBId,SBFace,fromSBPortIndex)
+				target_CB_port=conf_lastSB(SBId,fromSBFace,fromSBPortIndex,toCB,route,targetLUT)
+			else:
+			   	fromSBPortIndex=checkFreeSBPort_CBconnect(SBId,SBFace,x1,x2,x3,x4,fromCB)
+				CBobjectDictionary[fromCB].CBstate[5]=str(fromSBPortIndex)
+			#print 'q22222 right and portindex : %s %s'%(CBobjectDictionary[fromCB].CBstate[5],fromSBPortIndex)
+				CBobjectDictionary[fromCB].configCB(fromCB,x1,x2,x3,x4,q1,CBobjectDictionary[fromCB].CBstate[5])
+				SBobjectDictionary[SBId].setFaceStatus(SBFace,fromSBPortIndex,'Q')
+				print 'strating SB %s %s port %s'%(SBId,SBFace,fromSBPortIndex)
+				target_CB_port=conf_lastSB(SBId,fromSBFace,fromSBPortIndex,toCB,route,targetLUT)
+
+	if(route_len>3 and lutobjectDictionary[originLUT].status==1):
+		if CB_connect[fromCB][1]==route[1]: #check if the next SB is to the left of the origin-CB
+			SBId=CB_connect[fromCB][1]
+			fromSBFace=CB_connect[fromCB][2]
+		elif CB_connect[fromCB][3]==route[1]: #check if the next SB is to the right of the origin-CB
+			SBId=CB_connect[fromCB][3]
+			fromSBFace=CB_connect[fromCB][4]
+
+		q1=CBobjectDictionary[fromCB].CBstate[4]  
+		q2=CBobjectDictionary[fromCB].CBstate[5]
+		outputCB=''
+		if(CB_connect[fromCB][5]==originLUT):  #check if origin LUT is q1
+			x1=CBobjectDictionary[fromCB].CBstate[0]
+			x2=CBobjectDictionary[fromCB].CBstate[1]
+			x3=CBobjectDictionary[fromCB].CBstate[2]
+			x4=CBobjectDictionary[fromCB].CBstate[3]
+			if(q1!='X'):
+				fromSBPortIndex=int(CBobjectDictionary[fromCB].CBstate[4])
+			else:
+				fromSBPortIndex=checkFreeSBPort_CBconnect(SBId,fromSBFace,x1,x2,x3,x4,fromCB)
+				CBobjectDictionary[fromCB].CBstate[4]=str(fromSBPortIndex)
+				#fromSBPortIndex=checkFreeSBPort(SBId,SBFace)   #kp
+			#print 'q1111111: and freeindez %s  %s'%(CBobjectDictionary[fromCB].CBstate[4],fromSBPortIndex)
+				q2=CBobjectDictionary[fromCB].CBstate[5]
+				CBobjectDictionary[fromCB].configCB(fromCB,x1,x2,x3,x4,CBobjectDictionary[fromCB].CBstate[4],q2)
+				SBobjectDictionary[SBId].setFaceStatus(fromSBFace,fromSBPortIndex,'Q')
+				print 'strating SB %s %s port %s'%(SBId,fromSBFace,fromSBPortIndex)
+		if(CB_connect[fromCB][6]==originLUT):
+			x1=CBobjectDictionary[fromCB].CBstate[0]
+			x2=CBobjectDictionary[fromCB].CBstate[1]
+			x3=CBobjectDictionary[fromCB].CBstate[2]
+			x4=CBobjectDictionary[fromCB].CBstate[3]
+			q1=CBobjectDictionary[fromCB].CBstate[4]
+			if(q2!='X'):
+				fromSBPortIndex=int(CBobjectDictionary[fromCB].CBstate[5])
+			else:
+			   	fromSBPortIndex=checkFreeSBPort_CBconnect(SBId,fromSBFace,x1,x2,x3,x4,fromCB)
+				CBobjectDictionary[fromCB].CBstate[5]=str(fromSBPortIndex)
+			#print 'q22222 right and portindex : %s %s'%(CBobjectDictionary[fromCB].CBstate[5],fromSBPortIndex)
+				CBobjectDictionary[fromCB].configCB(fromCB,x1,x2,x3,x4,q1,CBobjectDictionary[fromCB].CBstate[5])
+				SBobjectDictionary[SBId].setFaceStatus(fromSBFace,fromSBPortIndex,'Q')
+		currentSBId=route[1]
+		currentSBFace=fromSBFace	
+		while((count+1)<(route_len-1)):
+			#currentSBFace=
+			nxtSBpos_wrt_currSB=FindNextSBPos(route[count],route[count+1])
+			print 'current SB %s next SB %s'%(route[count],route[count+1])
+			if(count==route_len-2 or nxtSBpos_wrt_currSB==999):
+				break
+				#return {'currentport':fromSBPortIndex,'currentSBId':route[route_len-2],'currentSBFace':currentSBFace}
+	
+			nxtSBpos_wrt_currSB=FindNextSBPos(route[count],route[count+1])
+			
+			if(nxtSBpos_wrt_currSB==0):
+				freeport=checkFreeSBPort(currentSBId,'A')
+				switchBlock.configSwitchBlock(SBobjectDictionary[currentSBId],currentSBId,currentSBFace,str(fromSBPortIndex),'A',str(freeport))
+			
+				fromSBPortIndex=freeport
+				currentSBFace='C'
+				currentSBId=route[count+1]
+				count=count+1
+			
+		
+			elif(nxtSBpos_wrt_currSB==1):
+				freeport=checkFreeSBPort(currentSBId,'B')
+				#print 'free port %s '%(freeport)
+				switchBlock.configSwitchBlock(SBobjectDictionary[currentSBId],currentSBId,currentSBFace,str(fromSBPortIndex),'B',str(freeport))
+				print 'currentSBId %s B  freeport %s '%(currentSBId,freeport)
+				fromSBPortIndex=freeport
+				currentSBFace='D'
+				currentSBId=route[count+1]
+				count=count+1
+		
+		
+			elif(nxtSBpos_wrt_currSB==2):
+				freeport=checkFreeSBPort(currentSBId,'C')
+				#print 'free port %s '%(freeport)
+				switchBlock.configSwitchBlock(SBobjectDictionary[currentSBId],currentSBId,currentSBFace,str(fromSBPortIndex),'C',str(freeport))	
+				print 'currentSBId %s C freeport %s count %s'%(currentSBId,freeport,count)
+				fromSBPortIndex=freeport
+				currentSBFace='A'
+				currentSBId=route[count+1]
+				count=count+1	
+			
+			else:
+				freeport=checkFreeSBPort(currentSBId,'D')
+				#print 'free port %s '%(freeport)
+				switchBlock.configSwitchBlock(SBobjectDictionary[currentSBId],currentSBId,currentSBFace,str(fromSBPortIndex),'D',str(freeport))
+				print 'currentSBId %s D freeport %s '%(currentSBId,freeport)
+				fromSBPortIndex=freeport
+				currentSBFace='B'
+				currentSBId=route[count+1]
+				count=count+1
+
+		target_CB_port=conf_lastSB(route[route_len-2],currentSBFace,fromSBPortIndex,toCB,route,targetLUT)
+		print 'target_CB_port %s'%target_CB_port
+	if(target_CB_port!=999):	
+		return target_CB_port
+	else:
+		return 999
+			
+			
 	
 			
 def find_shortest_path(graph, start, end, path=[]):	#finding route using backtracking

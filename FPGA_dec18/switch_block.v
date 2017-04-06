@@ -101,53 +101,53 @@ bidir_switch A0D7(.port1(A0),.port2(D7),.enable_dir(A0_D7));   bidir_switch A1D7
 
 
 
-bidir_switch SE1(.port1(A4),.port2(B0),.enable_dir(A4_B0));	   bidir_switch SG1(.port1(B0),.port2(A5),.enable_dir(A5_B0));   bidir_switch SH1(.port1(B0),.port2(A6),.enable_dir(A6_B0));	bidir_switch SI1(.port1(B0),.port2(A7),.enable_dir(A7_B0));
+bidir_switch SE1(.port1(A4),.port2(B0),.enable_dir(A4_B0));	   bidir_switch SG1(.port1(A5),.port2(B0),.enable_dir(A5_B0));   bidir_switch SH1(.port1(A6),.port2(B0),.enable_dir(A6_B0));	bidir_switch SI1(.port1(A7),.port2(B0),.enable_dir(A7_B0));
+                                                                                                                                                                                                                             
+bidir_switch SE2(.port1(A4),.port2(B1),.enable_dir(A4_B1));    bidir_switch SG2(.port1(A5),.port2(B1),.enable_dir(A5_B1));   bidir_switch SH2(.port1(A6),.port2(B1),.enable_dir(A6_B1));    bidir_switch SI2(.port1(A7),.port2(B1),.enable_dir(A7_B1));
+                                                                                                                                                                                                                             
+bidir_switch SE3(.port1(A4),.port2(B2),.enable_dir(A4_B2));    bidir_switch SG3(.port1(A5),.port2(B2),.enable_dir(A5_B2));   bidir_switch SH3(.port1(A6),.port2(B2),.enable_dir(A6_B2));    bidir_switch SI3(.port1(A7),.port2(B2),.enable_dir(A7_B2));
+                                                                                                                                                                                                                            
+bidir_switch SE4(.port1(A4),.port2(B3),.enable_dir(A4_B3));    bidir_switch SG4(.port1(A5),.port2(B3),.enable_dir(A5_B3));   bidir_switch SH4(.port1(A6),.port2(B3),.enable_dir(A6_B3));    bidir_switch SI4(.port1(A7),.port2(B3),.enable_dir(A7_B3));
+                                                                                                                                                                                                                            
+bidir_switch SE5(.port1(A4),.port2(B4),.enable_dir(A4_B4));    bidir_switch SG5(.port1(A5),.port2(B4),.enable_dir(A5_B4));   bidir_switch SH5(.port1(A6),.port2(B4),.enable_dir(A6_B4));    bidir_switch SI5(.port1(A7),.port2(B4),.enable_dir(A7_B4));
+                                                                                                                                                                                                                             
+bidir_switch SE6(.port1(A4),.port2(B5),.enable_dir(A4_B5));    bidir_switch SG6(.port1(A5),.port2(B5),.enable_dir(A5_B5));   bidir_switch SH6(.port1(A6),.port2(B5),.enable_dir(A6_B5));    bidir_switch SI6(.port1(A7),.port2(B5),.enable_dir(A7_B5));
+                                                                                                                                                                                                                             
+bidir_switch SE7(.port1(A4),.port2(B6),.enable_dir(A4_B6));    bidir_switch SG7(.port1(A5),.port2(B6),.enable_dir(A5_B6));   bidir_switch SH7(.port1(A6),.port2(B6),.enable_dir(A6_B6));    bidir_switch SI7(.port1(A7),.port2(B6),.enable_dir(A7_B6));
+                                                                                                                                                                                                                            
+bidir_switch SE8(.port1(A4),.port2(B7),.enable_dir(A4_B7));    bidir_switch SG8(.port1(A5),.port2(B7),.enable_dir(A5_B7));   bidir_switch SH8(.port1(A6),.port2(B7),.enable_dir(A6_B7));    bidir_switch SI8(.port1(A7),.port2(B7),.enable_dir(A7_B7));
 
-bidir_switch SE2(.port1(A4),.port2(B1),.enable_dir(A4_B1));    bidir_switch SG2(.port1(B1),.port2(A5),.enable_dir(A5_B1));   bidir_switch SH2(.port1(B1),.port2(A6),.enable_dir(A6_B1));    bidir_switch SI2(.port1(B1),.port2(A7),.enable_dir(A7_B1));
-
-bidir_switch SE3(.port1(A4),.port2(B2),.enable_dir(A4_B2));    bidir_switch SG3(.port1(B2),.port2(A5),.enable_dir(A5_B2));   bidir_switch SH3(.port1(B2),.port2(A6),.enable_dir(A6_B2));    bidir_switch SI3(.port1(B2),.port2(A7),.enable_dir(A7_B2));
-
-bidir_switch SE4(.port1(A4),.port2(B3),.enable_dir(A4_B3));    bidir_switch SG4(.port1(B3),.port2(A5),.enable_dir(A5_B3));   bidir_switch SH4(.port1(B3),.port2(A6),.enable_dir(A6_B3));    bidir_switch SI4(.port1(B3),.port2(A7),.enable_dir(A7_B3));
-
-bidir_switch SE5(.port1(A4),.port2(B4),.enable_dir(A4_B4));    bidir_switch SG5(.port1(B4),.port2(A5),.enable_dir(A5_B4));   bidir_switch SH5(.port1(B4),.port2(A6),.enable_dir(A6_B4));    bidir_switch SI5(.port1(B4),.port2(A7),.enable_dir(A7_B4));
-
-bidir_switch SE6(.port1(A4),.port2(B5),.enable_dir(A4_B5));    bidir_switch SG6(.port1(B5),.port2(A5),.enable_dir(A5_B5));   bidir_switch SH6(.port1(B5),.port2(A6),.enable_dir(A6_B5));    bidir_switch SI6(.port1(B5),.port2(A7),.enable_dir(A7_B5));
-
-bidir_switch SE7(.port1(A4),.port2(B6),.enable_dir(A4_B6));    bidir_switch SG7(.port1(B6),.port2(A5),.enable_dir(A5_B6));   bidir_switch SH7(.port1(B6),.port2(A6),.enable_dir(A6_B6));    bidir_switch SI7(.port1(B6),.port2(A7),.enable_dir(A7_B6));
-
-bidir_switch SE8(.port1(A4),.port2(B7),.enable_dir(A4_B7));    bidir_switch SG8(.port1(B7),.port2(A5),.enable_dir(A5_B7));   bidir_switch SH8(.port1(B7),.port2(A6),.enable_dir(A6_B7));    bidir_switch SI8(.port1(B7),.port2(A7),.enable_dir(A7_B7));
-
-bidir_switch SE9(.port1(A4),.port2(C0),.enable_dir(A4_C0));    bidir_switch SG9(.port1(C0),.port2(A5),.enable_dir(A5_C0));   bidir_switch SH9(.port1(C0),.port2(A6),.enable_dir(A6_C0));    bidir_switch SI9(.port1(C0),.port2(A7),.enable_dir(A7_C0));
-
-bidir_switch SE10(.port1(A4),.port2(C1),.enable_dir(A4_C1));   bidir_switch SG10(.port1(C1),.port2(A5),.enable_dir(A5_C1));  bidir_switch SH10(.port1(C1),.port2(A6),.enable_dir(A6_C1));   bidir_switch SI10(.port1(C1),.port2(A7),.enable_dir(A7_C1));
-
-bidir_switch SE11(.port1(A4),.port2(C2),.enable_dir(A4_C2));   bidir_switch SG11(.port1(C2),.port2(A5),.enable_dir(A5_C2));  bidir_switch SH11(.port1(C2),.port2(A6),.enable_dir(A6_C2));   bidir_switch SI11(.port1(C2),.port2(A7),.enable_dir(A7_C2));
-
-bidir_switch SE12(.port1(A4),.port2(C3),.enable_dir(A4_C3));   bidir_switch SG12(.port1(C3),.port2(A5),.enable_dir(A5_C3));  bidir_switch SH12(.port1(C3),.port2(A6),.enable_dir(A6_C3));   bidir_switch SI12(.port1(C3),.port2(A7),.enable_dir(A7_C3));
-
-bidir_switch SE13(.port1(A4),.port2(C4),.enable_dir(A4_C4));   bidir_switch SG13(.port1(C4),.port2(A5),.enable_dir(A5_C4));  bidir_switch SH13(.port1(C4),.port2(A6),.enable_dir(A6_C4));   bidir_switch SI13(.port1(C4),.port2(A7),.enable_dir(A7_C4));
-
-bidir_switch SE14(.port1(A4),.port2(C5),.enable_dir(A4_C5));   bidir_switch SG14(.port1(C5),.port2(A5),.enable_dir(A5_C5));  bidir_switch SH14(.port1(C5),.port2(A6),.enable_dir(A6_C5));   bidir_switch SI14(.port1(C5),.port2(A7),.enable_dir(A7_C5));
-
-bidir_switch SE15(.port1(A4),.port2(C6),.enable_dir(A4_C6));   bidir_switch SG15(.port1(C6),.port2(A5),.enable_dir(A5_C6));  bidir_switch SH15(.port1(C6),.port2(A6),.enable_dir(A6_C6));   bidir_switch SI15(.port1(C6),.port2(A7),.enable_dir(A7_C6));
-
-bidir_switch SE16(.port1(A4),.port2(C7),.enable_dir(A4_C7));   bidir_switch SG16(.port1(C7),.port2(A5),.enable_dir(A5_C7));  bidir_switch SH16(.port1(C7),.port2(A6),.enable_dir(A6_C7));   bidir_switch SI16(.port1(C7),.port2(A7),.enable_dir(A7_C7));
-
-bidir_switch SE17(.port1(A4),.port2(D0),.enable_dir(A4_D0));   bidir_switch SG17(.port1(D0),.port2(A5),.enable_dir(A5_D0));  bidir_switch SH17(.port1(D0),.port2(A6),.enable_dir(A6_D0));   bidir_switch SI17(.port1(D0),.port2(A7),.enable_dir(A7_D0));
-
-bidir_switch SE18(.port1(A4),.port2(D1),.enable_dir(A4_D1));   bidir_switch SG18(.port1(D1),.port2(A5),.enable_dir(A5_D1));  bidir_switch SH18(.port1(D1),.port2(A6),.enable_dir(A6_D1));   bidir_switch SI18(.port1(D1),.port2(A7),.enable_dir(A7_D1));
-
-bidir_switch SE19(.port1(A4),.port2(D2),.enable_dir(A4_D2));   bidir_switch SG19(.port1(D2),.port2(A5),.enable_dir(A5_D2));  bidir_switch SH19(.port1(D2),.port2(A6),.enable_dir(A6_D2));   bidir_switch SI19(.port1(D2),.port2(A7),.enable_dir(A7_D2));
-
-bidir_switch SE20(.port1(A4),.port2(D3),.enable_dir(A4_D3));   bidir_switch SG20(.port1(D3),.port2(A5),.enable_dir(A5_D3));  bidir_switch SH20(.port1(D3),.port2(A6),.enable_dir(A6_D3));   bidir_switch SI20(.port1(D3),.port2(A7),.enable_dir(A7_D3));
-
-bidir_switch SE21(.port1(A4),.port2(D4),.enable_dir(A4_D4));   bidir_switch SG21(.port1(D4),.port2(A5),.enable_dir(A5_D4));  bidir_switch SH21(.port1(D4),.port2(A6),.enable_dir(A6_D4));   bidir_switch SI21(.port1(D4),.port2(A7),.enable_dir(A7_D4));
-
-bidir_switch SE22(.port1(A4),.port2(D5),.enable_dir(A4_D5));   bidir_switch SG22(.port1(D5),.port2(A5),.enable_dir(A5_D5));  bidir_switch SH22(.port1(D5),.port2(A6),.enable_dir(A6_D5));   bidir_switch SI22(.port1(D5),.port2(A7),.enable_dir(A7_D5));
-
-bidir_switch SE23(.port1(A4),.port2(D6),.enable_dir(A4_D6));   bidir_switch SG23(.port1(D6),.port2(A5),.enable_dir(A5_D6));  bidir_switch SH23(.port1(D6),.port2(A6),.enable_dir(A6_D6));   bidir_switch SI23(.port1(D6),.port2(A7),.enable_dir(A7_D6));
-
-bidir_switch SE24(.port1(A4),.port2(D7),.enable_dir(A4_D7));   bidir_switch SG24(.port1(D7),.port2(A5),.enable_dir(A5_D7));  bidir_switch SH24(.port1(D7),.port2(A6),.enable_dir(A6_D7));   bidir_switch SI24(.port1(D7),.port2(A7),.enable_dir(A7_D7));
+bidir_switch SE9(.port1(A4),.port2(C0),.enable_dir(A4_C0));     bidir_switch SG9(.port1(A5),.port2(C0),.enable_dir(A5_C0));   bidir_switch SH9(.port1(A6),.port2(C0),.enable_dir(A6_C0));     bidir_switch SI9(.port1(A7),.port2(C0),.enable_dir(A7_C0));
+                                                                                                                                                                                                                      
+bidir_switch SE10(.port1(A4),.port2(C1),.enable_dir(A4_C1));   bidir_switch SG10(.port1(A5),.port2(C1),.enable_dir(A5_C1));  bidir_switch SH10(.port1(A6),.port2(C1),.enable_dir(A6_C1));   bidir_switch SI10(.port1(A7),.port2(C1),.enable_dir(A7_C1));
+                                                                                                                                                                                                                        
+bidir_switch SE11(.port1(A4),.port2(C2),.enable_dir(A4_C2));   bidir_switch SG11(.port1(A5),.port2(C2),.enable_dir(A5_C2));  bidir_switch SH11(.port1(A6),.port2(C2),.enable_dir(A6_C2));   bidir_switch SI11(.port1(A7),.port2(C2),.enable_dir(A7_C2));
+                                                                                                                                                                                                                     
+bidir_switch SE12(.port1(A4),.port2(C3),.enable_dir(A4_C3));   bidir_switch SG12(.port1(A5),.port2(C3),.enable_dir(A5_C3));  bidir_switch SH12(.port1(A6),.port2(C3),.enable_dir(A6_C3));   bidir_switch SI12(.port1(A7),.port2(C3),.enable_dir(A7_C3));
+                                                                                                                                                                                                                        
+bidir_switch SE13(.port1(A4),.port2(C4),.enable_dir(A4_C4));   bidir_switch SG13(.port1(A5),.port2(C4),.enable_dir(A5_C4));  bidir_switch SH13(.port1(A6),.port2(C4),.enable_dir(A6_C4));   bidir_switch SI13(.port1(A7),.port2(C4),.enable_dir(A7_C4));
+                                                                                                                                                                                                                       
+bidir_switch SE14(.port1(A4),.port2(C5),.enable_dir(A4_C5));   bidir_switch SG14(.port1(A5),.port2(C5),.enable_dir(A5_C5));  bidir_switch SH14(.port1(A6),.port2(C5),.enable_dir(A6_C5));   bidir_switch SI14(.port1(A7),.port2(C5),.enable_dir(A7_C5));
+                                                                                                                                                                                                                        
+bidir_switch SE15(.port1(A4),.port2(C6),.enable_dir(A4_C6));   bidir_switch SG15(.port1(A5),.port2(C6),.enable_dir(A5_C6));  bidir_switch SH15(.port1(A6),.port2(C6),.enable_dir(A6_C6));   bidir_switch SI15(.port1(A7),.port2(C6),.enable_dir(A7_C6));
+                                                                                                                                                                                                                      
+bidir_switch SE16(.port1(A4),.port2(C7),.enable_dir(A4_C7));   bidir_switch SG16(.port1(A5),.port2(C7),.enable_dir(A5_C7));  bidir_switch SH16(.port1(A6),.port2(C7),.enable_dir(A6_C7));   bidir_switch SI16(.port1(A7),.port2(C7),.enable_dir(A7_C7));
+                                                                                                                                                                                                                    
+bidir_switch SE17(.port1(A4),.port2(D0),.enable_dir(A4_D0));   bidir_switch SG17(.port1(A5),.port2(D0),.enable_dir(A5_D0));  bidir_switch SH17(.port1(A6),.port2(D0),.enable_dir(A6_D0));   bidir_switch SI17(.port1(A7),.port2(D0),.enable_dir(A7_D0));
+                                                                                                                                                                                                                   
+bidir_switch SE18(.port1(A4),.port2(D1),.enable_dir(A4_D1));   bidir_switch SG18(.port1(A5),.port2(D1),.enable_dir(A5_D1));  bidir_switch SH18(.port1(A6),.port2(D1),.enable_dir(A6_D1));   bidir_switch SI18(.port1(A7),.port2(D1),.enable_dir(A7_D1));
+                                                                                                                                                                                                                      
+bidir_switch SE19(.port1(A4),.port2(D2),.enable_dir(A4_D2));   bidir_switch SG19(.port1(A5),.port2(D2),.enable_dir(A5_D2));  bidir_switch SH19(.port1(A6),.port2(D2),.enable_dir(A6_D2));   bidir_switch SI19(.port1(A7),.port2(D2),.enable_dir(A7_D2));
+                                                                                                                                                                                                                        
+bidir_switch SE20(.port1(A4),.port2(D3),.enable_dir(A4_D3));   bidir_switch SG20(.port1(A5),.port2(D3),.enable_dir(A5_D3));  bidir_switch SH20(.port1(A6),.port2(D3),.enable_dir(A6_D3));   bidir_switch SI20(.port1(A7),.port2(D3),.enable_dir(A7_D3));
+                                                                                                                                                                                                                       
+bidir_switch SE21(.port1(A4),.port2(D4),.enable_dir(A4_D4));   bidir_switch SG21(.port1(A5),.port2(D4),.enable_dir(A5_D4));  bidir_switch SH21(.port1(A6),.port2(D4),.enable_dir(A6_D4));   bidir_switch SI21(.port1(A7),.port2(D4),.enable_dir(A7_D4));
+                                                                                                                                                                                                                      
+bidir_switch SE22(.port1(A4),.port2(D5),.enable_dir(A4_D5));   bidir_switch SG22(.port1(A5),.port2(D5),.enable_dir(A5_D5));  bidir_switch SH22(.port1(A6),.port2(D5),.enable_dir(A6_D5));   bidir_switch SI22(.port1(A7),.port2(D5),.enable_dir(A7_D5));
+                                                                                                                                                                                                                       
+bidir_switch SE23(.port1(A4),.port2(D6),.enable_dir(A4_D6));   bidir_switch SG23(.port1(A5),.port2(D6),.enable_dir(A5_D6));  bidir_switch SH23(.port1(A6),.port2(D6),.enable_dir(A6_D6));   bidir_switch SI23(.port1(A7),.port2(D6),.enable_dir(A7_D6));
+                                                                                                                                                                                                                        
+bidir_switch SE24(.port1(A4),.port2(D7),.enable_dir(A4_D7));   bidir_switch SG24(.port1(A5),.port2(D7),.enable_dir(A5_D7));  bidir_switch SH24(.port1(A6),.port2(D7),.enable_dir(A6_D7));   bidir_switch SI24(.port1(A7),.port2(D7),.enable_dir(A7_D7));
 
              
 
