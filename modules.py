@@ -941,6 +941,20 @@ def find_shortest_path(graph, start, end, path=[]):	#finding route using backtra
                         		shortest = newpath
         return shortest	
 
+
+def find_signal_CLB(target_LUT,originLUT):
+	k=0
+	for i in range(0,16):
+		if(CLB_INP_STATS[LUT_connect[target_LUT][0]][i]==originLUT):
+			k=i
+			break
+		else:
+			k=999	
+	
+	if(k!=999):	
+		return CLB_INDEX_TO_INPUT[str(k)]
+	else:
+		return 999	
 ##########################################routing logic ends##########################################################################
 
 

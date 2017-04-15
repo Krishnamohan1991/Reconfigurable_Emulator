@@ -41,65 +41,114 @@ def begins(cls):
 			print "LUTID= %s to CB= %s "%(cls.LUTID,toCB)
 			toCBCode=str(CB_connect[toCB][0])    #CB code at the output to which the output LUT is connected
 			print 'to name: %s code: %s'%(toCB,toCBCode)
-			route=[]
-			route=find_shortest_path(CB_SB_map,fromCBCode,toCBCode) # calling function to find the shortest route
-			target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.op1,cls.LUTID)
+			op=find_signal_CLB(cls.LUTID,cls.op1)
+			if(op==999):
+				route=[]
+				route=find_shortest_path(CB_SB_map,fromCBCode,toCBCode) # calling function to find the shortest route
+				target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.op1,cls.LUTID)
 			#last_SB_to_CB=connectRoute(route,fromCB,toCB,cls.op1,cls.LUTID) #calling function which connects the from CB to the target CB
 			#target_CB_port=conf_lastSB(last_SB_to_CB['currentSBId'],last_SB_to_CB['currentSBFace'],last_SB_to_CB['currentport'],toCB,route,cls.LUTID)
-			if(target_CB_port!=999):
-				op1=CB_input_output_connect[target_CB][target_CB_port]
+				if(target_CB_port!=999):
+					op1=CB_input_output_connect[target_CB][target_CB_port]
+					for key in CLB_INDEX_TO_INPUT.keys():
+						if (CLB_INDEX_TO_INPUT[key]==op1):
+							CLB_INP_STATS[LUT_connect[cls.LUTID][0]][int(key)]=cls.op1
+				else:
+					print 'No target CB port available'
 			#connectRoute(route,route_len,fromCB,toCB)
-			print 'routing %s for %s input1'%(cls.op1,cls.LUTID)
-			print route
+				print 'routing %s for %s input1'%(cls.op1,cls.LUTID)
+				print route
+			else:
+				#op1=CLB_INDEX_TO_INPUT[str(op)]
+				op1=op
 		if(LUT_connect.has_key(cls.op2) and (LUT_connect[cls.op2][0]!=LUT_connect[cls.LUTID][0])):	#look intro sort & heap sort
 			print "INPUT 2"
 			fromCB=LUT_connect[cls.op2][1]
 			fromCBCode=str(CB_connect[fromCB][0])
 			toCB=LUT_connect[cls.LUTID][1]
 			toCBCode=str(CB_connect[toCB][0])
-			route=[]
-			route=find_shortest_path(CB_SB_map,fromCBCode,toCBCode)
+			print 'from name: %s code: %s'%(fromCB,fromCBCode)
+			print "LUTID= %s to CB= %s "%(cls.LUTID,toCB)
+			print 'to name: %s code: %s'%(toCB,toCBCode)
+			op=find_signal_CLB(cls.LUTID,cls.op2)
+			if(op==999):
+				route=[]
+				route=find_shortest_path(CB_SB_map,fromCBCode,toCBCode)
 			#last_SB_to_CB=connectRoute(route,fromCB,toCB,cls.op2,cls.LUTID) #calling function which connects the from CB to the target CB
 			#target_CB_port=conf_lastSB(last_SB_to_CB['currentSBId'],last_SB_to_CB['currentSBFace'],last_SB_to_CB['currentport'],toCB,route,cls.LUTID)
-			target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.op2,cls.LUTID)
-			if(target_CB_port!=999):
-				op2=CB_input_output_connect[target_CB][target_CB_port]
+				target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.op2,cls.LUTID)
+				if(target_CB_port!=999):
+					op2=CB_input_output_connect[target_CB][target_CB_port]
+					for key in CLB_INDEX_TO_INPUT.keys():
+						if (CLB_INDEX_TO_INPUT[key]==op2):
+							CLB_INP_STATS[LUT_connect[cls.LUTID][0]][int(key)]=cls.op2
+				else:
+					print 'No target CB port available'
 				#print "oppppp2 %s"%op2
 			#route_len= len(route)
-			print 'routing %s for %s input2'%(cls.op2,cls.LUTID)
-			print route
+				print 'routing %s for %s input2'%(cls.op2,cls.LUTID)
+				print route
+			else:
+				#op2=CLB_INDEX_TO_INPUT[str(op)]
+				op2=op
 		if(LUT_connect.has_key(cls.op3) and (LUT_connect[cls.op3][0]!=LUT_connect[cls.LUTID][0])):
 			print "INPUT 3"
 			fromCB=LUT_connect[cls.op3][1]
 			toCB=LUT_connect[cls.LUTID][1]
 			fromCBCode=str(CB_connect[fromCB][0])
 			toCBCode=str(CB_connect[toCB][0])
-			route=[]
-			route=find_shortest_path(CB_SB_map,fromCBCode,toCBCode)
+			op=find_signal_CLB(cls.LUTID,cls.op3)
+			print 'from name: %s code: %s'%(fromCB,fromCBCode)
+			print "LUTID= %s to CB= %s "%(cls.LUTID,toCB)
+			print 'to name: %s code: %s'%(toCB,toCBCode)
+			if(op==999):
+				route=[]
+				route=find_shortest_path(CB_SB_map,fromCBCode,toCBCode)
 			#last_SB_to_CB=connectRoute(route,fromCB,toCB,cls.op3,cls.LUTID) #calling function which connects the from CB to the target CB
 			#target_CB_port=conf_lastSB(last_SB_to_CB['currentSBId'],last_SB_to_CB['currentSBFace'],last_SB_to_CB['currentport'],toCB,route,cls.LUTID)
-			target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.op3,cls.LUTID)
-			if(target_CB_port!=999):
-				op3=CB_input_output_connect[target_CB][target_CB_port]
+				target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.op3,cls.LUTID)
+				if(target_CB_port!=999):
+					op3=CB_input_output_connect[target_CB][target_CB_port]
+					for key in CLB_INDEX_TO_INPUT.keys():
+						if (CLB_INDEX_TO_INPUT[key]==op3):
+							CLB_INP_STATS[LUT_connect[cls.LUTID][0]][int(key)]=cls.op3
+				else:
+					print 'No target CB port available'
 			#route_len= len(route)
-			print 'routing %s for %s input3'%(cls.op3,cls.LUTID)
-			print route
+				print 'routing %s for %s input3'%(cls.op3,cls.LUTID)
+				print route
+			else:
+				#op3=CLB_INDEX_TO_INPUT[str(op)]
+				op3=op
 		if(LUT_connect.has_key(cls.op4) and (LUT_connect[cls.op4][0]!=LUT_connect[cls.LUTID][0])):
 			print "INPUT 4"
 			fromCB=LUT_connect[cls.op4][1]
 			toCB=LUT_connect[cls.LUTID][1]
 			fromCBCode=str(CB_connect[fromCB][0])
 			toCBCode=str(CB_connect[toCB][0])
-			route=[]
-			route=find_shortest_path(CB_SB_map,fromCBCode,toCBCode)
+			print 'from name: %s code: %s'%(fromCB,fromCBCode)
+			print "LUTID= %s to CB= %s "%(cls.LUTID,toCB)
+			print 'to name: %s code: %s'%(toCB,toCBCode)
+			op=find_signal_CLB(cls.LUTID,cls.op4)
+			if(op==999):
+				route=[]
+				route=find_shortest_path(CB_SB_map,fromCBCode,toCBCode)
 			#last_SB_to_CB=connectRoute(route,fromCB,toCB,cls.op4,cls.LUTID) #calling function which connects the from CB to the target CB
 			#target_CB_port=conf_lastSB(last_SB_to_CB['currentSBId'],last_SB_to_CB['currentSBFace'],last_SB_to_CB['currentport'],toCB,route,cls.LUTID)
-			target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.op4,cls.LUTID)
-			if(target_CB_port!=999):
-				op4=CB_input_output_connect[target_CB][target_CB_port]
+				target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.op4,cls.LUTID)
+				if(target_CB_port!=999):
+					op4=CB_input_output_connect[target_CB][target_CB_port]
+					for key in CLB_INDEX_TO_INPUT.keys():
+						if (CLB_INDEX_TO_INPUT[key]==op4):
+							CLB_INP_STATS[LUT_connect[cls.LUTID][0]][int(key)]=cls.op4
+				else:
+					print 'No target CB port available'
 			#route_len= len(route)
-			print 'routing %s for %s input4'%(cls.op4,cls.LUTID)
-			print route
+				print 'routing %s for %s input4'%(cls.op4,cls.LUTID)
+				print route
+			else:
+				#op4=CLB_INDEX_TO_INPUT[str(op)]
+				op4=op
 		print'lutid %s inpu1 %s input2 %s input3 %s input4 %s'%(cls.LUTID,op1,op2,op3,op4)
 		configureLUT(cls.LUTID,LUT_function[cls.function],LUT_interconnect[op1],LUT_interconnect[op2],LUT_interconnect[op3],LUT_interconnect[op4],
 		cls.MUXswitch)
@@ -262,8 +311,15 @@ print 'from SB 12 face D %s '%SBobjectDictionary['12'].D
 print 'from SB 12 face C %s '%SBobjectDictionary['12'].C
 print 'from CB 11_1 state  %s '%CBobjectDictionary['11_1'].CBstate
 print 'from CB 11_1 state  %s '%CBobjectDictionary['11_1'].printCBconfig()
+print 'from CB 11_2 state  %s '%CBobjectDictionary['11_2'].CBstate
+print 'from CB 11_2 state  %s '%CBobjectDictionary['11_2'].printCBconfig()
 print 'from SB 22 face A %s '%SBobjectDictionary['22'].A
 
+
+#print 'the new one 00 %s'%CLB_INP_STATS['00']
+#print 'the new one 01 %s'%CLB_INP_STATS['01']
+#print 'the new one 10 %s'%CLB_INP_STATS['10']
+#print 'the new one 11 %s'%CLB_INP_STATS['11']
 #####################################################printing bits######################################################################################
 
 CB_print_order=["11_3","11_2","11_1","11_0","10_3","10_2","10_1","10_0","01_3","01_2","01_1","01_0","00_3","00_2","00_1","00_0"]
