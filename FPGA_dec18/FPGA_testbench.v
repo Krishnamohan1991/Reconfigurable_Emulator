@@ -297,7 +297,7 @@ begin
 if(prgm_b!=1'b1 && CLB_prgm_b!=1'b0) 
 begin
 
-    if((CLB_counter == 297) && CLB_prgm_b!=1'b0) //(no of bits required for one CLB) + 1= 37+1=38  or (37 + (number of LUT -1))
+    if((CLB_counter == 312) && CLB_prgm_b!=1'b0) //(no of bits required for one CLB) + 1= 38+1=39  or (38 + (number of LUT -1))
 	begin
 	    
 		CLB_count=CLB_count+1;
