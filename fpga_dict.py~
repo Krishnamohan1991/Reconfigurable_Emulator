@@ -43,7 +43,7 @@ CB_input_output_connect={"00_0":['I12','I13','I14','I15','Q00_6','Q00_7'],"00_1"
 
 #LUT_function key- function keyword value-LUT entry
 
-LUT_function={"AND":'1000000000000000',"OR":'0111111111111111',"XOR":'0110100110010110',"HADD_SUM":'0000000100010000',"HADD_CARRY":'0001000000000000'}
+LUT_function={"AND":'1000000000000000',"OR":'0111111111111111',"XOR":'0110100110010110',"FULL_ADD":'0000000100010000'}
 
 
 #LUT_interconnect :> key=code for input or output ports values=coresponding configuration bits

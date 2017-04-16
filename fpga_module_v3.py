@@ -150,7 +150,7 @@ def begins(cls):
 				#op4=CLB_INDEX_TO_INPUT[str(op)]
 				op4=op
 		print'lutid %s inpu1 %s input2 %s input3 %s input4 %s'%(cls.LUTID,op1,op2,op3,op4)
-		configureLUT(cls.LUTID,LUT_function[cls.function],LUT_interconnect[op1],LUT_interconnect[op2],LUT_interconnect[op3],LUT_interconnect[op4],
+		configureLUT(cls.LUTID,cls.function,LUT_interconnect[op1],LUT_interconnect[op2],LUT_interconnect[op3],LUT_interconnect[op4],
 		cls.MUXswitch)
 
 		
@@ -195,7 +195,7 @@ operand1 = (input_port | output_port).setResultsName('op1')
 operand2 = (input_port | output_port).setResultsName('op2')
 operand3 = (input_port | output_port).setResultsName('op3')
 operand4 = (input_port | output_port).setResultsName('op4')
-op = (oneOf("AND OR XOR HADD_SUM HADD_CARRY")).setResultsName('function')
+op = (oneOf("AND OR XOR FULL_ADD")).setResultsName('function')
 
 switchId = (oneOf("00 01 02 10 11 12 20 21 22")).setResultsName('switchID')
 #switchId2 = (oneOf("0 1 2")).setResultsName('switchID2')
