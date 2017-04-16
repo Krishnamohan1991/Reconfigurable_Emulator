@@ -10,11 +10,12 @@ class lut(object):
 		self.inputPort4='00000'
 		self.status=0
 		self.LUTID=''
+		self.function=''
 
 	def lutConfig(self,LUTID,function,input1,input2,input3,input4,muxSw):
 		
 		
-		self.lutTable=function
+		self.lutTable=LUT_function[function]
 		self.muxSwitch=muxSw
 		self.outputPort=LUTID
 		self.inputPort1=input1
@@ -23,12 +24,18 @@ class lut(object):
 		self.inputPort4=input4
 		self.status=1
 		self.LUTID=LUTID
+		self.function=function
 		
 		return LUTID
 
 	def bits(self):
 		lut_config_bits=''
-		lut_config_bits=str(self.inputPort1+self.inputPort2+self.inputPort3+self.inputPort4+self.muxSwitch+self.lutTable)	
+		carry_control_bit=''
+		if(self.function=='FULL_ADD'):
+			carry_control_bit='1'
+		else:
+			carry_control_bit='0'
+		lut_config_bits=str(self.inputPort1+self.inputPort2+self.inputPort3+self.inputPort4+self.muxSwitch+self.lutTable+carry_control_bit)	
 		return lut_config_bits
 
 	
