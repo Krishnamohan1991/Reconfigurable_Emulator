@@ -1,14 +1,17 @@
 module look_up_table_interconnect_config(bit_in,prgm_b,clk,reset,lut,CLB_prgm_b,CLB_prgm_b_in,CLB_prgm_b_out,
-  interconnect_config_x1,interconnect_config_x2,interconnect_config_x3,interconnect_config_x4,mux_switch);
+  interconnect_config_x1,interconnect_config_x2,interconnect_config_x3,interconnect_config_x4,mux_switch,carryOut_sel_mux);
+
 input bit_in,prgm_b,clk,reset,CLB_prgm_b,CLB_prgm_b_in;
+
 reg q15,q14,q13,q12,q11,q10,q9,q8,q7,q6,q5,q4,q3,q2,q1,q0,
-i_q19,i_q18,i_q17,i_q16,i_q15,i_q14,i_q13,i_q12,i_q11,i_q10,i_q9,i_q8,i_q7,i_q6,i_q5,i_q4,i_q3,i_q2,i_q1,i_q0,switch;
+i_q19,i_q18,i_q17,i_q16,i_q15,i_q14,i_q13,i_q12,i_q11,i_q10,i_q9,i_q8,i_q7,i_q6,i_q5,i_q4,i_q3,i_q2,i_q1,i_q0,crry_sel_switch,switch;
 output reg mux_switch,CLB_prgm_b_out;
 output reg [15:0] lut;
 output reg [4:0] interconnect_config_x1;
 output reg [4:0] interconnect_config_x2;
 output reg [4:0] interconnect_config_x3;
 output reg [4:0] interconnect_config_x4;
+output reg carryOut_sel_mux;
 
 reg [5:0] count;
 
@@ -32,7 +35,7 @@ initial begin
            i_q5 <= 0;       q2 <= 0;
            i_q4 <= 0;       q1 <= 0;
            i_q3 <= 0;       q0 <= 0;
-           i_q2 <= 0;
+           i_q2 <= 0;	    crry_sel_switch<=0;
            i_q1 <= 0;
            i_q0 <= 0;
 
@@ -51,7 +54,7 @@ always @(posedge clk or posedge reset)
     
     else begin
      count[5:0]=count[5:0]+1'b1; 
-      if(count[5:0]==6'b100101)  //37 => 100101
+      if(count[5:0]==6'b100110)  //38 => 100110
       begin
       CLB_prgm_b_out= #clk 1'b1;
       count[5:0]=6'b000000;
@@ -109,7 +112,7 @@ begin
            i_q5 <= i_q6;        q2 <= q3;
            i_q4 <= i_q5;        q1 <= q2;
            i_q3 <= i_q4;        q0 <= q1;
-           i_q2 <= i_q3;      //bit_out <= q0;
+           i_q2 <= i_q3;	crry_sel_switch<=q0;
            i_q1 <= i_q2;
            i_q0 <= i_q1;
        
@@ -128,5 +131,6 @@ if(prgm_b==1'b1 && CLB_prgm_b==1'b0)
   interconnect_config_x3[4:0]={i_q14,i_q13,i_q12,i_q11,i_q10};
   interconnect_config_x4[4:0]={i_q19,i_q18,i_q17,i_q16,i_q15};
   mux_switch=switch;
+  carryOut_sel_mux=crry_sel_switch;
 end
 endmodule

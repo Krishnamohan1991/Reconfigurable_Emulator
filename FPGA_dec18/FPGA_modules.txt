@@ -3,6 +3,8 @@ value.v
 CLB.v
 look_up_table_interconnect_config.v
 interconnect_unit.v
+2X1MUX.v
+fast_carry_chain.v
 logic_pair.v
 LU.v
 syn_D_FF.v
