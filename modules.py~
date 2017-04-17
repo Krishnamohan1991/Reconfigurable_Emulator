@@ -444,11 +444,14 @@ class connectionBlock(object):   #fix input and output port collission
 				
 			elif(leftSB=='O' and rightSB=='X'): #think about this case
 				leftFace=CB_connect[cbId][2]
+				rightFace=CB_connect[cbId][4]
 				switchBlock.setFaceStatus(SBobjectDictionary[CB_connect[cbId][1]],leftFace,val,'O') #think about this case
+				switchBlock.setFaceStatus(SBobjectDictionary[CB_connect[cbId][3]],rightFace,val,'Q') #added 16-April
 				self.CBDict[CBDictKeyq1]='1'
 			elif(leftSB=='X' and rightSB=='O'):		
 				rightFace=CB_connect[cbId][4]
 				switchBlock.setFaceStatus(SBobjectDictionary[CB_connect[cbId][3]],rightFace,val,'O')
+				switchBlock.setFaceStatus(SBobjectDictionary[CB_connect[cbId][1]],leftFace,val,'Q')#added 16-April
 				self.CBDict[CBDictKeyq1]='1'
 			elif(leftSB=='O' and rightSB=='O'):
 				print 'cannot connect: output line already in use: Error in CB: %s'%cbId
@@ -789,7 +792,7 @@ def routing(route,fromCB,fromCBCode,toCB,toCBCode,originLUT,targetLUT):
 				q2=CBobjectDictionary[fromCB].CBstate[5]
 				CBobjectDictionary[fromCB].configCB(fromCB,x1,x2,x3,x4,CBobjectDictionary[fromCB].CBstate[4],q2)
 				SBobjectDictionary[SBId].setFaceStatus(SBFace,fromSBPortIndex,'Q')
-				print 'strating SB %s %s port %s'%(SBId,SBFace,fromSBPortIndex)
+				print 'starting SB %s %s port %s'%(SBId,SBFace,fromSBPortIndex)
 				target_CB_port=conf_lastSB(SBId,fromSBFace,fromSBPortIndex,toCB,route,targetLUT)
 			else:
 				fromSBPortIndex=checkFreeSBPort_CBconnect(SBId,SBFace,x1,x2,x3,x4,fromCB)

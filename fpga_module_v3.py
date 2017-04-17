@@ -252,7 +252,7 @@ config=OneOrMore(expression)
 
 counter=0
 
-tests=open("Test6.txt","r")
+tests=open("Test1.txt","r")
 scr=tests.read()
 
 scr_split=scr.splitlines()
@@ -347,7 +347,7 @@ for lut in LUT_print_order:
 file=open('conf_bit_stream.txt','w')
 file.write("CB_config_stream[767:0]= 768'b"+CB_bit_stream+";\n")
 file.write("SB_config_stream[6911:0]= 6912'b"+SB_bit_stream+";\n")
-file.write("CLB_config_stream[1183:0]= 1184'b"+LUT_bit_stream+";\n")
+file.write("CLB_config_stream[1215:0]= 1216'b"+LUT_bit_stream+";\n")
 file.write("IO_config_stream[191:0]=192'b"+IO_bit_stream+";")
 
 file.close()
