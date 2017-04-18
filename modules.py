@@ -595,43 +595,54 @@ CB_codes=['C1','C2','C3','C4',
 
 ##########################################routing logic begins#######################################################################################################################
 def checkFreeSBPort_CBconnect(SBId,SBFace,x1,x2,x3,x4,CBId):   #function checks for the index corresponding to free ports on a side of the switch block -- free ports have their status as 'X'
+	print 'inside checkFreeSBPort_CBconnect function : SBID %s SBFace %s CBId %s SBstate %s CBstate %s'%(SBId,SBFace,CBId,SBobjectDictionary[SBId].A,CBobjectDictionary[CBId].CBstate)
 	flag=1
 	counter=0
 	final=0
 	if(SBFace=='A'):
-		while(flag and counter<8):
+		while(flag==1 and counter<8):
+			#print 'controvertial %s'%SBobjectDictionary[SBId].A[counter]
 			if(SBobjectDictionary[SBId].A[counter] =='X'):  #check if any port in face A of the switch block adjacent to the from CB is free and its not connected to any of the inputs of the CB
 				if(CBobjectDictionary[CBId].CBstate[0]!=str(counter) and CBobjectDictionary[CBId].CBstate[1]!=str(counter) and CBobjectDictionary[CBId].CBstate[2]!=str(counter) and CBobjectDictionary[CBId].CBstate[3]!=str(counter)):
 					
 					flag=0
-			else:
-				counter=counter+1
-				#print counter	
+					break
+		
+			counter=counter+1
+			#print 'counter of A %s'%counter
+			#continue	
+				
+				
 							
 	elif(SBFace=='B'):
-		while(flag and counter<8):
+		while(flag==1 and counter<8):
 			if(SBobjectDictionary[SBId].B[counter] =='X'):
 				if(CBobjectDictionary[CBId].CBstate[0]!=str(counter) or CBobjectDictionary[CBId].CBstate[1]!=str(counter) or CBobjectDictionary[CBId].CBstate[2]!=str(counter) or CBobjectDictionary[CBId].CBstate[3]!=str(counter)):
 					
 					flag=0
-			else:
-				counter=counter+1
+					break
+			
+			counter=counter+1
 	elif(SBFace=='C'):
-		while(flag and counter<8):
+		while(flag==1 and counter<8):
 			if(SBobjectDictionary[SBId].C[counter] =='X'):
 				if(CBobjectDictionary[CBId].CBstate[0]!=str(counter) or CBobjectDictionary[CBId].CBstate[1]!=str(counter) or CBobjectDictionary[CBId].CBstate[2]!=str(counter) or CBobjectDictionary[CBId].CBstate[3]!=str(counter)):
 					
 					flag=0
-			else:
-				counter=counter+1
+					break
+			
+			counter=counter+1
 	else:
-		while(flag and counter<8):
+		while(flag==1 and counter<8):
 			if(SBobjectDictionary[SBId].D[counter] =='X'):
 				if(CBobjectDictionary[CBId].CBstate[0]!=str(counter) or CBobjectDictionary[CBId].CBstate[1]!=str(counter) or CBobjectDictionary[CBId].CBstate[2]!=str(counter) or CBobjectDictionary[CBId].CBstate[3]!=str(counter)):
 					
 					flag=0
-			else:
-				counter=counter+1
+					break
+			
+			counter=counter+1
+
+
 	final=counter  #kp
 	counter=counter*0 
 	return final   
@@ -736,17 +747,16 @@ def conf_lastSB(SBId,fromSBFace,fromSBPortIndex,toCB,route,targetLUT):  #kp the 
 		i_count=i_count+1
 		if(i_count==4):
 			break
-		print "i counnnntttt %s"%i_count
 		#print 'icount %s'%i_count
 	#if(1==2):
 	#	print "ooo"
 	if(i_count==4):
 		i_count=i_count*0
-		print 'no free port on the target CB'
+		print 'no free port on the target CB %s '%toCB
 	else:	
 		
 		outputCB=''
-		if((CB_connect[toCB][5]==targetLUT) or CB_connect[toCB][6]==targetLUT):
+		if((CB_connect[toCB][5]==targetLUT) or CB_connect[toCB][6]==targetLUT or CB_connect[toCB][7]==LUT_connect[targetLUT][0]):
 			CBobjectDictionary[toCB].CBstate[i_count]=str(toSBPortIndex)
 			x1=CBobjectDictionary[toCB].CBstate[0]
 			x2=CBobjectDictionary[toCB].CBstate[1]
@@ -792,23 +802,23 @@ def routing(route,fromCB,fromCBCode,toCB,toCBCode,originLUT,targetLUT):
 				print 'fromSBPortIndexxxxxxx %s'%fromSBPortIndex
 				q2=CBobjectDictionary[fromCB].CBstate[5]
 				CBobjectDictionary[fromCB].configCB(fromCB,x1,x2,x3,x4,CBobjectDictionary[fromCB].CBstate[4],q2)
-				SBobjectDictionary[SBId].setFaceStatus(SBFace,fromSBPortIndex,'Q')
-				print 'starting SB %s %s port %s'%(SBId,SBFace,fromSBPortIndex)
+				SBobjectDictionary[SBId].setFaceStatus(fromSBFace,fromSBPortIndex,'Q')
+				print 'starting SB %s %s port %s'%(SBId,fromSBFace,fromSBPortIndex)
 				target_CB_port=conf_lastSB(SBId,fromSBFace,fromSBPortIndex,toCB,route,targetLUT)
 			else:
-				fromSBPortIndex=checkFreeSBPort_CBconnect(SBId,SBFace,x1,x2,x3,x4,fromCB)
+				fromSBPortIndex=checkFreeSBPort_CBconnect(SBId,fromSBFace,x1,x2,x3,x4,fromCB)
 				CBobjectDictionary[fromCB].CBstate[4]=str(fromSBPortIndex)
 				q2=CBobjectDictionary[fromCB].CBstate[5]
 				CBobjectDictionary[fromCB].configCB(fromCB,x1,x2,x3,x4,CBobjectDictionary[fromCB].CBstate[4],q2)
-				SBobjectDictionary[SBId].setFaceStatus(SBFace,fromSBPortIndex,'Q')
-				print 'strating SB %s %s port %s'%(SBId,SBFace,fromSBPortIndex)
+				SBobjectDictionary[SBId].setFaceStatus(fromSBFace,fromSBPortIndex,'Q')
+				print 'starting SB %s %s port %s'%(SBId,fromSBFace,fromSBPortIndex)
 				target_CB_port=conf_lastSB(SBId,fromSBFace,fromSBPortIndex,toCB,route,targetLUT)
 				#fromSBPortIndex=checkFreeSBPort(SBId,SBFace)   #kp
 			#print 'q1111111: and freeindez %s  %s'%(CBobjectDictionary[fromCB].CBstate[4],fromSBPortIndex)
 				q2=CBobjectDictionary[fromCB].CBstate[5]
 				CBobjectDictionary[fromCB].configCB(fromCB,x1,x2,x3,x4,CBobjectDictionary[fromCB].CBstate[4],q2)
-				SBobjectDictionary[SBId].setFaceStatus(SBFace,fromSBPortIndex,'Q')
-				print 'strating SB %s %s port %s'%(SBId,SBFace,fromSBPortIndex)
+				SBobjectDictionary[SBId].setFaceStatus(fromSBFace,fromSBPortIndex,'Q')
+				print 'starting SB %s %s port %s'%(SBId,fromSBFace,fromSBPortIndex)
 				target_CB_port=conf_lastSB(SBId,fromSBFace,fromSBPortIndex,toCB,route,targetLUT)
 				#switch_adj_toCB=ConfNextSBPos(SBId,SBFace,route[count+1],fromSBPortIndex,route,route_len,count,0)
 		if(CB_connect[fromCB][6]==originLUT):
@@ -820,16 +830,16 @@ def routing(route,fromCB,fromCBCode,toCB,toCBCode,originLUT,targetLUT):
 			if(q2!='X'):
 				fromSBPortIndex=int(CBobjectDictionary[fromCB].CBstate[5])
 				CBobjectDictionary[fromCB].configCB(fromCB,x1,x2,x3,x4,q1,CBobjectDictionary[fromCB].CBstate[5])
-				SBobjectDictionary[SBId].setFaceStatus(SBFace,fromSBPortIndex,'Q')
-				print 'strating SB %s %s port %s'%(SBId,SBFace,fromSBPortIndex)
+				SBobjectDictionary[SBId].setFaceStatus(fromSBFace,fromSBPortIndex,'Q')
+				print 'starting SB %s %s port %s'%(SBId,fromSBFace,fromSBPortIndex)
 				target_CB_port=conf_lastSB(SBId,fromSBFace,fromSBPortIndex,toCB,route,targetLUT)
 			else:
-			   	fromSBPortIndex=checkFreeSBPort_CBconnect(SBId,SBFace,x1,x2,x3,x4,fromCB)
+			   	fromSBPortIndex=checkFreeSBPort_CBconnect(SBId,fromSBFace,x1,x2,x3,x4,fromCB)
 				CBobjectDictionary[fromCB].CBstate[5]=str(fromSBPortIndex)
 			#print 'q22222 right and portindex : %s %s'%(CBobjectDictionary[fromCB].CBstate[5],fromSBPortIndex)
 				CBobjectDictionary[fromCB].configCB(fromCB,x1,x2,x3,x4,q1,CBobjectDictionary[fromCB].CBstate[5])
-				SBobjectDictionary[SBId].setFaceStatus(SBFace,fromSBPortIndex,'Q')
-				print 'strating SB %s %s port %s'%(SBId,SBFace,fromSBPortIndex)
+				SBobjectDictionary[SBId].setFaceStatus(fromSBFace,fromSBPortIndex,'Q')
+				print 'starting SB %s %s port %s'%(SBId,fromSBFace,fromSBPortIndex)
 				target_CB_port=conf_lastSB(SBId,fromSBFace,fromSBPortIndex,toCB,route,targetLUT)
 
 	if(route_len>3 and lutobjectDictionary[originLUT].status==1):
@@ -858,7 +868,7 @@ def routing(route,fromCB,fromCBCode,toCB,toCBCode,originLUT,targetLUT):
 				q2=CBobjectDictionary[fromCB].CBstate[5]
 				CBobjectDictionary[fromCB].configCB(fromCB,x1,x2,x3,x4,CBobjectDictionary[fromCB].CBstate[4],q2)
 				SBobjectDictionary[SBId].setFaceStatus(fromSBFace,fromSBPortIndex,'Q')
-				print 'strating SB %s %s port %s'%(SBId,fromSBFace,fromSBPortIndex)
+				print 'starting SB %s %s port %s'%(SBId,fromSBFace,fromSBPortIndex)
 		if(CB_connect[fromCB][6]==originLUT):
 			x1=CBobjectDictionary[fromCB].CBstate[0]
 			x2=CBobjectDictionary[fromCB].CBstate[1]
@@ -931,6 +941,7 @@ def routing(route,fromCB,fromCBCode,toCB,toCBCode,originLUT,targetLUT):
 	if(target_CB_port!=999):	
 		return target_CB_port
 	else:
+		print 'No available target CB port'
 		return 999
 			
 			
@@ -953,7 +964,7 @@ def find_shortest_path(graph, start, end, path=[]):	#finding route using backtra
         return shortest	
 
 
-def find_signal_CLB(target_LUT,originLUT):
+def find_signal_CLB(target_LUT,originLUT):  #used to find whether a signal has already been routed to any of the ports of the  current CLB 
 	k=0
 	for i in range(0,16):
 		if(CLB_INP_STATS[LUT_connect[target_LUT][0]][i]==originLUT):
@@ -965,10 +976,69 @@ def find_signal_CLB(target_LUT,originLUT):
 	if(k!=999):	
 		return CLB_INDEX_TO_INPUT[str(k)]
 	else:
-		return 999	
+		return 999
+
+
+def check_free_CB_port(CLBID):   #helper function which checks all CB in a CLB to see if it has any free ports to get the incoming routed signal
+	CB0=CLB_CB_List[CLBID][0];
+	CB1=CLB_CB_List[CLBID][1];
+	CB2=CLB_CB_List[CLBID][2];
+	CB3=CLB_CB_List[CLBID][3];
+	i_count_cb0=0
+	i_count_cb1=0
+	i_count_cb2=0
+	i_count_cb3=0
+	final_CB_index_00=0
+	final_CB_index_01=0
+	final_CB_index_10=0
+	final_CB_index_11=0
+
+	while(CBobjectDictionary[CB0].CBstate[i_count_cb0] !='X'):
+		i_count_cb0=i_count_cb0+1
+		if(i_count_cb0==4):
+			break
+
+	while(CBobjectDictionary[CB1].CBstate[i_count_cb1] !='X'):
+		i_count_cb1=i_count_cb1+1
+		if(i_count_cb1==4):
+			break
+
+	while(CBobjectDictionary[CB2].CBstate[i_count_cb2] !='X'):
+		i_count_cb2=i_count_cb2+1
+		if(i_count_cb2==4):
+			break
+
+	while(CBobjectDictionary[CB3].CBstate[i_count_cb3] !='X'):
+		i_count_cb3=i_count_cb3+1
+		if(i_count_cb3==4):
+			break
+	
+	if(i_count_cb0==4):
+		i_count_cb0=i_count_cb0*0
+		final_CB_index_00=999
+	else:
+		final_CB_index_00=i_count_cb0
+	if(i_count_cb1==4):
+		i_count_cb1=i_count_cb1*0
+		final_CB_index_01=999
+	else:
+		final_CB_index_01=i_count_cb1
+	
+	if(i_count_cb2==4):
+		i_count_cb2=i_count_cb2*0
+		final_CB_index_10=999
+	else:
+		final_CB_index_10=i_count_cb2
+	if(i_count_cb3==4):
+		i_count_cb3=i_count_cb3*0
+		final_CB_index_11=999
+	else:
+		final_CB_index_11=i_count_cb3
+	print 'CLB CB status %s'%[final_CB_index_00,final_CB_index_01,final_CB_index_10,final_CB_index_11]
+
+	return [final_CB_index_00,final_CB_index_01,final_CB_index_10,final_CB_index_11]
+	
 ##########################################routing logic ends##########################################################################
-
-
-
-
+	
+			
 
