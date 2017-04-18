@@ -18,8 +18,15 @@ inout V00_0,V00_1,V00_2,V00_3,V00_4,V00_5,V00_6,V00_7,V01_0,V01_1,V01_2,V01_3,V0
 	    H20_0,H20_1,H20_2,H20_3,H20_4,H20_5,H20_6,H20_7,H21_0,H21_1,H21_2,H21_3,H21_4,H21_5,H21_6,H21_7;
 
 
-value carry_column1(.in(0),.out(carry_in_1));  
-value carry_column2(.in(0),.out(carry_in_2));  
+value carry_chain1(.in(0),.out(carry_in_10_1));  
+value carry_chain2(.in(0),.out(carry_in_10_2));
+value carry_chain3(.in(0),.out(carry_in_11_1));  
+value carry_chain4(.in(0),.out(carry_in_11_2));
+
+wire   carry_in_10_1,carry_in_10_2,carry_in_11_1,carry_in_11_2,carry_out_10_1,carry_out_10_2,carry_out_00_1,carry_out_00_2;
+
+wire   carry_out_11_1,carry_out_11_2,carry_out_01_1,carry_out_01_2;
+
 
 wire CLB_prgm_b_out_CLB00,CLB_prgm_b_out_CLB01,CLB_prgm_b_out_CLB10,CLB_prgm_b_out_CLB11;
 
@@ -94,7 +101,7 @@ wire CLB10_IQ0,CLB10_IQ1,CLB10_IQ2,CLB10_IQ3,CLB10_IQ4,CLB10_IQ5,CLB10_IQ6,CLB10
 wire CLB11_I0,CLB11_I1,CLB11_I2,CLB11_I3,CLB11_I4,CLB11_I5,CLB11_I6,CLB11_I7,CLB11_I8,CLB11_I9,CLB11_I10,CLB11_I11,CLB11_I12,CLB11_I13,CLB11_I14,CLB11_I15;
 wire CLB11_IQ0,CLB11_IQ1,CLB11_IQ2,CLB11_IQ3,CLB11_IQ4,CLB11_IQ5,CLB11_IQ6,CLB11_IQ7;
 
-wire carry_out_10,carry_out_11,carry_out_1,carry_out_2,carry_in_1,carry_in_2;
+
 //
 
 
@@ -188,25 +195,26 @@ CB CB11_3(.x1(CLB11_I0),.x2(CLB11_I1),.x3(CLB11_I2),.x4(CLB11_I3),.q1(CLB11_IQ0)
 //CLB Blocks
 
 
+
 CLB CLB00(.I0(CLB00_I0),.I1(CLB00_I1),.I2(CLB00_I2),.I3(CLB00_I3),.I4(CLB00_I4),.I5(CLB00_I5),.I6(CLB00_I6),.I7(CLB00_I7),.I8(CLB00_I8),.I9(CLB00_I9),.I10(CLB00_I10),.I11(CLB00_I11),
 	.I12(CLB00_I12),.I13(CLB00_I13),.I14(CLB00_I14),.I15(CLB00_I15),.IQ1(CLB00_IQ0),.IQ2(CLB00_IQ1),.IQ3(CLB00_IQ2),.IQ4(CLB00_IQ3),.IQ5(CLB00_IQ4),
 	.IQ6(CLB00_IQ5),.IQ7(CLB00_IQ6),.IQ8(CLB00_IQ7),.clk(clk),.reset(reset),.prgm_b(prgm_b),.bit_in(bit_in_CLB),.CLB_prgm_b(CLB_prgm_b),
-	.CLB_prgm_b_in(CLB_prgm_b_in),.CLB_prgm_b_out(CLB_prgm_b_out_CLB00),.carry_in(carry_out_10),.carry_out(carry_out_1)); 
+	.CLB_prgm_b_in(CLB_prgm_b_in),.CLB_prgm_b_out(CLB_prgm_b_out_CLB00),.carry_out_chain1(carry_out_00_1),.carry_in_chain1(carry_out_10_1),.carry_out_chain2(carry_out_00_2),.carry_in_chain2(carry_out_10_2)); 
 
 CLB CLB01(.I0(CLB01_I0),.I1(CLB01_I1),.I2(CLB01_I2),.I3(CLB01_I3),.I4(CLB01_I4),.I5(CLB01_I5),.I6(CLB01_I6),.I7(CLB01_I7),.I8(CLB01_I8),.I9(CLB01_I9),.I10(CLB01_I10),.I11(CLB01_I11),
 	.I12(CLB01_I12),.I13(CLB01_I13),.I14(CLB01_I14),.I15(CLB01_I15),.IQ1(CLB01_IQ0),.IQ2(CLB01_IQ1),.IQ3(CLB01_IQ2),.IQ4(CLB01_IQ3),.IQ5(CLB01_IQ4),
 	.IQ6(CLB01_IQ5),.IQ7(CLB01_IQ6),.IQ8(CLB01_IQ7),.clk(clk),.reset(reset),.prgm_b(prgm_b),.bit_in(bit_in_CLB),.CLB_prgm_b(CLB_prgm_b),
-	.CLB_prgm_b_in(CLB_prgm_b_out_CLB00),.CLB_prgm_b_out(CLB_prgm_b_out_CLB01),.carry_in(carry_out_11),.carry_out(carry_out_2));
+	.CLB_prgm_b_in(CLB_prgm_b_out_CLB00),.CLB_prgm_b_out(CLB_prgm_b_out_CLB01),.carry_out_chain1(carry_out_01_1),.carry_in_chain1(carry_out_11_1),.carry_out_chain2(carry_out_01_2),.carry_in_chain2(carry_out_11_2));
 
 CLB CLB10(.I0(CLB10_I0),.I1(CLB10_I1),.I2(CLB10_I2),.I3(CLB10_I3),.I4(CLB10_I4),.I5(CLB10_I5),.I6(CLB10_I6),.I7(CLB10_I7),.I8(CLB10_I8),.I9(CLB10_I9),.I10(CLB10_I10),.I11(CLB10_I11),
 	.I12(CLB10_I12),.I13(CLB10_I13),.I14(CLB10_I14),.I15(CLB10_I15),.IQ1(CLB10_IQ0),.IQ2(CLB10_IQ1),.IQ3(CLB10_IQ2),.IQ4(CLB10_IQ3),.IQ5(CLB10_IQ4),
 	.IQ6(CLB10_IQ5),.IQ7(CLB10_IQ6),.IQ8(CLB10_IQ7),.clk(clk),.reset(reset),.prgm_b(prgm_b),.bit_in(bit_in_CLB),.CLB_prgm_b(CLB_prgm_b),
-	.CLB_prgm_b_in(CLB_prgm_b_out_CLB01),.CLB_prgm_b_out(CLB_prgm_b_out_CLB10),.carry_in(carry_in_1),.carry_out(carry_out_10));
+	.CLB_prgm_b_in(CLB_prgm_b_out_CLB01),.CLB_prgm_b_out(CLB_prgm_b_out_CLB10),.carry_out_chain1(carry_out_10_1),.carry_in_chain1(carry_in_10_1),.carry_out_chain2(carry_out_10_2),.carry_in_chain2(carry_in_10_2));
 
 CLB CLB11(.I0(CLB11_I0),.I1(CLB11_I1),.I2(CLB11_I2),.I3(CLB11_I3),.I4(CLB11_I4),.I5(CLB11_I5),.I6(CLB11_I6),.I7(CLB11_I7),.I8(CLB11_I8),.I9(CLB11_I9),.I10(CLB11_I10),.I11(CLB11_I11),
 	.I12(CLB11_I12),.I13(CLB11_I13),.I14(CLB11_I14),.I15(CLB11_I15),.IQ1(CLB11_IQ0),.IQ2(CLB11_IQ1),.IQ3(CLB11_IQ2),.IQ4(CLB11_IQ3),.IQ5(CLB11_IQ4),
 	.IQ6(CLB11_IQ5),.IQ7(CLB11_IQ6),.IQ8(CLB11_IQ7),.clk(clk),.reset(reset),.prgm_b(prgm_b),.bit_in(bit_in_CLB),.CLB_prgm_b(CLB_prgm_b),
-	.CLB_prgm_b_in(CLB_prgm_b_out_CLB10),.CLB_prgm_b_out(CLB_prgm_b_out_CLB11),.carry_in(carry_in_2),.carry_out(carry_out_11)); 
+	.CLB_prgm_b_in(CLB_prgm_b_out_CLB10),.CLB_prgm_b_out(CLB_prgm_b_out_CLB11),.carry_out_chain1(carry_out_11_1),.carry_in_chain1(carry_in_11_1),.carry_out_chain2(carry_out_11_2),.carry_in_chain2(carry_in_11_2)); 
 
 //
 
