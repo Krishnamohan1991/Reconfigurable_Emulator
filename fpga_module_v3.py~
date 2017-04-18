@@ -32,12 +32,29 @@ def begins(cls):
 		op3=cls.op3
 		op4=cls.op4
 		target_CB=LUT_connect[cls.LUTID][1] #its the ID of the connection block to which the currently programmed LUT is connected to
+		freeCB=[]
+		CB_target=0
+		k=0	
+		CB_code=0	
 		if(LUT_connect.has_key(cls.op1) and (LUT_connect[cls.op1][0]!=LUT_connect[cls.LUTID][0])): #check if the input and output LUTs belong to the same group or not
 			print "INPUT 1"			
 			fromCB=LUT_connect[cls.op1][1] #the CB from which the input signal is transmited
 			fromCBCode=str(CB_connect[fromCB][0]) #the global code of the CB from which the input signal to be routed originates
 			print 'from name: %s code: %s'%(fromCB,fromCBCode)
-			toCB=LUT_connect[cls.LUTID][1]  #CB at the output to which the output LUT is connected
+			freeCB=check_free_CB_port(LUT_connect[cls.LUTID][0])
+			print 'fee CB %s'%freeCB
+			for i in freeCB:
+				if i!=999:
+					CB_target=i
+					i=i*0
+					CB_code=k
+					break
+				else:
+					k=k+1
+					continue
+			#toCB=LUT_connect[cls.LUTID][1]  #CB at the output to which the output LUT is connected
+			toCB=CLB_CB_List[LUT_connect[cls.LUTID][0]][CB_code]
+			k=k*0
 			print "LUTID= %s to CB= %s "%(cls.LUTID,toCB)
 			toCBCode=str(CB_connect[toCB][0])    #CB code at the output to which the output LUT is connected
 			print 'to name: %s code: %s'%(toCB,toCBCode)
@@ -65,7 +82,20 @@ def begins(cls):
 			print "INPUT 2"
 			fromCB=LUT_connect[cls.op2][1]
 			fromCBCode=str(CB_connect[fromCB][0])
-			toCB=LUT_connect[cls.LUTID][1]
+			freeCB=check_free_CB_port(LUT_connect[cls.LUTID][0])
+			print 'fee CB %s'%freeCB
+			for i in freeCB:
+				if i!=999:
+					CB_target=i
+					i=i*0
+					CB_code=k
+					break
+				else:
+					k=k+1
+					continue
+			toCB=CLB_CB_List[LUT_connect[cls.LUTID][0]][CB_code]
+			#toCB=LUT_connect[cls.LUTID][1]
+			k=k*0
 			toCBCode=str(CB_connect[toCB][0])
 			print 'from name: %s code: %s'%(fromCB,fromCBCode)
 			print "LUTID= %s to CB= %s "%(cls.LUTID,toCB)
@@ -94,7 +124,21 @@ def begins(cls):
 		if(LUT_connect.has_key(cls.op3) and (LUT_connect[cls.op3][0]!=LUT_connect[cls.LUTID][0])):
 			print "INPUT 3"
 			fromCB=LUT_connect[cls.op3][1]
-			toCB=LUT_connect[cls.LUTID][1]
+			freeCB=check_free_CB_port(LUT_connect[cls.LUTID][0])
+			print 'fee CB %s'%freeCB
+			for i in freeCB:
+				if i!=999:
+					CB_target=i
+					i=i*0
+					CB_code=k
+					break
+				else:
+					k=k+1
+					continue
+			print 'k value %s CB_code %s CB_target %s '%(k,CB_code,CB_target)
+			toCB=CLB_CB_List[LUT_connect[cls.LUTID][0]][CB_code]
+			k=k*0
+			#toCB=LUT_connect[cls.LUTID][1]
 			fromCBCode=str(CB_connect[fromCB][0])
 			toCBCode=str(CB_connect[toCB][0])
 			op=find_signal_CLB(cls.LUTID,cls.op3)
@@ -123,7 +167,23 @@ def begins(cls):
 		if(LUT_connect.has_key(cls.op4) and (LUT_connect[cls.op4][0]!=LUT_connect[cls.LUTID][0])):
 			print "INPUT 4"
 			fromCB=LUT_connect[cls.op4][1]
-			toCB=LUT_connect[cls.LUTID][1]
+			freeCB=check_free_CB_port(LUT_connect[cls.LUTID][0])
+			print 'fee CB %s'%freeCB
+			for i in freeCB:
+				print 'i value %s'%i
+				if i!=999:
+					CB_target=i
+					i=i*0
+					CB_code=k
+					break
+				else:
+					k=k+1
+					continue
+			print 'k value %s CB_code %s CB_target %s '%(k,CB_code,CB_target)
+			toCB=CLB_CB_List[LUT_connect[cls.LUTID][0]][CB_code]
+			print 'Target Connection Block %s '%toCB
+			k=k*0
+			#toCB=LUT_connect[cls.LUTID][1]
 			fromCBCode=str(CB_connect[fromCB][0])
 			toCBCode=str(CB_connect[toCB][0])
 			print 'from name: %s code: %s'%(fromCB,fromCBCode)
@@ -133,14 +193,18 @@ def begins(cls):
 			if(op==999):
 				route=[]
 				route=find_shortest_path(CB_SB_map,fromCBCode,toCBCode)
+				print 'route is %s '%route
+				
 			#last_SB_to_CB=connectRoute(route,fromCB,toCB,cls.op4,cls.LUTID) #calling function which connects the from CB to the target CB
 			#target_CB_port=conf_lastSB(last_SB_to_CB['currentSBId'],last_SB_to_CB['currentSBFace'],last_SB_to_CB['currentport'],toCB,route,cls.LUTID)
 				target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.op4,cls.LUTID)
+				print 'found the target CB port'
 				if(target_CB_port!=999):
 					op4=CB_input_output_connect[target_CB][target_CB_port]
 					for key in CLB_INDEX_TO_INPUT.keys():
 						if (CLB_INDEX_TO_INPUT[key]==op4):
 							CLB_INP_STATS[LUT_connect[cls.LUTID][0]][int(key)]=cls.op4
+							print 'updated the CLB inp statsu' 
 				else:
 					print 'No target CB port available'
 			#route_len= len(route)
@@ -187,7 +251,7 @@ def begins(cls):
 input_port = (oneOf("I0 I1 I2 I3 I4 I5 I6 I7 I8 I9 I10 I11 I12 I13 I14 I15 Q00_0 Q00_1 Q00_2 Q00_3 Q00_4 Q00_5 Q00_6 Q00_7 Q01_0 Q01_1 Q01_2 Q01_3 Q01_4 Q01_5 Q01_6 Q01_7 Q10_0 Q10_1 Q10_2 Q10_3 Q10_4 Q10_5 Q10_6 Q10_7 Q11_0 Q11_1 Q11_2 Q11_3 Q11_4 Q11_5 Q11_6 Q11_7")).setResultsName('InputLine')
 
 #inputLines=(oneOf("I0 I1 I2 I3 I4 I5 I6 I7 I8 I9 I10 I11 I12 I13 I14 I15")).setResultsName('onlyInput')
-output_port = (oneOf("Q00_0 Q00_1 Q00_2 Q00_3 Q00_4 Q00_5 Q00_6 Q00_7 Q10 Q01_1 Q01_2 Q01_3 Q01_4 Q01_5 Q01_6 Q01_7 Q11_0 Q11_1 Q11_2 Q11_3 Q11_4 Q11_5 Q11_6 Q11_7 Q10_0 Q10_1 Q10_2 Q10_3 Q10_4 Q10_5 Q10_6 Q10_7")).setResultsName('LUTID')
+output_port = (oneOf("Q00_0 Q00_1 Q00_2 Q00_3 Q00_4 Q00_5 Q00_6 Q00_7 Q01_0 Q01_1 Q01_2 Q01_3 Q01_4 Q01_5 Q01_6 Q01_7 Q11_0 Q11_1 Q11_2 Q11_3 Q11_4 Q11_5 Q11_6 Q11_7 Q10_0 Q10_1 Q10_2 Q10_3 Q10_4 Q10_5 Q10_6 Q10_7")).setResultsName('LUTID')
 #operand= input_port | output_port
 
 
@@ -195,7 +259,7 @@ operand1 = (input_port | output_port).setResultsName('op1')
 operand2 = (input_port | output_port).setResultsName('op2')
 operand3 = (input_port | output_port).setResultsName('op3')
 operand4 = (input_port | output_port).setResultsName('op4')
-op = (oneOf("AND OR XOR FULL_ADD")).setResultsName('function')
+op = (oneOf("AND OR XOR FULL_ADD ZERO")).setResultsName('function')
 
 switchId = (oneOf("00 01 02 10 11 12 20 21 22")).setResultsName('switchID')
 #switchId2 = (oneOf("0 1 2")).setResultsName('switchID2')
@@ -252,7 +316,7 @@ config=OneOrMore(expression)
 
 counter=0
 
-tests=open("Test1.txt","r")
+tests=open("4bit_multiplier.txt","r")
 scr=tests.read()
 
 scr_split=scr.splitlines()
