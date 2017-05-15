@@ -1,0 +1,7 @@
+LUT_SLICEM.v
+LUT_input_interconnect.v
+syn_D_FF.v
+interconnect_unit.v
+2X1MUX.v
+value.v
+testbench_SLICEM.v

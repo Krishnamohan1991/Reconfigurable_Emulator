@@ -1,4 +1,4 @@
-module syn_D_FF(data_out,data_in,clk,reset); 
+module syn_D_FF(data_in,data_out,clk,reset); 
 input wire data_in, clk,reset;
 
 output reg data_out;

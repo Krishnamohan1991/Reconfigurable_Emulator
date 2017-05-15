@@ -17,4 +17,5 @@ IO_config_behav.v
 IO.v
 switch_block.v
 SB_config_behav.v
+CY0_MUX.v
 FPGA_testbench_multiplication.v

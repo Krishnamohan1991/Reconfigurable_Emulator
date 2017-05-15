@@ -15,6 +15,9 @@ output reg carryOut_sel_mux;
 
 reg [5:0] count;
 
+
+
+
 initial begin
   count[5:0]=6'b000000;
   CLB_prgm_b_out=1'b0;
