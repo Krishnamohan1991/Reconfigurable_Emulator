@@ -1,16 +1,16 @@
-module fast_carry_chain(x2,x1,carry_in,bypass,LUT_output,carry_out,sum_out,carryOut_sel_mux,CYMUX0_select);
-input x2,x1,carry_in,LUT_output,carryOut_sel_mux,bypass;
-input [2:0] CYMUX0_select;
+module fast_carry_chain(x1,x0,carry_in,bypass,LUT_output,carry_out,sum_out,CYO_MUX_SEL,CY0_MUX_SEL);
+input x0,x1,carry_in,LUT_output,CYO_MUX_SEL,bypass;
+input [2:0] CY0_MUX_SEL;
 output reg sum_out;
 output carry_out;
-wire carryOut_control_signal;
+wire carryOutMuxSelSignal;
 wire CYMUX0_inp;
 
-CYMUX0_inp CY0 (.bypass(bypass),.x1(x1),.x2(x2),.select(CYMUX0_select),.CYMUX_inp(CYMUX0_inp));
+CYMUX0_inp CYO_inp0 (.bypass(bypass),.x0(x0),.x1(x1),.x0ANDx1(x0&x1),.select(CY0_MUX_SEL),.CYMUX_inp(CYMUX0_inp));
 
-MUX2X1 CYSEL(.in1(1),.in2(LUT_output),.sel(carryOut_sel_mux),.out(carryOut_control_signal));
+MUX2X1 CYO_SEL(.in1(1),.in2(LUT_output),.sel(CYO_MUX_SEL),.out(carryOutMuxSelSignal));
 
-MUX2X1 CYMUX(.in1(CYMUX0_inp),.in2(carry_in),.sel(carryOut_control_signal),.out(carry_out));
+MUX2X1 CYO_MUX(.in1(CYMUX0_inp),.in2(carry_in),.sel(carryOutMuxSelSignal),.out(carry_out));
 
 always@(*)
 begin
