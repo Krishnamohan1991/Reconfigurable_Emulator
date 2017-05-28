@@ -11,15 +11,20 @@ i_consider_whitespaces_to_be_only = ' '
 ParserElement.setDefaultWhitespaceChars(i_consider_whitespaces_to_be_only)
 
 LUTId=''
+
+CB_SB_RouteMap = Graph()
+for vertice in graph_nodes:
+	CB_SB_RouteMap.add_vertex(vertice,CB_SB_map[vertice])
+
 class InputOutputClashError(Exception):
 	def __init__(self,value):
 		self.value=value
 	def __str__(self):
 		return repr(self.value)
 
-def configureLUT(lutid,lutfunc,inp1,inp2,inp3,inp4,CarryGenerateConfig):  #helper fucntion to set the configuration bits of an LUT
+def configureLUT(lutid,lutfunc,inp1,inp2,inp3,inp4,CarryGenerateConfig,data_write):  #helper fucntion to set the configuration bits of an LUT
 	LUT_ID=str(lutid)
-	lutobjectDictionary[Logic_Objects[LUT_ID]].lutConfig(LUT_ID,lutfunc,inp1,inp2,inp3,inp4,CarryGenerateConfig)
+	lutobjectDictionary[Logic_Objects[LUT_ID]].lutConfig(LUT_ID,lutfunc,inp1,inp2,inp3,inp4,CarryGenerateConfig,data_write)
 
 
 
@@ -39,6 +44,11 @@ def begins(cls):
 		k=0	#to check the free port in target CB
 		
 		CB_code=0
+
+		if(cls.LUT_Reg=='' or cls.DReg_inp==''):
+			bypass='I0'
+		if(cls.write_input==''):
+			data_write='I0'
 
 		#catch conditon when bypass and/or data line is absent
 		
@@ -151,17 +161,23 @@ def begins(cls):
 				else:
 					k=k+1
 					continue					
-			
+			print 'CB_code %s'%CB_code
 			toCB=CLB_CB_List[LUT_connect[cls.LUTID][0]][CB_code] #finding the target CB
 			k=k*0 #resetting k to 0
 			print "LUTID= %s to CB= %s "%(cls.LUTID,toCB)
 			toCBCode=str(CB_connect[toCB][0])    #CB code at the output to which the output LUT is connected
 			print 'to name: %s code: %s'%(toCB,toCBCode)
 			op=find_signal_CLB(cls.LUTID,cls.op1)
+			#print 'first operand %s'%op
 			if(op==999):
 				route=[]
-				route=find_shortest_path(CB_SB_map,fromCBCode,toCBCode) # calling function to find the shortest route
+				route=CB_SB_RouteMap.shortest_path(fromCBCode,toCBCode)
+				route.append(fromCBCode)
+				route.reverse()
+				#route=find_shortest_path(CB_SB_map,fromCBCode,toCBCode) # calling function to find the shortest route
+				print 'route %s'%route
 				target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.op1,cls.LUTID)
+				print 'Target CB Port %s'%target_CB_port
 				if(target_CB_port!=999):
 					op1=CB_input_output_connect[target_CB][target_CB_port]
 					for key in CLB_INDEX_TO_INPUT.keys():  #updating the CLB_INDEX_TO_INPUT dictionary 
@@ -297,7 +313,7 @@ def begins(cls):
 				print route
 			else:
 				op4=op
-		print'lutid %s inpu1 %s input2 %s input3 %s input4 %s'%(cls.LUTID,op1,op2,op3,op4)
+		print'lutid %s inpu1 %s input2 %s input3 %s input4 %s bypass %s data_write %s'%(cls.LUTID,op1,op2,op3,op4,bypass,data_write)
 		
 		#configuring the CLB
 		configureLUT(cls.LUTID,cls.function,LUT_interconnect[op1],LUT_interconnect[op2],LUT_interconnect[op3],LUT_interconnect[op4],cls.CarryGenerateConfig,LUT_interconnect[data_write])
@@ -513,7 +529,7 @@ tests.close()
 
 
 #####################################################printing bits######################################################################################
-
+'''
 CB_print_order=["11_3","11_2","11_1","11_0","10_3","10_2","10_1","10_0","01_3","01_2","01_1","01_0","00_3","00_2","00_1","00_0"]
 CB_bit_stream=''
 for i in CB_print_order:
@@ -543,3 +559,4 @@ file.write("CLB_config_stream[1215:0]= 1216'b"+LUT_bit_stream+";\n")
 file.write("IO_config_stream[191:0]=192'b"+IO_bit_stream+";")
 
 file.close()
+'''

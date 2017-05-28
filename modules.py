@@ -1,9 +1,12 @@
 #!/usr/bin/env python
+import heapq
+import sys
 from fpga_dict import*
 class DReg(object):
-	def __init__(self):   #DregId written as CLB00_R0
+	def __init__(self,name):   #DregId written as CLB00_R0
 		self.src='X'
 		self.status=0
+		self.RegId=name
 
 	def confDReg(self,Inp_Src):
 		if(self.status==1 and self.src!='X'):
@@ -53,7 +56,10 @@ class lut(object):
 		self.data='000000'
 		self.BY='000000'
 
-	def lutConfig(self,LUTID,function,input1,input2,input3,input4,CarryGenerateConfig,data):		
+	def lutConfig(self,LUTID,function,input1,input2,input3,input4,CarryGenerateConfig,data):
+		if(self.status==1):
+			print 'WARNING: LUT %s is already configured'%self.LUTID
+			return LUTID		
 		
 		self.lutTable=LUT_function[function]		
 		self.outputPort=LUTID
@@ -65,8 +71,9 @@ class lut(object):
 		self.LUTID=LUTID
 		self.function=function
 		self.out_dir_or_reg= LUTID[-3:]       #attribute says if the output of the LUT being configured is registered or direct
+		self.data=data
 		
-		if(out_dir_or_reg[0]=='R'):
+		if(self.out_dir_or_reg[0]=='R'):
 			Reg_obj_key=LUTID[:6]+'R'+LUTID[-1:]  #MAKES CLB00_RQ0 TO CLB0_R0 ---?KEY FOR THE OBJECT DICT
 			if(LUTReg_objectDictionary[Reg_obj_key].status==0 and LUTReg_objectDictionary[Reg_obj_key].src!='X'):
 				self.DY_SEL='0'
@@ -109,7 +116,7 @@ for name in objectNames:
 
 
 
-class switchElock(object):
+class switchBlock(object):
 	def __init__(self,switchID):
 		self.N=['X','X','X','X','X','X','X','X']  #the config for IO blocks should update the face nearest to it while coding
 		self.E=['X','X','X','X','X','X','X','X'] #index and look up these lists using the face index of the switch blocks
@@ -120,7 +127,7 @@ class switchElock(object):
 		self.port_signal_ids=['X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X']
 		self.switchID=switchID
 		self.status=0
-		self.switchWict={'N0E0':'00','N0E1':'00','N0E2':'00','N0E3':'00','N0E4':'00','N0E5':'00','N0E6':'00','N0E7':'00','N0S0':'00',\
+		self.switchDict={'N0E0':'00','N0E1':'00','N0E2':'00','N0E3':'00','N0E4':'00','N0E5':'00','N0E6':'00','N0E7':'00','N0S0':'00',\
 'N0S1':'00','N0S2':'00','N0S3':'00','N0S4':'00','N0S5':'00','N0S6':'00','N0S7':'00','N0W0':'00','N0W1':'00','N0W2':'00','N0W3':'00',\
 'N0W4':'00','N0W5':'00','N0W6':'00','N0W7':'00','N1E0':'00','N1E1':'00','N1E2':'00','N1E3':'00','N1E4':'00','N1E5':'00','N1E6':'00',\
 'N1E7':'00','N1S0':'00','N1S1':'00','N1S2':'00','N1S3':'00','N1S4':'00','N1S5':'00','N1S6':'00','N1S7':'00','N1W0':'00','N1W1':'00',\
@@ -275,27 +282,27 @@ class switchElock(object):
 			else:
 				print 'no signal at from port switchID: %s,fromFace: %s port: %s'%(switchID,fromFace,fromFaceIndexnum)
 	def gen_SB_bits(self):
-		SE_switchList=["N0E0","N0E1","N0E2","N0E3","N0E4","N0E5","N0E6","N0E7","N0S0","N0S1","N0S2","N0S3","N0S4","N0S5","N0S6","N0S7","N0W0","N0W1","N0W2",
-"N0W3","N0W4","N0W5","N0W6","N0W7","N1E0","N1E1","N1E2","N1E3","N1E4","N1E5","N1E6","N1E7","N1S0","N1S1","N1S2","N1S3","N1S4","N1S5",
-"N1S6","N1S7","N1W0","N1W1","N1W2","N1W3","N1W4","N1W5","N1W6","N1W7","N2E0","N2E1","N2E2","N2E3","N2E4","N2E5","N2E6","N2E7","N2S0",
-"N2S1","N2S2","N2S3","N2S4","N2S5","N2S6","N2S7","N2W0","N2W1","N2W2","N2W3","N2W4","N2W5","N2W6","N2W7","N3E0","N3E1","N3E2","N3E3",
-"N3E4","N3E5","N3E6","N3E7","N3S0","N3S1","N3S2","N3S3","N3S4","N3S5","N3S6","N3S7","N3W0","N3W1","N3W2","N3W3","N3W4","N3W5","N3W6",
-"N3W7","N4E0","N4E1","N4E2","N4E3","N4E4","N4E5","N4E6","N4E7","N4S0","N4S1","N4S2","N4S3","N4S4","N4S5","N4S6","N4S7","N4W0","N4W1",
-"N4W2","N4W3","N4W4","N4W5","N4W6","N4W7","N5E0","N5E1","N5E2","N5E3","N5E4","N5E5","N5E6","N5E7","N5S0","N5S1","N5S2","N5S3","N5S4",
-"N5S5","N5S6","N5S7","N5W0","N5W1","N5W2","N5W3","N5W4","N5W5","N5W6","N5W7","N6E0","N6E1","N6E2","N6E3","N6E4","N6E5","N6E6","N6E7",
-"N6S0","N6S1","N6S2","N6S3","N6S4","N6S5","N6S6","N6S7","N6W0","N6W1","N6W2","N6W3","N6W4","N6W5","N6W6","N6W7","N7E0","N7E1","N7E2",
-"N7E3","N7E4","N7E5","N7E6","N7E7","N7S0","N7S1","N7S2","N7S3","N7S4","N7S5","N7S6","N7S7","N7W0","N7W1","N7W2","N7W3","N7W4","N7W5",
-"N7W6","N7W7","E0W0","E0W1","E0W2","E0W3","E0W4","E0W5","E0W6","E0W7","E0S0","E0S1","E0S2","E0S3","E0S4","E0S5","E0S6","E0S7","E1W0",
-"E1W1","E1W2","E1W3","E1W4","E1W5","E1W6","E1W7","E1S0","E1S1","E1S2","E1S3","E1S4","E1S5","E1S6","E1S7","E2W0","E2W1","E2W2","E2W3",
-"E2W4","E2W5","E2W6","E2W7","E2S0","E2S1","E2S2","E2S3","E2S4","E2S5","E2S6","E2S7","E3W0","E3W1","E3W2","E3W3","E3W4","E3W5","E3W6",
-"E3W7","E3S0","E3S1","E3S2","E3S3","E3S4","E3S5","E3S6","E3S7","E4W0","E4W1","E4W2","E4W3","E4W4","E4W5","E4W6","E4W7","E4S0","E4S1",
-"E4S2","E4S3","E4S4","E4S5","E4S6","E4S7","E5W0","E5W1","E5W2","E5W3","E5W4","E5W5","E5W6","E5W7","E5S0","E5S1","E5S2","E5S3","E5S4",
-"E5S5","E5S6","E5S7","E6W0","E6W1","E6W2","E6W3","E6W4","E6W5","E6W6","E6W7","E6S0","E6S1","E6S2","E6S3","E6S4","E6S5","E6S6","E6S7",
-"E7W0","E7W1","E7W2","E7W3","E7W4","E7W5","E7W6","E7W7","E7S0","E7S1","E7S2","E7S3","E7S4","E7S5","E7S6","E7S7","S0W0","S0W1","S0W2",
-"S0W3","S0W4","S0W5","S0W6","S0W7","S1W0","S1W1","S1W2","S1W3","S1W4","S1W5","S1W6","S1W7","S2W0","S2W1","S2W2","S2W3","S2W4","S2W5",
-"S2W6","S2W7","S3W0","S3W1","S3W2","S3W3","S3W4","S3W5","S3W6","S3W7","S4W0","S4W1","S4W2","S4W3","S4W4","S4W5","S4W6","S4W7","S5W0",
-"S5W1","S5W2","S5W3","S5W4","S5W5","S5W6","S5W7","S6W0","S6W1","S6W2","S6W3","S6W4","S6W5","S6W6","S6W7","S7W0","S7W1","S7W2","S7W3",
-"S7W4","S7W5","S7W6","S7W7"]
+		SB_switchList=["N0E0","N0E1","N0E2","N0E3","N0E4","N0E5","N0E6","N0E7","N0S0","N0S1","N0S2","N0S3","N0S4","N0S5","N0S6","N0S7","N0W0","N0W1","N0W2",
+		"N0W3","N0W4","N0W5","N0W6","N0W7","N1E0","N1E1","N1E2","N1E3","N1E4","N1E5","N1E6","N1E7","N1S0","N1S1","N1S2","N1S3","N1S4","N1S5",
+		"N1S6","N1S7","N1W0","N1W1","N1W2","N1W3","N1W4","N1W5","N1W6","N1W7","N2E0","N2E1","N2E2","N2E3","N2E4","N2E5","N2E6","N2E7","N2S0",
+		"N2S1","N2S2","N2S3","N2S4","N2S5","N2S6","N2S7","N2W0","N2W1","N2W2","N2W3","N2W4","N2W5","N2W6","N2W7","N3E0","N3E1","N3E2","N3E3",
+		"N3E4","N3E5","N3E6","N3E7","N3S0","N3S1","N3S2","N3S3","N3S4","N3S5","N3S6","N3S7","N3W0","N3W1","N3W2","N3W3","N3W4","N3W5","N3W6",
+		"N3W7","N4E0","N4E1","N4E2","N4E3","N4E4","N4E5","N4E6","N4E7","N4S0","N4S1","N4S2","N4S3","N4S4","N4S5","N4S6","N4S7","N4W0","N4W1",
+		"N4W2","N4W3","N4W4","N4W5","N4W6","N4W7","N5E0","N5E1","N5E2","N5E3","N5E4","N5E5","N5E6","N5E7","N5S0","N5S1","N5S2","N5S3","N5S4",
+		"N5S5","N5S6","N5S7","N5W0","N5W1","N5W2","N5W3","N5W4","N5W5","N5W6","N5W7","N6E0","N6E1","N6E2","N6E3","N6E4","N6E5","N6E6","N6E7",
+		"N6S0","N6S1","N6S2","N6S3","N6S4","N6S5","N6S6","N6S7","N6W0","N6W1","N6W2","N6W3","N6W4","N6W5","N6W6","N6W7","N7E0","N7E1","N7E2",
+		"N7E3","N7E4","N7E5","N7E6","N7E7","N7S0","N7S1","N7S2","N7S3","N7S4","N7S5","N7S6","N7S7","N7W0","N7W1","N7W2","N7W3","N7W4","N7W5",
+		"N7W6","N7W7","E0W0","E0W1","E0W2","E0W3","E0W4","E0W5","E0W6","E0W7","E0S0","E0S1","E0S2","E0S3","E0S4","E0S5","E0S6","E0S7","E1W0",
+		"E1W1","E1W2","E1W3","E1W4","E1W5","E1W6","E1W7","E1S0","E1S1","E1S2","E1S3","E1S4","E1S5","E1S6","E1S7","E2W0","E2W1","E2W2","E2W3",
+		"E2W4","E2W5","E2W6","E2W7","E2S0","E2S1","E2S2","E2S3","E2S4","E2S5","E2S6","E2S7","E3W0","E3W1","E3W2","E3W3","E3W4","E3W5","E3W6",
+		"E3W7","E3S0","E3S1","E3S2","E3S3","E3S4","E3S5","E3S6","E3S7","E4W0","E4W1","E4W2","E4W3","E4W4","E4W5","E4W6","E4W7","E4S0","E4S1",
+		"E4S2","E4S3","E4S4","E4S5","E4S6","E4S7","E5W0","E5W1","E5W2","E5W3","E5W4","E5W5","E5W6","E5W7","E5S0","E5S1","E5S2","E5S3","E5S4",
+		"E5S5","E5S6","E5S7","E6W0","E6W1","E6W2","E6W3","E6W4","E6W5","E6W6","E6W7","E6S0","E6S1","E6S2","E6S3","E6S4","E6S5","E6S6","E6S7",
+		"E7W0","E7W1","E7W2","E7W3","E7W4","E7W5","E7W6","E7W7","E7S0","E7S1","E7S2","E7S3","E7S4","E7S5","E7S6","E7S7","S0W0","S0W1","S0W2",
+		"S0W3","S0W4","S0W5","S0W6","S0W7","S1W0","S1W1","S1W2","S1W3","S1W4","S1W5","S1W6","S1W7","S2W0","S2W1","S2W2","S2W3","S2W4","S2W5",
+		"S2W6","S2W7","S3W0","S3W1","S3W2","S3W3","S3W4","S3W5","S3W6","S3W7","S4W0","S4W1","S4W2","S4W3","S4W4","S4W5","S4W6","S4W7","S5W0",
+		"S5W1","S5W2","S5W3","S5W4","S5W5","S5W6","S5W7","S6W0","S6W1","S6W2","S6W3","S6W4","S6W5","S6W6","S6W7","S7W0","S7W1","S7W2","S7W3",
+		"S7W4","S7W5","S7W6","S7W7"]
 
 		sb_bits=''
 
@@ -372,6 +379,8 @@ class IOBlocks(object):
 		self.ioConf[6]=pt6;
 		self.ioConf[7]=pt7;
 		ptrs=[pt0,pt1,pt2,pt3,pt4,pt5,pt6,pt7]
+		ioPortName=''
+
 		for m in range(0,8):
 			index_m=str(m)
 			self.ioDict[index_m]=IOBlocks.setIOBits(self,self.ioConf[m])
@@ -379,6 +388,7 @@ class IOBlocks(object):
 		index=0  #for keeping track of all 8 ports of the IO
 		for i in ptrs:
 			if index<8:  #setting the adjacent SB ports to I or O based on each IO block
+				ioPortName='IO'+ioId+'_'+str(i)
 				switchBlock.setFaceStatus(SBobjectDictionary[IO_connect[ioId][0]],IO_connect[ioId][1],index,i)
 				index=index+1
 	def printIObits(self):
@@ -479,7 +489,7 @@ class connectionBlock(object):   #fix input and output port collission
 
 
 	def CB_AdjSB_conf(self,cbId,leftSB,rightSB,CBPortId,CBDictKey): #helper function to configure CB and the two SB on either of its sides
-		 if(leftSB=='X' and rightSB=='X'):
+		 	if(leftSB=='X' and rightSB=='X'):
 				leftFace=CB_connect[cbId][2]
 				rightFace=CB_connect[cbId][4]
 				switchBlock.setFaceStatus(SBobjectDictionary[CB_connect[cbId][1]],leftFace,CBPortId,'Q')
@@ -671,77 +681,89 @@ CB_map_code={
 #00, 01,02 etc. represents the SB and C4,C1 etc. represent the code for Switch blocks
 
 CB_SB_map={
-	  "00":['C1','01','C4','10'],       
-	  "01":['00','02','11','C1','C5','C2'],
-	  "02":['01','12','03','C5','C8','C6'],
-	  "03":['02','04','13','C8','C9','C11'],
-	  "04":['03','14','C11','C12'],
-	  
-	  "10":['11','20','00','C3','C14','C3'],       
-	  "11":['10','12','21','01','C3','C7','C15','C2'],
-	  "12":['11','13','22','02','C7','C10','C17','C6'],
-	  "13":['12','14','23','03','C10','C13','C19','C9'],
-	  "14":['13','24','04','C13','C21','C12'],
+	 "00":{'C1':1,'01':1,'C4':1,'10':1},       
+	 "01":{'00':1,'02':1,'11':1,'C1':1,'C5':1,'C2':1},
+	 "02":{'01':1,'12':1,'03':1,'C5':1,'C8':1,'C6':1},
+	 "03":{'02':1,'04':1,'13':1,'C8':1,'C9':1,'C11':1},
+	 "04":{'03':1,'14':1,'C11':1,'C12':1},	 
+	 "10":{'11':1,'20':1,'00':1,'C3':1,'C14':1,'C3':1},       
+	 "11":{'10':1,'12':1,'21':1,'01':1,'C3':1,'C7':1,'C15':1,'C2':1},
+	 "12":{'11':1,'13':1,'22':1,'02':1,'C7':1,'C10':1,'C17':1,'C6':1},
+	 "13":{'12':1,'14':1,'23':1,'03':1,'C10':1,'C13':1,'C19':1,'C9':1},
+	 "14":{'13':1,'24':1,'04':1,'C13':1,'C21':1,'C12':1},
+	 "20":{'21':1,'30':1,'10':1,'C14':1,'C16':1,'C23':1},       
+	 "21":{'11':1,'20':1,'22':1,'31':1,'C16':1,'C18':1,'C24':1,'C15':1},
+	 "22":{'12':1,'21':1,'23':1,'32':1,'C18':1,'C20':1,'C26':1,'C17':1},
+	 "23":{'22':1,'24':1,'33':1,'13':1,'C20':1,'C22':1,'C28':1,'C19':1},
+	 "24":{'23':1,'34':1,'14':1,'C22':1,'C30':1,'C21':1},
+	 "30":{'31':1,'40':1,'20':1,'C25':1,'C32':1,'C23':1},       
+	 "31":{'30':1,'32':1,'41':1,'21':1,'C25':1,'C27':1,'C33':1,'C24':1},
+	 "32":{'31':1,'33':1,'42':1,'22':1,'C27':1,'C29':1,'C35':1,'C26':1},
+	 "33":{'23':1,'32':1,'34':1,'43':1,'C29':1,'C31':1,'C37':1,'C28':1},
+	 "34":{'33':1,'44':1,'24':1,'C31':1,'C39':1,'C30':1},
+	 "40":{'30':1,'41':1,'C32':1,'C34':1},       
+	 "41":{'40':1,'31':1,'42':1,'C34':1,'C33':1,'C36':1},
+	 "42":{'41':1,'32':1,'43':1,'C36':1,'C35':1,'C38':1},
+	 "43":{'42':1,'33':1,'44':1,'C38':1,'C37':1,'C40':1},
+	 "44":{'43':1,'34':1,'C40':1,'C39':1},
+	 "C1":{'00':1,'01':1},
+	 "C2":{'01':1,'11':1},
+	 "C3":{'10':1,'11':1},
+	 "C4":{'00':1,'10':1},
+	 "C5":{'01':1,'02':1},
+	 "C6":{'02':1,'12':1},
+	 "C7":{'11':1,'12':1},
+	 "C8":{'02':1,'03':1},
+	 "C9":{'03':1,'13':1},
+	 "C10":{'12':1,'13':1},
+	 "C11":{'03':1,'04':1},
+	 "C12":{'04':1,'14':1},
+	 "C13":{'13':1,'14':1},
+	 "C14":{'10':1,'20':1},
+	 "C15":{'11':1,'21':1},
+	 "C16":{'20':1,'21':1},
+	 "C17":{'12':1,'22':1},
+	 "C18":{'21':1,'22':1},
+	 "C19":{'13':1,'23':1},
+	 "C20":{'22':1,'23':1},
+	 "C21":{'14':1,'24':1},
+	 "C22":{'23':1,'24':1},
+	 "C23":{'20':1,'30':1},
+	 "C24":{'21':1,'31':1},
+	 "C25":{'30':1,'31':1},
+	 "C26":{'22':1,'32':1},
+	 "C27":{'31':1,'32':1},
+	 "C28":{'23':1,'33':1},
+	 "C29":{'32':1,'33':1},
+	 "C30":{'24':1,'34':1},
+	 "C31":{'33':1,'34':1},
+	 "C32":{'30':1,'40':1},
+	 "C33":{'31':1,'41':1},
+	 "C34":{'40':1,'41':1},
+	 "C35":{'32':1,'42':1},
+	 "C36":{'41':1,'42':1},
+	 "C37":{'33':1,'43':1},
+	 "C38":{'42':1,'43':1},
+	 "C39":{'34':1,'44':1},
+	 "C40":{'43':1,'44':1}
+	 }
 
-	  "20":['21','30','10','C14','C16','C23'],       
-	  "21":['11','20','22','31','C16','C18','C24','C15'],
-	  "22":['12','21','23','32','C18','C20','C26'],
-	  "23":['22','24','33','C20','C22','C28','C17'],
-	  "24":['23','34','14','C22','C30','C21'],
-
-	  "30":['31','40','20','C25','C32','C23'],       
-	  "31":['30','32','41','21','C25','C27','C33','C24'],
-	  "32":['31','33','42','22','C27','C29','C35','C26'],
-	  "33":['23','32','34','43','C29','C31','C37','C28'],
-	  "34":['33','44','24','C31','C39','C30'],
-
-	  "40":['30','41','C32','C34'],       
-	  "41":['40','31','42','C34','C33','C36'],
-	  "42":['41','32','43','C36','C35','C38'],
-	  "43":['42','33','44','C38','C37','C40'],
-	  "44":['43','34','C40','C39'],
-
-	  "C1":['00','01'],
-	  "C2":['01','11'],
-	  "C3":['10','11'],
-	  "C4":['00','10'],
-	  "C5":['01','02'],
-	  "C6":['02','12'],
-	  "C7":['11','12'],
-	  "C8":['02','03'],
-	  "C9":['03','13'],
-	  "C10":['12','13'],
-	  "C11":['03','04'],
-	  "C12":['04','14'],
-	  "C13":['13','14'],
-	  "C14":['10','20'],
-	  "C15":['11','21'],
-	  "C16":['20','21'],
-	  "C17":['12','22'],
-	  "C18":['21','22'],
-	  "C19":['13','23'],
-	  "C20":['22','23'],
-	  "C21":['14','24'],
-	  "C22":['23','24'],
-	  "C23":['20','30'],
-	  "C24":['21','31'],
-	  "C25":['30','31'],
-	  "C26":['22','32'],
-	  "C27":['31','32'],
-	  "C28":['23','33'],
-	  "C29":['32','33'],
-	  "C30":['24','34'],
-	  "C31":['33','34'],
-	  "C32":['30','40'],
-	  "C33":['31','41'],
-	  "C34":['40','41'],
-	  "C35":['32','42'],
-	  "C36":['41','42'],
-	  "C37":['33','43'],
-	  "C38":['42','43'],
-	  "C39":['34','44'],
-	  "C40":['43','44']  
-	  }
+graph_nodes=[
+	 "00","01", "02","03","04","10","11","12",
+	 "13","14","20","21",
+	 "22","23","24","30",
+	 "31","32","33","34",
+	 "40","41","42","43","44",
+	 "C1", "C2","C3","C4",
+	 "C5","C6","C7", "C8",
+	 "C9","C10","C11","C12",
+	 "C13","C14","C15","C16","C17","C18",
+	 "C19","C20", "C21","C22", "C23","C24",
+	 "C25","C26", "C27","C28",
+	 "C29","C30", "C31","C32",
+	 "C33","C34", "C35","C36",
+	 "C37","C38", "C39","C40"  
+	 ]
 
 
 pa=[]
@@ -955,6 +977,7 @@ def config_originCB_SB_connect_RG3(fromCB,CB_output_port,CB_output_port_ID,port_
 	
 	if(CB_output_port!='X'):
 		fromSBPortIndex=int(CBobjectDictionary[fromCB].CBstate[CB_output_port_ID])
+		print 'Output Port Already Set as %s'%CB_output_port
 
 	else:
 		fromSBPortIndex=checkFreeSBPort_CBconnect(SBId,fromSBFace,x1,x2,x3,x4,fromCB)
@@ -973,8 +996,9 @@ def config_originCB_SB_connect_RG3(fromCB,CB_output_port,CB_output_port_ID,port_
 		if(port_name=='CY2'):
 			CBobjectDictionary[fromCB].configCB(fromCB,x1,x2,x3,x4,CB_output_port,q2,Rq1,Rq2,CY1,CB_output_port)
 		SBobjectDictionary[SBId].setFaceStatus(fromSBFace,fromSBPortIndex,'Q')
+		print 'WARNING:Switch 10 North face %s'%SBobjectDictionary[SBId].N
 		print 'starting SB %s %s port %s'%(SBId,fromSBFace,fromSBPortIndex)
-
+		return fromSBPortIndex
 
 
 
@@ -986,11 +1010,11 @@ def routing(route,fromCB,fromCBCode,toCB,toCBCode,originLUT,targetLUT):
 		print'LUT %s has not been configured'%originLUT
 
 	if CB_connect[fromCB][1]==route[1]: #check if the next SB is to the left of the origin-CB
-			SBId=CB_connect[fromCB][1]
-			fromSBFace=CB_connect[fromCB][2]
-		elif CB_connect[fromCB][3]==route[1]: #check if the next SB is to the right of the origin-CB
-			SBId=CB_connect[fromCB][3]
-			fromSBFace=CB_connect[fromCB][4]
+		SBId=CB_connect[fromCB][1]
+		fromSBFace=CB_connect[fromCB][2]
+	elif CB_connect[fromCB][3]==route[1]: #check if the next SB is to the right of the origin-CB
+		SBId=CB_connect[fromCB][3]
+		fromSBFace=CB_connect[fromCB][4]
 
 	x1=CBobjectDictionary[fromCB].CBstate[0]
 	x2=CBobjectDictionary[fromCB].CBstate[1]
@@ -1003,6 +1027,8 @@ def routing(route,fromCB,fromCBCode,toCB,toCBCode,originLUT,targetLUT):
 	CY1=CBobjectDictionary[fromCB].CBstate[8]  
 	CY2=CBobjectDictionary[fromCB].CBstate[9]
 	outputCB=''
+	originSBPortIndex=0
+
 
 	if(route_len==3 and lutobjectDictionary[originLUT].status==1): # #when route length is equal to 3 (origin CB->one SB->target CB)
 
@@ -1031,34 +1057,36 @@ def routing(route,fromCB,fromCBCode,toCB,toCBCode,originLUT,targetLUT):
 			config_originCB_SB_connect(fromCB,CY2,CB_output_port_ID[CY2],port_name,fromSBFace,SBId,toCB,route,targetLUT,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)
 
 	if(route_len>3 and lutobjectDictionary[originLUT].status==1):   #when route length is greater than 3 (origin CB->more than one SB->target CB)
-		
+		print 'ERROR CHECK: CB_connect[fromCB] %s origin LUT %s'%(CB_connect[fromCB],originLUT)
 		if(CB_connect[fromCB][5]==originLUT):  #check if origin LUT is q1
 			port_name='q1'
-			config_originCB_SB_connect_RG3(fromCB,q1,CB_output_port_ID[q1],port_name,fromSBFace,SBId,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)			
+			originSBPortIndex=config_originCB_SB_connect_RG3(fromCB,q1,CB_output_port_ID[q1],port_name,fromSBFace,SBId,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)			
+			print 'origin SB port index inside the if block %s'%originSBPortIndex
 
 		if(CB_connect[fromCB][6]==originLUT):			
 			port_name='q2'
-			config_originCB_SB_connect_RG3(fromCB,q2,CB_output_port_ID[q2],port_name,fromSBFace,SBId,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)
+			originSBPortIndex=config_originCB_SB_connect_RG3(fromCB,q2,CB_output_port_ID[q2],port_name,fromSBFace,SBId,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)
 
 		if(CB_connect[fromCB][8]==originLUT):			
 			port_name='Rq1'
-			config_originCB_SB_connect_RG3(fromCB,Rq1,CB_output_port_ID[Rq1],port_name,fromSBFace,SBId,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)	
+			originSBPortIndex=config_originCB_SB_connect_RG3(fromCB,Rq1,CB_output_port_ID[Rq1],port_name,fromSBFace,SBId,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)	
 
 		if(CB_connect[fromCB][9]==originLUT):			
 			port_name='Rq2'
-			config_originCB_SB_connect_RG3(fromCB,Rq2,CB_output_port_ID[Rq2],port_name,fromSBFace,SBId,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)	
+			originSBPortIndex=config_originCB_SB_connect_RG3(fromCB,Rq2,CB_output_port_ID[Rq2],port_name,fromSBFace,SBId,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)	
 
 		if(CB_connect[fromCB][10]==originLUT):			
 			port_name='CY1'
-			config_originCB_SB_connect_RG3(fromCB,CY1,CB_output_port_ID[CY1],port_name,fromSBFace,SBId,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)	
+			originSBPortIndex=config_originCB_SB_connect_RG3(fromCB,CY1,CB_output_port_ID[CY1],port_name,fromSBFace,SBId,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)	
 
 		if(CB_connect[fromCB][11]==originLUT):			
 			port_name='CY1'
-			config_originCB_SB_connect_RG3(fromCB,CY2,CB_output_port_ID[CY2],port_name,fromSBFace,SBId,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)			
+			originSBPortIndex=config_originCB_SB_connect_RG3(fromCB,CY2,CB_output_port_ID[CY2],port_name,fromSBFace,SBId,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)			
 			
 
 		currentSBId=route[1]
 		currentSBFace=fromSBFace
+		fromSBPortIndex=originSBPortIndex
 
 		while((count+1)<(route_len-1)):
 
@@ -1119,11 +1147,10 @@ def routing(route,fromCB,fromCBCode,toCB,toCBCode,originLUT,targetLUT):
 		return 999
 			
 			
-	
-			
+
+'''			
 def find_shortest_path(graph, start, end, path=[]):	#finding route using backtracking
        	path = path + [start]
-	#print path
         if start == end:
             	return path
         if not graph.has_key(start):
@@ -1137,6 +1164,7 @@ def find_shortest_path(graph, start, end, path=[]):	#finding route using backtra
                         		shortest = newpath
         return shortest	
 
+'''
 
 def find_signal_CLB(target_LUT,originLUT):  #used to find whether a signal has already been routed to any of the input ports of the origin CLB 
 	k=0
@@ -1211,6 +1239,55 @@ def check_free_CB_port(CLBID):   #helper function which checks all CB in target 
 	print 'CLB CB status %s'%[final_CB_index_00,final_CB_index_01,final_CB_index_10,final_CB_index_11]
 
 	return [final_CB_index_00,final_CB_index_01,final_CB_index_10,final_CB_index_11]  #returns a list containing the first free port of each CB
+
+
+class Graph:
+    
+    def __init__(self):
+        self.vertices = {}
+        
+    def add_vertex(self, name, edges):
+        self.vertices[name] = edges
+    
+    def shortest_path(self, start, finish):
+        distances = {} # Distance from start to node
+        previous = {}  # Previous node in optimal path from source
+        nodes = [] # Priority queue of all nodes in Graph
+
+        for vertex in self.vertices:
+            if vertex == start: # Set root node as distance of 0
+                distances[vertex] = 0
+                heapq.heappush(nodes, [0, vertex])
+            else:
+                distances[vertex] = sys.maxsize
+                heapq.heappush(nodes, [sys.maxsize, vertex])
+            previous[vertex] = None
+        
+        while nodes:
+            smallest = heapq.heappop(nodes)[1] # Vertex in nodes with smallest distance in distances
+            if smallest == finish: # If the closest node is our target we're done so print the path
+                path = []
+                while previous[smallest]: # Traverse through nodes til we reach the root which is 0
+                    path.append(smallest)
+                    smallest = previous[smallest]
+                return path
+            if distances[smallest] == sys.maxsize: # All remaining vertices are inaccessible from source
+                break
+            
+            for neighbor in self.vertices[smallest]: # Look at all the nodes that this vertex is attached to
+                alt = distances[smallest] + self.vertices[smallest][neighbor] # Alternative path distance
+                if alt < distances[neighbor]: # If there is a new shortest path update our priority queue (relax)
+                    distances[neighbor] = alt
+                    previous[neighbor] = smallest
+                    for n in nodes:
+                        if n[1] == neighbor:
+                            n[0] = alt
+                            break
+                    heapq.heapify(nodes)
+        return distances
+        
+    def __str__(self):
+        return str(self.vertices)
 	
 ##########################################routing logic ends##########################################################################
 	
