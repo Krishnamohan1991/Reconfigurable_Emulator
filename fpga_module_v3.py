@@ -30,6 +30,7 @@ def configureLUT(lutid,lutfunc,inp1,inp2,inp3,inp4,CarryGenerateConfig,data_writ
 
 
 def begins(cls):
+	#print 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXX %s'%cls.LUTID[0:2]
 	if(LUT_connect.get(cls.LUTID,0)):
 		isRegOutput=cls.LUTID[-3:]
 		Reg_obj_key=cls.LUTID[:6]+'R'+cls.LUTID[-1:]
@@ -62,23 +63,30 @@ def begins(cls):
 		k=0	#to check the free port in target CB
 		
 		CB_code=0
+		config_IO_input=0
+		fromSB='' #to store the orgin SB code when an IO port is given as input of a LUT
 		
 		print 'INITIAL VALUE OF BYPASS %s'%bypass
 		#catch conditon when bypass and/or data line is absent
 		print 'DRegInp = %s LUT_Reg = %s'%(cls.DReg_inp,cls.LUT_Reg)
-		if(cls.LUT_Reg!='' and cls.DReg_inp!='' and (cls.DReg_inp!=cls.LUT_Reg) and (LUT_connect[cls.DReg_inp][0]!=LUT_connect[cls.LUT_Reg][0])):  #cls.LUTID and cls.
-			Reg_obj_key=cls.LUT_Reg[:6]+'R'+cls.LUT_Reg[-1:] #MAKES CLB00_RQ0 TO CLB0_R0 ---?KEY FOR THE OBJECT DICT
+
+	
+
+		if(cls.LUT_Reg!='' and cls.DReg_inp!='' and (cls.DReg_inp!=cls.LUT_Reg)):  #cls.LUTID and cls.
+			Reg_obj_key=cls.LUT_Reg[:6]+'R'+cls.LUT_Reg[-1:] #MAKES CLB00_RQ0 TO CLB0_R0 ---?KEY FOR THE OBJECT DICT --
 			RegWr_enable=1
 			if(LUTReg_objectDictionary[Reg_obj_key].status==0 and LUTReg_objectDictionary[Reg_obj_key].src=='X'): #checking if the register has already been used or not
-				lutobjectDictionary[Logic_Objects[cls.LUT_Reg]].DY_SEL='1'
+				lutobjectDictionary[Logic_Objects[cls.LUT_Reg]].DY_SEL='1'  #configuring the Logic Pair Registers
 				LUTReg_objectDictionary[Reg_obj_key].confDReg(cls.DReg_inp)
-				print "Bypass connection %s "%bypass			
-				fromCB=LUT_connect[cls.DReg_inp][1] #the CB from which the input signal is transmited
-				fromCBCode=str(CB_connect[fromCB][0]) #the global code of the CB from which the input signal to be routed originates
-				print 'from name: %s code: %s'%(fromCB,fromCBCode)
-				freeCB=check_free_CB_port(LUT_connect[cls.LUT_Reg][0])
-				print 'free CB %s'%freeCB
-				for i in freeCB:  #finding all available CB ports around the LUT in the target CLB
+				#print "Bypass connection %s "%bypass
+				if(cls.DReg_inp[0:2]!='IO'):			
+					fromCB=LUT_connect[cls.DReg_inp][1] #the CB from which the input signal is transmited
+					fromCBCode=str(CB_connect[fromCB][0]) #the global code of the CB from which the input signal to be routed originates
+					print 'from name: %s code: %s'%(fromCB,fromCBCode)
+
+				freeCB=check_free_CB_port(LUT_connect[cls.LUT_Reg][0])  #finding all available CB ports around the LUT in the target CLB
+				print 'free CB %s'%freeCB 
+				for i in freeCB:  
 					if i!=999:
 						CB_target_port=i
 						i=i*0
@@ -93,13 +101,22 @@ def begins(cls):
 				print "LUTID= %s to CB= %s "%(cls.LUT_Reg,toCB)
 				toCBCode=str(CB_connect[toCB][0])    #CB code at the output to which the output LUT is connected
 				print 'to name: %s code: %s'%(toCB,toCBCode)
-				op=find_signal_CLB(cls.LUT_Reg,cls.DReg_inp)
+				op=find_signal_CLB(cls.LUT_Reg,cls.DReg_inp)  #see if the signal has already been routed or not
 				if(op==999):
 					route=[]
-					route=CB_SB_RouteMap.shortest_path(fromCBCode,toCBCode)
-					route.append(fromCBCode)
-					route.reverse()
-					target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.DReg_inp,cls.LUT_Reg,RegWr_enable)
+					if(cls.DReg_inp[0:2]!='IO'):
+						route=CB_SB_RouteMap.shortest_path(fromCBCode,toCBCode)
+						route.append(fromCBCode)
+						route.reverse()
+						target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.DReg_inp,cls.LUT_Reg,RegWr_enable)
+
+					elif(cls.DReg_inp[0:2]=='IO' and IOobjectDictionary[cls.DReg_inp[3:5]].status==1):
+						fromSB=IO_SB_Connect[cls.DReg_inp[3:5]][0]
+						route=CB_SB_RouteMap.shortest_path(fromSB,toCBCode)
+						route.append(fromSB)
+						route.reverse()
+						target_CB_port=routing(route,'X','X',toCB,toCBCode,cls.DReg_inp,cls.LUT_Reg,RegWr_enable)
+					print route
 					print 'TARGET CB PORT FOR ROUTING %s'%(target_CB_port)
 					if(target_CB_port!=999):
 						bypass=CB_input_output_connect[target_CB][target_CB_port]
@@ -110,7 +127,6 @@ def begins(cls):
 						print 'ERROR: No target CB port available'
 			
 					print 'routing %s for %s Bypass line'%(cls.DReg_inp,cls.LUT_Reg)
-					print route
 				
 				else:				
 					bypass=op
@@ -122,11 +138,13 @@ def begins(cls):
 			
 
 
-		if(LUT_connect.has_key(cls.write_input) and cls.write_input!='' and (LUT_connect[cls.write_input][0]!=LUT_connect[cls.LUTID][0])):
-			print "Write Data Line"			
-			fromCB=LUT_connect[cls.write_input][1] #the CB from which the input signal is transmited
-			fromCBCode=str(CB_connect[fromCB][0]) #the global code of the CB from which the input signal to be routed originates
-			print 'from name: %s code: %s'%(fromCB,fromCBCode)
+		if((LUT_connect.has_key(cls.write_input) and cls.write_input!='' and (LUT_connect[cls.write_input][0]!=LUT_connect[cls.LUTID][0])) or cls.write_input[0:2]=='IO'):
+			print "Write Data Line"
+			if(cls.write_input[0:2]!='IO'):			
+				fromCB=LUT_connect[cls.write_input][1] #the CB from which the input signal is transmited
+				fromCBCode=str(CB_connect[fromCB][0]) #the global code of the CB from which the input signal to be routed originates
+				print 'from name: %s code: %s'%(fromCB,fromCBCode)
+
 			freeCB=check_free_CB_port(LUT_connect[cls.LUTID][0])
 			print 'free CB %s'%freeCB
 			for i in freeCB:  #finding all available CB ports around the LUT in the target CLB
@@ -147,10 +165,20 @@ def begins(cls):
 			op=find_signal_CLB(cls.LUTID,cls.write_input)
 			if(op==999):
 				route=[]
-				route=CB_SB_RouteMap.shortest_path(fromCBCode,toCBCode)
-				route.append(fromCBCode)
-				route.reverse()
-				target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.write_input,cls.LUTID,RegWr_enable)
+				if(cls.write_input[0:2]!='IO'):
+					route=CB_SB_RouteMap.shortest_path(fromCBCode,toCBCode)
+					route.append(fromCBCode)
+					route.reverse()
+					target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.write_input,cls.LUTID,RegWr_enable)
+
+				elif(cls.write_input[0:2]=='IO' and IOobjectDictionary[cls.DReg_inp[3:5]].status==1):
+					fromSB=IO_SB_Connect[cls.DReg_inp[3:5]][0]
+					route=CB_SB_RouteMap.shortest_path(fromSB,toCBCode)
+					route.append(fromSB)
+					route.reverse()
+					target_CB_port=routing(route,'X','X',toCB,toCBCode,cls.write_input,cls.LUTID,RegWr_enable)
+
+				print route				
 				if(target_CB_port!=999):
 					data_write=CB_input_output_connect[target_CB][target_CB_port]
 					for key in CLB_INDEX_TO_INPUT.keys():  #updating the CLB_INDEX_TO_INPUT dictionary 
@@ -160,17 +188,17 @@ def begins(cls):
 					print 'No target CB port available'
 			
 				print 'routing %s for %s data write line'%(cls.write_input,cls.LUTID)
-				print route
 				
 			else:				
 				data_write=op
 
 		
-		if(LUT_connect.has_key(cls.op1) and (LUT_connect[cls.op1][0]!=LUT_connect[cls.LUTID][0])): #check if the input and output LUTs belong to the same group or not
-			print "INPUT 1"			
-			fromCB=LUT_connect[cls.op1][1] #the CB from which the input signal is transmited
-			fromCBCode=str(CB_connect[fromCB][0]) #the global code of the CB from which the input signal to be routed originates
-			print 'from name: %s code: %s'%(fromCB,fromCBCode)
+		if((LUT_connect.has_key(cls.op1) and (LUT_connect[cls.op1][0]!=LUT_connect[cls.LUTID][0])) or cls.op1[0:2]=='IO'): #check if the input and output LUTs belong to the same group or not
+			print "INPUT 1 XXXXXXXX"	
+			if(cls.op1[0:2]!='IO'):			
+				fromCB=LUT_connect[cls.op1][1] #the CB from which the input signal is transmited
+				fromCBCode=str(CB_connect[fromCB][0]) #the global code of the CB from which the input signal to be routed originates
+				print 'from name: %s code: %s'%(fromCB,fromCBCode)
 			freeCB=check_free_CB_port(LUT_connect[cls.LUTID][0])
 			print 'free CB %s'%freeCB
 			for i in freeCB:  #finding all available CB ports around the LUT in the target CLB
@@ -189,15 +217,22 @@ def begins(cls):
 			toCBCode=str(CB_connect[toCB][0])    #CB code at the output to which the output LUT is connected
 			print 'Target CB: %s Target CB code: %s'%(toCB,toCBCode)
 			op=find_signal_CLB(cls.LUTID,cls.op1)
-			#print 'first operand %s'%op
+			print 'VALUE OF OP %s'%op
 			if(op==999):
 				route=[]
-				route=CB_SB_RouteMap.shortest_path(fromCBCode,toCBCode)
-				route.append(fromCBCode)
-				route.reverse()
-				#route=find_shortest_path(CB_SB_map,fromCBCode,toCBCode) # calling function to find the shortest route
-				print 'route %s'%route
-				target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.op1,cls.LUTID,RegWr_enable)
+				if(cls.op1[0:2]!='IO'):
+					route=CB_SB_RouteMap.shortest_path(fromCBCode,toCBCode)
+					route.append(fromCBCode)
+					route.reverse()
+					target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.op1,cls.LUTID,RegWr_enable)
+
+				elif(cls.op1[0:2]=='IO' and IOobjectDictionary[cls.op1[3:5]].status==1):
+					fromSB=IO_SB_Connect[cls.op1[3:5]][0]
+					route=CB_SB_RouteMap.shortest_path(fromSB,toCBCode)
+					route.append(fromSB)
+					route.reverse()
+					target_CB_port=routing(route,'X','X',toCB,toCBCode,cls.op1,cls.LUTID,RegWr_enable)
+				print route
 				print 'Target CB Port %s'%target_CB_port
 				if(target_CB_port!=999):
 					op1=CB_input_output_connect[target_CB][target_CB_port]
@@ -208,15 +243,15 @@ def begins(cls):
 					print 'No target CB port available'
 			
 				#print 'routing %s for %s input1'%(cls.op1,cls.LUTID)
-				print route
 				
 			else:				
 				op1=op
 				
-		if(LUT_connect.has_key(cls.op2) and (LUT_connect[cls.op2][0]!=LUT_connect[cls.LUTID][0])):	
-			print "INPUT 2"
-			fromCB=LUT_connect[cls.op2][1]
-			fromCBCode=str(CB_connect[fromCB][0])
+		if((LUT_connect.has_key(cls.op2) and (LUT_connect[cls.op2][0]!=LUT_connect[cls.LUTID][0])) or cls.op2[0:2]=='IO'):	
+			if(cls.op2[0:2]!='IO'):			
+				fromCB=LUT_connect[cls.op2][1] #the CB from which the input signal is transmited
+				fromCBCode=str(CB_connect[fromCB][0]) #the global code of the CB from which the input signal to be routed originates
+				print 'from name: %s code: %s'%(fromCB,fromCBCode)
 			freeCB=check_free_CB_port(LUT_connect[cls.LUTID][0])
 			print 'free CB %s'%freeCB
 			for i in freeCB:
@@ -231,16 +266,26 @@ def begins(cls):
 			toCB=CLB_CB_List[LUT_connect[cls.LUTID][0]][CB_code]
 			k=k*0
 			toCBCode=str(CB_connect[toCB][0])
-			print 'from name: %s code: %s'%(fromCB,fromCBCode)
+			
 			print "LUTID= %s to CB= %s "%(cls.LUTID,toCB)
 			print 'to name: %s code: %s'%(toCB,toCBCode)
 			op=find_signal_CLB(cls.LUTID,cls.op2) #to find out if the signal to be routed has already been routed before to one of the CLB ports
 			if(op==999):
 				route=[]
-				route=CB_SB_RouteMap.shortest_path(fromCBCode,toCBCode)
-				route.append(fromCBCode)
-				route.reverse()
-				target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.op2,cls.LUTID,RegWr_enable)
+				if(cls.op2[0:2]!='IO'):
+					route=CB_SB_RouteMap.shortest_path(fromCBCode,toCBCode)
+					route.append(fromCBCode)
+					route.reverse()
+					target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.op2,cls.LUTID,RegWr_enable)
+
+				elif(cls.op2[0:2]=='IO' and IOobjectDictionary[cls.op2[3:5]].status==1):
+					fromSB=IO_SB_Connect[cls.op2[3:5]][0]
+					route=CB_SB_RouteMap.shortest_path(fromSB,toCBCode)
+					route.append(fromSB)
+					route.reverse()
+					target_CB_port=routing(route,'X','X',toCB,toCBCode,cls.op2,cls.LUTID,RegWr_enable)
+				print route
+				print 'Target CB Port %s'%target_CB_port		
 				if(target_CB_port!=999):
 					op2=CB_input_output_connect[target_CB][target_CB_port]
 					for key in CLB_INDEX_TO_INPUT.keys(): #update the status of CLB input ports after routing the signal from another CLB
@@ -249,14 +294,16 @@ def begins(cls):
 				else:
 					print 'No target CB port available'
 				#print 'routing %s for %s input2'%(cls.op2,cls.LUTID)
-				print route
 					
 			else:				
 				op2=op
 				
-		if(LUT_connect.has_key(cls.op3) and (LUT_connect[cls.op3][0]!=LUT_connect[cls.LUTID][0])):
+		if((LUT_connect.has_key(cls.op3) and (LUT_connect[cls.op3][0]!=LUT_connect[cls.LUTID][0])) or cls.op3[0:2]=='IO'):
 			print "INPUT 3"
-			fromCB=LUT_connect[cls.op3][1]
+			if(cls.op3[0:2]!='IO'):			
+				fromCB=LUT_connect[cls.op3][1] #the CB from which the input signal is transmited
+				fromCBCode=str(CB_connect[fromCB][0]) #the global code of the CB from which the input signal to be routed originates
+				print 'from name: %s code: %s'%(fromCB,fromCBCode)
 			freeCB=check_free_CB_port(LUT_connect[cls.LUTID][0])
 			print 'free CB %s'%freeCB
 			for i in freeCB:
@@ -271,18 +318,26 @@ def begins(cls):
 			print 'k value %s CB_code %s CB_target_port %s '%(k,CB_code,CB_target_port)
 			toCB=CLB_CB_List[LUT_connect[cls.LUTID][0]][CB_code]
 			k=k*0
-			fromCBCode=str(CB_connect[fromCB][0])
 			toCBCode=str(CB_connect[toCB][0])
 			op=find_signal_CLB(cls.LUTID,cls.op3)
-			print 'from name: %s code: %s'%(fromCB,fromCBCode)
 			print "LUTID= %s to CB= %s "%(cls.LUTID,toCB)
 			print 'to name: %s code: %s'%(toCB,toCBCode)
 			if(op==999):
 				route=[]
-				route=CB_SB_RouteMap.shortest_path(fromCBCode,toCBCode)
-				route.append(fromCBCode)
-				route.reverse()
-				target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.op3,cls.LUTID,RegWr_enable)
+				if(cls.op3[0:2]!='IO'):
+					route=CB_SB_RouteMap.shortest_path(fromCBCode,toCBCode)
+					route.append(fromCBCode)
+					route.reverse()
+					target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.op3,cls.LUTID,RegWr_enable)
+
+				elif(cls.op3[0:2]=='IO' and IOobjectDictionary[cls.op3[3:5]].status==1):
+					fromSB=IO_SB_Connect[cls.op3[3:5]][0]
+					route=CB_SB_RouteMap.shortest_path(fromSB,toCBCode)
+					route.append(fromSB)
+					route.reverse()
+					target_CB_port=routing(route,'X','X',toCB,toCBCode,cls.op3,cls.LUTID,RegWr_enable)
+				print route	
+				print 'Target CB Port %s'%target_CB_port		
 				if(target_CB_port!=999):
 					op3=CB_input_output_connect[target_CB][target_CB_port]
 					for key in CLB_INDEX_TO_INPUT.keys():
@@ -291,13 +346,16 @@ def begins(cls):
 				else:
 					print 'No target CB port available'
 				#print 'routing %s for %s input3'%(cls.op3,cls.LUTID)
-				print route
+				
 			else:
 				op3=op
 				
-		if(LUT_connect.has_key(cls.op4) and (LUT_connect[cls.op4][0]!=LUT_connect[cls.LUTID][0])):
-			print "INPUT 4"
-			fromCB=LUT_connect[cls.op4][1]
+		if((LUT_connect.has_key(cls.op4) and (LUT_connect[cls.op4][0]!=LUT_connect[cls.LUTID][0])) or cls.op4[0:2]=='IO'):
+			print "INPUT 4 XXXXXXXXXXXXX"
+			if(cls.op4[0:2]!='IO'):			
+				fromCB=LUT_connect[cls.op4][1] #the CB from which the input signal is transmited
+				fromCBCode=str(CB_connect[fromCB][0]) #the global code of the CB from which the input signal to be routed originates
+				print 'from name: %s code: %s'%(fromCB,fromCBCode)
 			freeCB=check_free_CB_port(LUT_connect[cls.LUTID][0])
 			print 'fee CB %s'%freeCB
 			for i in freeCB:
@@ -314,20 +372,26 @@ def begins(cls):
 			toCB=CLB_CB_List[LUT_connect[cls.LUTID][0]][CB_code]
 			print 'Target Connection Block %s '%toCB
 			k=k*0
-			fromCBCode=str(CB_connect[fromCB][0])
 			toCBCode=str(CB_connect[toCB][0])
-			print 'from name: %s code: %s'%(fromCB,fromCBCode)
 			print "LUTID= %s to CB= %s "%(cls.LUTID,toCB)
 			print 'to name: %s code: %s'%(toCB,toCBCode)
 			op=find_signal_CLB(cls.LUTID,cls.op4)
 			if(op==999):
 				route=[]
-				route=CB_SB_RouteMap.shortest_path(fromCBCode,toCBCode)
-				route.append(fromCBCode)
-				route.reverse()
-				print 'route is %s '%route
-				target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.op4,cls.LUTID,RegWr_enable)
-				print 'found the target CB port'
+				if(cls.op4[0:2]!='IO'):
+					route=CB_SB_RouteMap.shortest_path(fromCBCode,toCBCode)
+					route.append(fromCBCode)
+					route.reverse()
+					target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.op4,cls.LUTID,RegWr_enable)
+
+				elif(cls.op4[0:2]=='IO' and IOobjectDictionary[cls.op4[3:5]].status==1):
+					fromSB=IO_SB_Connect[cls.op4[3:5]][0]
+					route=CB_SB_RouteMap.shortest_path(fromSB,toCBCode)
+					route.append(fromSB)
+					route.reverse()
+					target_CB_port=routing(route,'X','X',toCB,toCBCode,cls.op4,cls.LUTID,RegWr_enable)
+				print route
+				print 'Target CB Port %s'%target_CB_port		
 				if(target_CB_port!=999):
 					op4=CB_input_output_connect[target_CB][target_CB_port]
 					for key in CLB_INDEX_TO_INPUT.keys():
@@ -337,9 +401,10 @@ def begins(cls):
 				else:
 					print 'No target CB port available'
 				#print 'routing %s for %s input4'%(cls.op4,cls.LUTID)
-				print route
+				
 			else:
 				op4=op
+
 		print'lutid %s inpu1 %s input2 %s input3 %s input4 %s bypass %s data_write %s'%(cls.LUTID,op1,op2,op3,op4,bypass,data_write)		
 		#configuring the CLB
 		if(cls.LUT_Reg=='' and cls.DReg_inp==''):
@@ -407,8 +472,7 @@ input_port = (oneOf("I0 I1 I2 I3 I4 I5 I6 I7 I8 I9 I10 I11 I12 I13 I14 I15 CLB00
 					IO[20][0] IO[20][1] IO[20][2] IO[20][3] IO[20][4] IO[20][5] IO[20][6] IO[20][7] IO[21][0] IO[21][1] IO[21][2] IO[21][3] IO[21][4] IO[21][5] IO[21][6] IO[21][7] \
 					IO[30][0] IO[30][1] IO[30][2] IO[30][3] IO[30][4] IO[30][5] IO[30][6] IO[30][7] IO[31][0] IO[31][1] IO[31][2] IO[31][3] IO[31][4] IO[31][5] IO[31][6] IO[31][7] \
 					IO[40][0] IO[40][1] IO[40][2] IO[40][3] IO[40][4] IO[40][5] IO[40][6] IO[40][7] IO[41][0] IO[41][1] IO[41][2] IO[41][3] IO[41][4] IO[41][5] IO[41][6] IO[41][7] \
-					IO[50][0] IO[50][1] IO[50][2] IO[50][3] IO[50][4] IO[50][5] IO[50][6] IO[50][7] IO[51][0] IO[51][1] IO[51][2] IO[51][3] IO[51][4] IO[51][5] IO[51][6] IO[51][7] \
-					")).setResultsName('InputLine')
+					IO[50][0] IO[50][1] IO[50][2] IO[50][3] IO[50][4] IO[50][5] IO[50][6] IO[50][7] IO[51][0] IO[51][1] IO[51][2] IO[51][3] IO[51][4] IO[51][5] IO[51][6] IO[51][7] ")).setResultsName('InputLine')
 
 output_port = (oneOf("CLB00_Q0 CLB00_Q1 CLB00_Q2 CLB00_Q3 CLB00_Q4 CLB00_Q5 CLB00_Q6 CLB00_Q7 CLB01_Q0 CLB01_Q1 \
 					CLB01_Q2 CLB01_Q3 CLB01_Q4 CLB01_Q5 CLB01_Q6 CLB01_Q7 CLB02_Q2 CLB02_Q3 CLB02_Q4 CLB02_Q5 CLB02_Q6 CLB02_Q7 CLB02_Q0 CLB02_Q1 CLB03_Q0 CLB03_Q1 CLB03_Q2 CLB03_Q3 CLB03_Q4 CLB03_Q5 CLB03_Q6 CLB03_Q7 \
@@ -454,13 +518,35 @@ write_input = (oneOf("I0 I1 I2 I3 I4 I5 I6 I7 I8 I9 I10 I11 I12 I13 I14 I15 \
 					CLB21_CY2 CLB21_CY3 CLB21_CY4 CLB21_CY5 CLB21_CY6 CLB21_CY7 CLB22_CY2 CLB22_CY3 CLB22_CY4 CLB22_CY5 CLB22_CY6 CLB22_CY7 CLB22_CY0 CLB22_CY1 CLB23_CY0 CLB23_CY1 CLB23_CY2 CLB23_CY3 CLB23_CY4 CLB23_CY5 CLB23_CY6 CLB23_CY7 \
 					CLB30_CY0 CLB30_CY1 CLB30_CY2 CLB30_CY3 CLB30_CY4 CLB30_CY5 CLB30_CY6 CLB30_CY7 CLB31_CY0 CLB31_CY1 \
 					CLB31_CY2 CLB31_CY3 CLB31_CY4 CLB31_CY5 CLB31_CY6 CLB31_CY7 CLB32_CY2 CLB32_CY3 CLB32_CY4 CLB32_CY5 CLB32_CY6 CLB32_CY7 CLB32_CY0 CLB32_CY1 CLB33_CY0 CLB33_CY1 CLB33_CY2 CLB33_CY3 CLB33_CY4 CLB33_CY5 CLB33_CY6 CLB33_CY7 \
+					IO[00][0] IO[00][1] IO[00][2] IO[00][3] IO[00][4] IO[00][5] IO[00][6] IO[00][7] IO[01][0] IO[01][1] IO[01][2] IO[01][3] IO[01][4] IO[01][5] IO[01][6] IO[01][7] \
+					IO[02][0] IO[02][1] IO[02][2] IO[02][3] IO[02][4] IO[02][5] IO[02][6] IO[02][7] IO[03][0] IO[03][1] IO[03][2] IO[03][3] IO[03][4] IO[03][5] IO[03][6] IO[03][7] \
+					IO[04][0] IO[04][1] IO[04][2] IO[04][3] IO[04][4] IO[04][5] IO[04][6] IO[04][7] IO[60][0] IO[60][1] IO[60][2] IO[60][3] IO[60][4] IO[60][5] IO[60][6] IO[60][7] \
+					IO[61][0] IO[61][1] IO[61][2] IO[61][3] IO[61][4] IO[61][5] IO[61][6] IO[61][7] IO[62][0] IO[62][1] IO[62][2] IO[62][3] IO[62][4] IO[62][5] IO[62][6] IO[62][7] \
+					IO[63][0] IO[63][1] IO[63][2] IO[63][3] IO[63][4] IO[63][5] IO[63][6] IO[63][7] IO[64][0] IO[64][1] IO[64][2] IO[64][3] IO[64][4] IO[64][5] IO[64][6] IO[64][7] \
+					IO[10][0] IO[10][1] IO[10][2] IO[10][3] IO[10][4] IO[10][5] IO[10][6] IO[10][7] IO[11][0] IO[11][1] IO[11][2] IO[11][3] IO[11][4] IO[11][5] IO[11][6] IO[11][7] \
+					IO[20][0] IO[20][1] IO[20][2] IO[20][3] IO[20][4] IO[20][5] IO[20][6] IO[20][7] IO[21][0] IO[21][1] IO[21][2] IO[21][3] IO[21][4] IO[21][5] IO[21][6] IO[21][7] \
+					IO[30][0] IO[30][1] IO[30][2] IO[30][3] IO[30][4] IO[30][5] IO[30][6] IO[30][7] IO[31][0] IO[31][1] IO[31][2] IO[31][3] IO[31][4] IO[31][5] IO[31][6] IO[31][7] \
+					IO[40][0] IO[40][1] IO[40][2] IO[40][3] IO[40][4] IO[40][5] IO[40][6] IO[40][7] IO[41][0] IO[41][1] IO[41][2] IO[41][3] IO[41][4] IO[41][5] IO[41][6] IO[41][7] \
+					IO[50][0] IO[50][1] IO[50][2] IO[50][3] IO[50][4] IO[50][5] IO[50][6] IO[50][7] IO[51][0] IO[51][1] IO[51][2] IO[51][3] IO[51][4] IO[51][5] IO[51][6] IO[51][7] \
 					")).setResultsName('DReg_inp')
 
 
-operand1 = (input_port | output_port).setResultsName('op1')
-operand2 = (input_port | output_port).setResultsName('op2')
-operand3 = (input_port | output_port).setResultsName('op3')
-operand4 = (input_port | output_port).setResultsName('op4')
+bopen=Literal("(").suppress()
+bclose=Literal(")").suppress()
+comma=Literal(",").suppress()
+sqopen=Literal("[").suppress()
+sqclose=Literal("]").suppress()
+equal=Literal("=").suppress()
+
+IOId = (oneOf("00 01 02 03 04 10 11 20 21 30 31 40 41 50 51 60 61 62 63 64")).setResultsName('IOId')
+IO_portId= (oneOf("0 1 2 3 4 5 6 7")).setResultsName('IO_portId')
+
+
+#IO_input=Literal('IO')+sqopen+IOId+sqclose+sqopen+IO_portId+sqclose
+operand1 = (input_port | output_port ).setResultsName('op1')
+operand2 = (input_port | output_port ).setResultsName('op2')
+operand3 = (input_port | output_port ).setResultsName('op3')
+operand4 = (input_port | output_port ).setResultsName('op4')
 op = (oneOf("AND OR XOR ZERO FULL_ADD HALF_ADD")).setResultsName('function')
 
 switchId = (oneOf("00 01 02 03 04 10 11 12 13 14 20 21 22 23 24 30 31 32 33 34 40 41 42 43 44")).setResultsName('switchID')
@@ -470,13 +556,6 @@ toFace=(oneOf("N E S W")).setResultsName('toFace')
 toFaceIndex=(oneOf("0 1 2 3 4 5 6 7")).setResultsName('toFaceIndex')
 fromFaceIndex=(oneOf("0 1 2 3 4 5 6 7")).setResultsName('fromFaceIndex')
 
-bopen=Literal("(").suppress()
-bclose=Literal(")").suppress()
-comma=Literal(",").suppress()
-sqopen=Literal("[").suppress()
-sqclose=Literal("]").suppress()
-equal=Literal("=").suppress()
-
 SBport0 = (oneOf("X I O")).setResultsName('SBport0')
 SBport1 = (oneOf("X I O")).setResultsName('SBport1') 
 SBport2 = (oneOf("X I O")).setResultsName('SBport2') 
@@ -485,9 +564,6 @@ SBport4 = (oneOf("X I O")).setResultsName('SBport4')
 SBport5 = (oneOf("X I O")).setResultsName('SBport5') 
 SBport6 = (oneOf("X I O")).setResultsName('SBport6') 
 SBport7 = (oneOf("X I O")).setResultsName('SBport7')
-
-IOId = (oneOf("00 01 02 03 04 10 11 20 21 30 31 40 41 50 51 60 61 62 63 64")).setResultsName('IOId')
-IO_portId= (oneOf("0 1 2 3 4 5 6 7")).setResultsName('IO_portId')
 
 CBId=(oneOf("00_0 00_1 00_2 00_3 01_0 01_1 01_2 01_3 02_0 02_1 02_2 02_3 03_0 03_1 03_2 03_3\
 			 10_0 10_1 10_2 10_3 11_0 11_1 11_2 11_3 12_0 12_1 12_2 12_3 13_0 13_1 13_2 13_3\
