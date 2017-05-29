@@ -2,6 +2,8 @@
 import heapq
 import sys
 from fpga_dict import*
+
+
 class DReg(object):
 	def __init__(self,name):   #DregId written as CLB00_R0
 		self.src='X'
@@ -60,8 +62,10 @@ class lut(object):
 		if(self.status==1):
 			print 'WARNING: LUT %s is already configured'%self.LUTID
 			return LUTID		
-		
-		self.lutTable=LUT_function[function]		
+		if(function!=''):
+			self.lutTable=LUT_function[function]
+		else:
+			self.lutTable=LUT_function['ZERO']		
 		self.outputPort=LUTID
 		self.inputPort1=input1
 		self.inputPort2=input2
@@ -207,7 +211,7 @@ class switchBlock(object):
 		else:
 			return self.W[indexnum]
 
-	def adjSEface(self,toFace):
+	def adjSBface(self,toFace):
 
 		if toFace=='N':
 			adjface='S'
@@ -219,7 +223,7 @@ class switchBlock(object):
 			adjface='E'
 		return adjface
 	
-	def configSENext(self,switchID,toFace,toFaceIndex):
+	def configSBNext(self,switchID,toFace,toFaceIndex):
 		
 		if toFace=='N':
 			
@@ -483,7 +487,7 @@ class connectionBlock(object):   #fix input and output port collission
 		elif CB_connect[cbId][direc+1]=='E':
 			return SBobjectDictionary[CB_connect[cbId][direc]].E[port]
 		elif CB_connect[cbId][direc+1]=='S':
-			return SBobjectDictionary[CB_conect[cbId][direc]].S[port]
+			return SBobjectDictionary[CB_connect[cbId][direc]].S[port]
 		else:
 			return SBobjectDictionary[CB_connect[cbId][direc]].W[port]	
 
@@ -509,8 +513,7 @@ class connectionBlock(object):   #fix input and output port collission
 				switchBlock.setFaceStatus(SBobjectDictionary[CB_connect[cbId][1]],leftFace,CBPortId,'Q')#added 16-April
 				self.CBDict[CBDictKey]='1'
 			elif(leftSB=='O' and rightSB=='O'):
-				print 'cannot connect: output line already in use: Error in CB: %s'%cbId
-		
+				print 'cannot connect: output line already in use: Error in CB: %s'%cbId	
 
 	def configCB(self,cbId,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2):
 		self.cbId=cbId
@@ -582,40 +585,40 @@ class connectionBlock(object):   #fix input and output port collission
 			val=int(self.q1)
 			leftSB=connectionBlock.getting_SB_line_status(self,cbId,'left',val)
 			rightSB=connectionBlock.getting_SB_line_status(self,cbId,'right',val)
-			CB_AdjSB_conf(self,cbId,leftSB,rightSB,val,CBDictKeyq1)
+			connectionBlock.CB_AdjSB_conf(self,cbId,leftSB,rightSB,val,CBDictKeyq1)
 			
 		
 		if self.q2!='X':
 			val=int(self.q2)
 			leftSB=connectionBlock.getting_SB_line_status(self,cbId,'left',val)
 			rightSB=connectionBlock.getting_SB_line_status(self,cbId,'right',val)
-			CB_AdjSB_conf(self,cbId,leftSB,rightSB,val,CBDictKeyq2)
+			connectionBlock.CB_AdjSB_conf(self,cbId,leftSB,rightSB,val,CBDictKeyq2)
 
 		if self.Rq1!='X':   #see if this can be condensed further  #Major
 			val=int(self.Rq1)
 			leftSB=connectionBlock.getting_SB_line_status(self,cbId,'left',val)
 			rightSB=connectionBlock.getting_SB_line_status(self,cbId,'right',val)
-			CB_AdjSB_conf(self,cbId,leftSB,rightSB,val,CBDictKeyRq1)
+			connectionBlock.CB_AdjSB_conf(self,cbId,leftSB,rightSB,val,CBDictKeyRq1)
 			
 		
 		if self.Rq2!='X':
 			val=int(self.Rq2)
 			leftSB=connectionBlock.getting_SB_line_status(self,cbId,'left',val)
 			rightSB=connectionBlock.getting_SB_line_status(self,cbId,'right',val)
-			CB_AdjSB_conf(self,cbId,leftSB,rightSB,val,CBDictKeyRq2)
+			connectionBlock.CB_AdjSB_conf(self,cbId,leftSB,rightSB,val,CBDictKeyRq2)
 
 		if self.CY1!='X':   #see if this can be condensed further  #Major
 			val=int(self.CY1)
 			leftSB=connectionBlock.getting_SB_line_status(self,cbId,'left',val)
 			rightSB=connectionBlock.getting_SB_line_status(self,cbId,'right',val)
-			CB_AdjSB_conf(self,cbId,leftSB,rightSB,val,CBDictKeyCY1)
+			connectionBlock.CB_AdjSB_conf(self,cbId,leftSB,rightSB,val,CBDictKeyCY1)
 			
 		
 		if self.CY2!='X':
 			val=int(self.CY2)
 			leftSB=connectionBlock.getting_SB_line_status(self,cbId,'left',val)
 			rightSB=connectionBlock.getting_SB_line_status(self,cbId,'right',val)
-			CB_AdjSB_conf(self,cbId,leftSB,rightSB,val,CBDictKeyCY2)
+			connectionBlock.CB_AdjSB_conf(self,cbId,leftSB,rightSB,val,CBDictKeyCY2)
 			
 		
 	def printCBconfig(self):
@@ -775,14 +778,14 @@ CB_codes=['C1','C2','C3','C4','C5','C6','C7','C8','C9','C10','C11','C12',
 
 ##########################################routing logic begins#######################################################################################################################
 def checkFreeSBPort_CBconnect(SBId,SBFace,x1,x2,x3,x4,CBId):   #function checks for the index corresponding to free ports on a side of the switch block -- free ports have their status as 'X'
-	print 'inside checkFreeSBPort_CBconnect function : SBID %s SBFace %s CBId %s SBstate %s CBstate %s'%(SBId,SBFace,CBId,SBobjectDictionary[SBId].A,CBobjectDictionary[CBId].CBstate)
+	print 'inside checkFreeSBPort_CBconnect function : SBID %s SBFace %s CBId %s SBstate %s CBstate %s'%(SBId,SBFace,CBId,SBobjectDictionary[SBId].N,CBobjectDictionary[CBId].CBstate)
 	flag=1
 	counter=0
 	final=0
 	if(SBFace=='N'):
 		while(flag==1 and counter<8):
 			#print 'controvertial %s'%SBobjectDictionary[SBId].A[counter]
-			if(SBobjectDictionary[SBId].A[counter] =='X'):  #check if any port in face A of the switch block adjacent to the from CB is free and its not connected to any of the inputs of the CB
+			if(SBobjectDictionary[SBId].N[counter] =='X'):  #check if any port in face A of the switch block adjacent to the from CB is free and its not connected to any of the inputs of the CB
 				if(CBobjectDictionary[CBId].CBstate[0]!=str(counter) and CBobjectDictionary[CBId].CBstate[1]!=str(counter) and CBobjectDictionary[CBId].CBstate[2]!=str(counter) and CBobjectDictionary[CBId].CBstate[3]!=str(counter)):
 					
 					flag=0
@@ -796,7 +799,7 @@ def checkFreeSBPort_CBconnect(SBId,SBFace,x1,x2,x3,x4,CBId):   #function checks 
 							
 	elif(SBFace=='E'):
 		while(flag==1 and counter<8):
-			if(SBobjectDictionary[SBId].B[counter] =='X'):
+			if(SBobjectDictionary[SBId].E[counter] =='X'):
 				if(CBobjectDictionary[CBId].CBstate[0]!=str(counter) or CBobjectDictionary[CBId].CBstate[1]!=str(counter) or CBobjectDictionary[CBId].CBstate[2]!=str(counter) or CBobjectDictionary[CBId].CBstate[3]!=str(counter)):
 					
 					flag=0
@@ -805,7 +808,7 @@ def checkFreeSBPort_CBconnect(SBId,SBFace,x1,x2,x3,x4,CBId):   #function checks 
 			counter=counter+1
 	elif(SBFace=='S'):
 		while(flag==1 and counter<8):
-			if(SBobjectDictionary[SBId].C[counter] =='X'):
+			if(SBobjectDictionary[SBId].S[counter] =='X'):
 				if(CBobjectDictionary[CBId].CBstate[0]!=str(counter) or CBobjectDictionary[CBId].CBstate[1]!=str(counter) or CBobjectDictionary[CBId].CBstate[2]!=str(counter) or CBobjectDictionary[CBId].CBstate[3]!=str(counter)):
 					
 					flag=0
@@ -814,7 +817,7 @@ def checkFreeSBPort_CBconnect(SBId,SBFace,x1,x2,x3,x4,CBId):   #function checks 
 			counter=counter+1
 	else:
 		while(flag==1 and counter<8):
-			if(SBobjectDictionary[SBId].D[counter] =='X'):
+			if(SBobjectDictionary[SBId].W[counter] =='X'):
 				if(CBobjectDictionary[CBId].CBstate[0]!=str(counter) or CBobjectDictionary[CBId].CBstate[1]!=str(counter) or CBobjectDictionary[CBId].CBstate[2]!=str(counter) or CBobjectDictionary[CBId].CBstate[3]!=str(counter)):
 					
 					flag=0
@@ -922,7 +925,10 @@ def conf_lastSB(SBId,fromSBFace,fromSBPortIndex,toCB,route,targetLUT):  #kp the 
 	else:	
 		
 		outputCB=''
-		if(CB_connect[toCB][5]==targetLUT or CB_connect[toCB][6]==targetLUT or CB_connect[toCB][8]==targetLUT or CB_connect[toCB][9]==targetLUT or CB_connect[toCB][7]==LUT_connect[targetLUT][0]): #neeed to modify KP
+		print 'CONFIGURING THE CONNECTION BETWEEN LAST SB AND THE TARGET CB'
+		print 'CB connect[5] = %s CB connect[6] = %s CB connect[8] = %s CB connect[9] = %s CLBofTargetCB = %s LUT_connectCLB = %s targetLUT = %s'%(CB_connect[toCB][5],CB_connect[toCB][6],CB_connect[toCB][8],CB_connect[toCB][9],CB_connect[toCB][7],LUT_connect[targetLUT][0],targetLUT)
+		if(CB_connect[toCB][7]==LUT_connect[targetLUT][0]): #neeed to modify KP
+	#	if((CB_connect[toCB][5]==targetLUT or CB_connect[toCB][6]==targetLUT or CB_connect[toCB][8]==targetLUT or CB_connect[toCB][9]==targetLUT) and CB_connect[toCB][7]==LUT_connect[targetLUT][0]): #neeed to modify KP
 			CBobjectDictionary[toCB].CBstate[i_count]=str(toSBPortIndex)
 			x1=CBobjectDictionary[toCB].CBstate[0]
 			x2=CBobjectDictionary[toCB].CBstate[1]
@@ -930,10 +936,10 @@ def conf_lastSB(SBId,fromSBFace,fromSBPortIndex,toCB,route,targetLUT):  #kp the 
 			x4=CBobjectDictionary[toCB].CBstate[3]
 			q1=CBobjectDictionary[toCB].CBstate[4]
 			q2=CBobjectDictionary[toCB].CBstate[5]
-			Rq1=CBobjectDictionary[fromCB].CBstate[6]  
-			Rq2=CBobjectDictionary[fromCB].CBstate[7]
-			CY1=CBobjectDictionary[fromCB].CBstate[8]  
-			CY2=CBobjectDictionary[fromCB].CBstate[9]
+			Rq1=CBobjectDictionary[toCB].CBstate[6]  
+			Rq2=CBobjectDictionary[toCB].CBstate[7]
+			CY1=CBobjectDictionary[toCB].CBstate[8]  
+			CY2=CBobjectDictionary[toCB].CBstate[9]
 			CBobjectDictionary[toCB].configCB(toCB,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)
 			final_CB_index=i_count
 			i_count=i_count*0
@@ -977,14 +983,17 @@ def config_originCB_SB_connect_RG3(fromCB,CB_output_port,CB_output_port_ID,port_
 	
 	if(CB_output_port!='X'):
 		fromSBPortIndex=int(CBobjectDictionary[fromCB].CBstate[CB_output_port_ID])
-		print 'Output Port Already Set as %s'%CB_output_port
+		return fromSBPortIndex
+		print 'Output Port Already Set as %s'%CBobjectDictionary[fromCB].CBstate
 
 	else:
 		fromSBPortIndex=checkFreeSBPort_CBconnect(SBId,fromSBFace,x1,x2,x3,x4,fromCB)
 		CBobjectDictionary[fromCB].CBstate[CB_output_port_ID]=str(fromSBPortIndex)
 		CB_output_port=CBobjectDictionary[fromCB].CBstate[CB_output_port_ID]
 		if(port_name=='q1'):
+			print 'INSIDE CONFIGURATION OF ORIGIN CB TO FIRST SB IN ROUTE'
 			CBobjectDictionary[fromCB].configCB(fromCB,x1,x2,x3,x4,CB_output_port,q2,Rq1,Rq2,CY1,CY2)
+			print 'ERROR:oriport status CB %s'%CBobjectDictionary[fromCB].CBstate
 		if(port_name=='q2'):
 			CBobjectDictionary[fromCB].configCB(fromCB,x1,x2,x3,x4,q1,CB_output_port,Rq1,Rq2,CY1,CY2)
 		if(port_name=='Rq1'):
@@ -1002,12 +1011,13 @@ def config_originCB_SB_connect_RG3(fromCB,CB_output_port,CB_output_port_ID,port_
 
 
 
-def routing(route,fromCB,fromCBCode,toCB,toCBCode,originLUT,targetLUT):
+def routing(route,fromCB,fromCBCode,toCB,toCBCode,originLUT,targetLUT,RegWr_enable):
+	print 'targetLUT= %s'%targetLUT
 	route_len=len(route)  #calculating length of path from origin CLB to target CLB
 	target_CB_port=999  #initial value for target CLB port
 	count=1
-	if(lutobjectDictionary[originLUT].status!=1): #checking status ---origin LUT should be configured before you can actually route the signal
-		print'LUT %s has not been configured'%originLUT
+	if(lutobjectDictionary[Logic_Objects[originLUT]].status!=1): #checking status ---origin LUT should be configured before you can actually route the signal
+		print'WARNING :LUT %s has not been configured'%originLUT
 
 	if CB_connect[fromCB][1]==route[1]: #check if the next SB is to the left of the origin-CB
 		SBId=CB_connect[fromCB][1]
@@ -1030,58 +1040,58 @@ def routing(route,fromCB,fromCBCode,toCB,toCBCode,originLUT,targetLUT):
 	originSBPortIndex=0
 
 
-	if(route_len==3 and lutobjectDictionary[originLUT].status==1): # #when route length is equal to 3 (origin CB->one SB->target CB)
+	if(route_len==3 and (lutobjectDictionary[Logic_Objects[originLUT]].status==1 or RegWr_enable==1)): # #when route length is equal to 3 (origin CB->one SB->target CB)
 
 		if(CB_connect[fromCB][5]==originLUT):  #check if origin LUT is q1
 			port_name='q1'
-			config_originCB_SB_connect(fromCB,q1,CB_output_port_ID[q1],port_name,fromSBFace,SBId,toCB,route,targetLUT,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)				
+			config_originCB_SB_connect(fromCB,q1,CB_output_port_ID[port_name],port_name,fromSBFace,SBId,toCB,route,targetLUT,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)				
 
 		if(CB_connect[fromCB][6]==originLUT):
 			port_name='q2'
-			config_originCB_SB_connect(fromCB,q2,CB_output_port_ID[q2],port_name,fromSBFace,SBId,toCB,route,targetLUT,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)
+			config_originCB_SB_connect(fromCB,q2,CB_output_port_ID[port_name],port_name,fromSBFace,SBId,toCB,route,targetLUT,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)
 
 		if(CB_connect[fromCB][8]==originLUT): 
 			port_name='Rq1'
-			config_originCB_SB_connect(fromCB,Rq1,CB_output_port_ID[Rq1],port_name,fromSBFace,SBId,toCB,route,targetLUT,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)				
+			config_originCB_SB_connect(fromCB,Rq1,CB_output_port_ID[port_name],port_name,fromSBFace,SBId,toCB,route,targetLUT,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)				
 
 		if(CB_connect[fromCB][9]==originLUT):
 			port_name='Rq2'
-			config_originCB_SB_connect(fromCB,Rq2,CB_output_port_ID[Rq2],port_name,fromSBFace,SBId,toCB,route,targetLUT,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)
+			config_originCB_SB_connect(fromCB,Rq2,CB_output_port_ID[port_name],port_name,fromSBFace,SBId,toCB,route,targetLUT,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)
 
 		if(CB_connect[fromCB][10]==originLUT): 
 			port_name='CY1'
-			config_originCB_SB_connect(fromCB,CY1,CB_output_port_ID[CY1],port_name,fromSBFace,SBId,toCB,route,targetLUT,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)				
+			config_originCB_SB_connect(fromCB,CY1,CB_output_port_ID[port_name],port_name,fromSBFace,SBId,toCB,route,targetLUT,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)				
 
 		if(CB_connect[fromCB][11]==originLUT):
 			port_name='CY12'
-			config_originCB_SB_connect(fromCB,CY2,CB_output_port_ID[CY2],port_name,fromSBFace,SBId,toCB,route,targetLUT,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)
+			config_originCB_SB_connect(fromCB,CY2,CB_output_port_ID[port_name],port_name,fromSBFace,SBId,toCB,route,targetLUT,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)
 
-	if(route_len>3 and lutobjectDictionary[originLUT].status==1):   #when route length is greater than 3 (origin CB->more than one SB->target CB)
-		print 'ERROR CHECK: CB_connect[fromCB] %s origin LUT %s'%(CB_connect[fromCB],originLUT)
+	if(route_len>3 and (lutobjectDictionary[Logic_Objects[originLUT]].status==1 or RegWr_enable==1)):   #when route length is greater than 3 (origin CB->more than one SB->target CB)
+		print 'ERROR CHECK: CB_connect[fromCB] %s origin LUT %s and Q1 %s'%(CB_connect[fromCB],originLUT,q1)
 		if(CB_connect[fromCB][5]==originLUT):  #check if origin LUT is q1
 			port_name='q1'
-			originSBPortIndex=config_originCB_SB_connect_RG3(fromCB,q1,CB_output_port_ID[q1],port_name,fromSBFace,SBId,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)			
-			print 'origin SB port index inside the if block %s'%originSBPortIndex
+			originSBPortIndex=config_originCB_SB_connect_RG3(fromCB,q1,CB_output_port_ID[port_name],port_name,fromSBFace,SBId,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)			
+			print 'AFTER GETTING ORIGIN SB port index inside the if block %s'%originSBPortIndex
 
 		if(CB_connect[fromCB][6]==originLUT):			
 			port_name='q2'
-			originSBPortIndex=config_originCB_SB_connect_RG3(fromCB,q2,CB_output_port_ID[q2],port_name,fromSBFace,SBId,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)
+			originSBPortIndex=config_originCB_SB_connect_RG3(fromCB,q2,CB_output_port_ID[port_name],port_name,fromSBFace,SBId,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)
 
 		if(CB_connect[fromCB][8]==originLUT):			
 			port_name='Rq1'
-			originSBPortIndex=config_originCB_SB_connect_RG3(fromCB,Rq1,CB_output_port_ID[Rq1],port_name,fromSBFace,SBId,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)	
+			originSBPortIndex=config_originCB_SB_connect_RG3(fromCB,Rq1,CB_output_port_ID[port_name],port_name,fromSBFace,SBId,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)	
 
 		if(CB_connect[fromCB][9]==originLUT):			
 			port_name='Rq2'
-			originSBPortIndex=config_originCB_SB_connect_RG3(fromCB,Rq2,CB_output_port_ID[Rq2],port_name,fromSBFace,SBId,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)	
+			originSBPortIndex=config_originCB_SB_connect_RG3(fromCB,Rq2,CB_output_port_ID[port_name],port_name,fromSBFace,SBId,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)	
 
 		if(CB_connect[fromCB][10]==originLUT):			
 			port_name='CY1'
-			originSBPortIndex=config_originCB_SB_connect_RG3(fromCB,CY1,CB_output_port_ID[CY1],port_name,fromSBFace,SBId,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)	
+			originSBPortIndex=config_originCB_SB_connect_RG3(fromCB,CY1,CB_output_port_ID[port_name],port_name,fromSBFace,SBId,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)	
 
 		if(CB_connect[fromCB][11]==originLUT):			
 			port_name='CY1'
-			originSBPortIndex=config_originCB_SB_connect_RG3(fromCB,CY2,CB_output_port_ID[CY2],port_name,fromSBFace,SBId,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)			
+			originSBPortIndex=config_originCB_SB_connect_RG3(fromCB,CY2,CB_output_port_ID[port_name],port_name,fromSBFace,SBId,x1,x2,x3,x4,q1,q2,Rq1,Rq2,CY1,CY2)			
 			
 
 		currentSBId=route[1]

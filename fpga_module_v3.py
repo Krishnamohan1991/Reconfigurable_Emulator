@@ -36,28 +36,37 @@ def begins(cls):
 		op2=cls.op2
 		op3=cls.op3
 		op4=cls.op4
-		data_write=cls.write_input
-		bypass=cls.DReg_inp
-		target_CB=LUT_connect[cls.LUTID][1] #its the ID of the connection block to which the currently programmed LUT is connected to
+		RegWr_enable=0
+		if(cls.write_input==''):
+			data_write='I0'
+		else:
+			data_write=cls.write_input
+		
+		if(cls.LUT_Reg=='' and cls.DReg_inp==''):
+			bypass='I0'
+		else:
+			bypass=cls.DReg_inp
+
+		if(cls.LUT_Reg==''):
+			target_CB=LUT_connect[cls.LUTID][1] #its the ID of the connection block to which the currently programmed LUT is connected to
+		else:
+			target_CB=LUT_connect[cls.LUT_Reg][1]
 		freeCB=[]
 		CB_target_port=0
 		k=0	#to check the free port in target CB
 		
 		CB_code=0
-
-		if(cls.LUT_Reg=='' or cls.DReg_inp==''):
-			bypass='I0'
-		if(cls.write_input==''):
-			data_write='I0'
-
-		#catch conditon when bypass and/or data line is absent
 		
-		if(cls.LUT_Reg!='' and cls.DReg_inp!='' and (cls.DReg_inp!=cls.LUT_Reg) and (LUT_connect[cls.DReg_inp][0]!=LUT_connect[cls.LUTID][0])):  #cls.LUTID and cls.
-			Reg_obj_key=LUTID[:6]+'R'+LUTID[-1:]  #MAKES CLB00_RQ0 TO CLB0_R0 ---?KEY FOR THE OBJECT DICT
-			if(LUTReg_objectDictionary[Reg_obj_key].status==0 and LUTReg_objectDictionary[Reg_obj_key].src!='X'): #checking if the register has already been used or not
+		print 'INITIAL VALUE OF BYPASS %s'%bypass
+		#catch conditon when bypass and/or data line is absent
+		print 'DRegInp = %s LUT_Reg = %s'%(cls.DReg_inp,cls.LUT_Reg)
+		if(cls.LUT_Reg!='' and cls.DReg_inp!='' and (cls.DReg_inp!=cls.LUT_Reg) and (LUT_connect[cls.DReg_inp][0]!=LUT_connect[cls.LUT_Reg][0])):  #cls.LUTID and cls.
+			Reg_obj_key=cls.LUT_Reg[:6]+'R'+cls.LUT_Reg[-1:] #MAKES CLB00_RQ0 TO CLB0_R0 ---?KEY FOR THE OBJECT DICT
+			RegWr_enable=1
+			if(LUTReg_objectDictionary[Reg_obj_key].status==0 and LUTReg_objectDictionary[Reg_obj_key].src=='X'): #checking if the register has already been used or not
 				lutobjectDictionary[Logic_Objects[cls.LUT_Reg]].DY_SEL='1'
 				LUTReg_objectDictionary[Reg_obj_key].confDReg(cls.DReg_inp)
-				print "Bypass connection"			
+				print "Bypass connection %s "%bypass			
 				fromCB=LUT_connect[cls.DReg_inp][1] #the CB from which the input signal is transmited
 				fromCBCode=str(CB_connect[fromCB][0]) #the global code of the CB from which the input signal to be routed originates
 				print 'from name: %s code: %s'%(fromCB,fromCBCode)
@@ -81,21 +90,25 @@ def begins(cls):
 				op=find_signal_CLB(cls.LUT_Reg,cls.DReg_inp)
 				if(op==999):
 					route=[]
-					route=find_shortest_path(CB_SB_map,fromCBCode,toCBCode) # calling function to find the shortest route
-					target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.DReg_inp,cls.LUTID)
+					route=CB_SB_RouteMap.shortest_path(fromCBCode,toCBCode)
+					route.append(fromCBCode)
+					route.reverse()
+					target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.DReg_inp,cls.LUT_Reg,RegWr_enable)
+					print 'TARGET CB PORT FOR ROUTING %s'%(target_CB_port)
 					if(target_CB_port!=999):
 						bypass=CB_input_output_connect[target_CB][target_CB_port]
 						for key in CLB_INDEX_TO_INPUT.keys():  #updating the CLB_INDEX_TO_INPUT dictionary 
 							if (CLB_INDEX_TO_INPUT[key]==bypass):
 								CLB_INP_STATS[LUT_connect[cls.LUT_Reg][0]][int(key)]=cls.DReg_inp
 					else:
-						print 'No target CB port available'
+						print 'ERROR: No target CB port available'
 			
 					print 'routing %s for %s Bypass line'%(cls.DReg_inp,cls.LUT_Reg)
 					print route
 				
 				else:				
 					bypass=op
+				print 'WHAT IS BYPASS = %s'%bypass
 				lutobjectDictionary[Logic_Objects[cls.LUT_Reg]].BY=	LUT_interconnect[bypass]
 			else:
 				print 'Warning: The Register %s is already in use'%Reg_obj_key
@@ -128,8 +141,10 @@ def begins(cls):
 			op=find_signal_CLB(cls.LUTID,cls.write_input)
 			if(op==999):
 				route=[]
-				route=find_shortest_path(CB_SB_map,fromCBCode,toCBCode) # calling function to find the shortest route
-				target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.write_input,cls.LUTID)
+				route=CB_SB_RouteMap.shortest_path(fromCBCode,toCBCode)
+				route.append(fromCBCode)
+				route.reverse()
+				target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.write_input,cls.LUTID,RegWr_enable)
 				if(target_CB_port!=999):
 					data_write=CB_input_output_connect[target_CB][target_CB_port]
 					for key in CLB_INDEX_TO_INPUT.keys():  #updating the CLB_INDEX_TO_INPUT dictionary 
@@ -166,7 +181,7 @@ def begins(cls):
 			k=k*0 #resetting k to 0
 			print "LUTID= %s to CB= %s "%(cls.LUTID,toCB)
 			toCBCode=str(CB_connect[toCB][0])    #CB code at the output to which the output LUT is connected
-			print 'to name: %s code: %s'%(toCB,toCBCode)
+			print 'Target CB: %s Target CB code: %s'%(toCB,toCBCode)
 			op=find_signal_CLB(cls.LUTID,cls.op1)
 			#print 'first operand %s'%op
 			if(op==999):
@@ -176,7 +191,7 @@ def begins(cls):
 				route.reverse()
 				#route=find_shortest_path(CB_SB_map,fromCBCode,toCBCode) # calling function to find the shortest route
 				print 'route %s'%route
-				target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.op1,cls.LUTID)
+				target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.op1,cls.LUTID,RegWr_enable)
 				print 'Target CB Port %s'%target_CB_port
 				if(target_CB_port!=999):
 					op1=CB_input_output_connect[target_CB][target_CB_port]
@@ -186,7 +201,7 @@ def begins(cls):
 				else:
 					print 'No target CB port available'
 			
-				print 'routing %s for %s input1'%(cls.op1,cls.LUTID)
+				#print 'routing %s for %s input1'%(cls.op1,cls.LUTID)
 				print route
 				
 			else:				
@@ -216,8 +231,10 @@ def begins(cls):
 			op=find_signal_CLB(cls.LUTID,cls.op2) #to find out if the signal to be routed has already been routed before to one of the CLB ports
 			if(op==999):
 				route=[]
-				route=find_shortest_path(CB_SB_map,fromCBCode,toCBCode)
-				target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.op2,cls.LUTID)
+				route=CB_SB_RouteMap.shortest_path(fromCBCode,toCBCode)
+				route.append(fromCBCode)
+				route.reverse()
+				target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.op2,cls.LUTID,RegWr_enable)
 				if(target_CB_port!=999):
 					op2=CB_input_output_connect[target_CB][target_CB_port]
 					for key in CLB_INDEX_TO_INPUT.keys(): #update the status of CLB input ports after routing the signal from another CLB
@@ -225,7 +242,7 @@ def begins(cls):
 							CLB_INP_STATS[LUT_connect[cls.LUTID][0]][int(key)]=cls.op2
 				else:
 					print 'No target CB port available'
-				print 'routing %s for %s input2'%(cls.op2,cls.LUTID)
+				#print 'routing %s for %s input2'%(cls.op2,cls.LUTID)
 				print route
 					
 			else:				
@@ -256,8 +273,10 @@ def begins(cls):
 			print 'to name: %s code: %s'%(toCB,toCBCode)
 			if(op==999):
 				route=[]
-				route=find_shortest_path(CB_SB_map,fromCBCode,toCBCode)
-				target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.op3,cls.LUTID)
+				route=CB_SB_RouteMap.shortest_path(fromCBCode,toCBCode)
+				route.append(fromCBCode)
+				route.reverse()
+				target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.op3,cls.LUTID,RegWr_enable)
 				if(target_CB_port!=999):
 					op3=CB_input_output_connect[target_CB][target_CB_port]
 					for key in CLB_INDEX_TO_INPUT.keys():
@@ -265,7 +284,7 @@ def begins(cls):
 							CLB_INP_STATS[LUT_connect[cls.LUTID][0]][int(key)]=cls.op3
 				else:
 					print 'No target CB port available'
-				print 'routing %s for %s input3'%(cls.op3,cls.LUTID)
+				#print 'routing %s for %s input3'%(cls.op3,cls.LUTID)
 				print route
 			else:
 				op3=op
@@ -297,9 +316,11 @@ def begins(cls):
 			op=find_signal_CLB(cls.LUTID,cls.op4)
 			if(op==999):
 				route=[]
-				route=find_shortest_path(CB_SB_map,fromCBCode,toCBCode)
+				route=CB_SB_RouteMap.shortest_path(fromCBCode,toCBCode)
+				route.append(fromCBCode)
+				route.reverse()
 				print 'route is %s '%route
-				target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.op4,cls.LUTID)
+				target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.op4,cls.LUTID,RegWr_enable)
 				print 'found the target CB port'
 				if(target_CB_port!=999):
 					op4=CB_input_output_connect[target_CB][target_CB_port]
@@ -309,14 +330,14 @@ def begins(cls):
 							print 'updated the CLB inp statsu' 
 				else:
 					print 'No target CB port available'
-				print 'routing %s for %s input4'%(cls.op4,cls.LUTID)
+				#print 'routing %s for %s input4'%(cls.op4,cls.LUTID)
 				print route
 			else:
 				op4=op
-		print'lutid %s inpu1 %s input2 %s input3 %s input4 %s bypass %s data_write %s'%(cls.LUTID,op1,op2,op3,op4,bypass,data_write)
-		
+		print'lutid %s inpu1 %s input2 %s input3 %s input4 %s bypass %s data_write %s'%(cls.LUTID,op1,op2,op3,op4,bypass,data_write)		
 		#configuring the CLB
-		configureLUT(cls.LUTID,cls.function,LUT_interconnect[op1],LUT_interconnect[op2],LUT_interconnect[op3],LUT_interconnect[op4],cls.CarryGenerateConfig,LUT_interconnect[data_write])
+		if(cls.LUT_Reg=='' and cls.DReg_inp==''):
+			configureLUT(cls.LUTID,cls.function,LUT_interconnect[op1],LUT_interconnect[op2],LUT_interconnect[op3],LUT_interconnect[op4],cls.CarryGenerateConfig,LUT_interconnect[data_write])
 
 		
 
@@ -401,7 +422,8 @@ output_port = (oneOf("CLB00_Q0 CLB00_Q1 CLB00_Q2 CLB00_Q3 CLB00_Q4 CLB00_Q5 CLB0
 					CLB31_RQ2 CLB31_RQ3 CLB31_RQ4 CLB31_RQ5 CLB31_RQ6 CLB31_RQ7 CLB32_RQ2 CLB32_RQ3 CLB32_RQ4 CLB32_RQ5 \
 					CLB32_RQ6 CLB32_RQ7 CLB32_RQ0 CLB32_RQ1 CLB33_RQ0 CLB33_RQ1 CLB33_RQ2 CLB33_RQ3 CLB33_RQ4 CLB33_RQ5 CLB33_RQ6 CLB33_RQ7 ")).setResultsName('LUTID')
 
-write_input = (oneOf("CLB00_Q0 CLB00_Q1 CLB00_Q2 CLB00_Q3 CLB00_Q4 CLB00_Q5 CLB00_Q6 CLB00_Q7 CLB01_Q0 CLB01_Q1 \
+write_input = (oneOf("I0 I1 I2 I3 I4 I5 I6 I7 I8 I9 I10 I11 I12 I13 I14 I15 \
+					CLB00_Q0 CLB00_Q1 CLB00_Q2 CLB00_Q3 CLB00_Q4 CLB00_Q5 CLB00_Q6 CLB00_Q7 CLB01_Q0 CLB01_Q1 \
 					CLB01_Q2 CLB01_Q3 CLB01_Q4 CLB01_Q5 CLB01_Q6 CLB01_Q7 CLB02_Q2 CLB02_Q3 CLB02_Q4 CLB02_Q5 CLB02_Q6 CLB02_Q7 CLB02_Q0 CLB02_Q1 CLB03_Q0 CLB03_Q1 CLB03_Q2 CLB03_Q3 CLB03_Q4 CLB03_Q5 CLB03_Q6 CLB03_Q7 \
 					CLB10_Q0 CLB10_Q1 CLB10_Q2 CLB10_Q3 CLB10_Q4 CLB10_Q5 CLB10_Q6 CLB10_Q7 CLB11_Q0 CLB11_Q1 \
 					CLB11_Q2 CLB11_Q3 CLB11_Q4 CLB11_Q5 CLB11_Q6 CLB11_Q7 CLB12_Q2 CLB12_Q3 CLB12_Q4 CLB12_Q5 CLB12_Q6 CLB12_Q7 CLB12_Q0 CLB12_Q1 CLB13_Q0 CLB13_Q1 CLB13_Q2 CLB13_Q3 CLB13_Q4 CLB13_Q5 CLB13_Q6 CLB13_Q7 \
@@ -417,7 +439,16 @@ write_input = (oneOf("CLB00_Q0 CLB00_Q1 CLB00_Q2 CLB00_Q3 CLB00_Q4 CLB00_Q5 CLB0
 					CLB21_RQ2 CLB21_RQ3 CLB21_RQ4 CLB21_RQ5 CLB21_RQ6 CLB21_RQ7 CLB22_RQ2 CLB22_RQ3 CLB22_RQ4 CLB22_RQ5 CLB22_RQ6 CLB22_RQ7 CLB22_RQ0 CLB22_RQ1 CLB23_RQ0 CLB23_RQ1 CLB23_RQ2 CLB23_RQ3 CLB23_RQ4 CLB23_RQ5 CLB23_RQ6 CLB23_RQ7 \
 					CLB30_RQ0 CLB30_RQ1 CLB30_RQ2 CLB30_RQ3 CLB30_RQ4 CLB30_RQ5 CLB30_RQ6 CLB30_RQ7 CLB31_RQ0 CLB31_RQ1 \
 					CLB31_RQ2 CLB31_RQ3 CLB31_RQ4 CLB31_RQ5 CLB31_RQ6 CLB31_RQ7 CLB32_RQ2 CLB32_RQ3 CLB32_RQ4 CLB32_RQ5 \
-					CLB32_RQ6 CLB32_RQ7 CLB32_RQ0 CLB32_RQ1 CLB33_RQ0 CLB33_RQ1 CLB33_RQ2 CLB33_RQ3 CLB33_RQ4 CLB33_RQ5 CLB33_RQ6 CLB33_RQ7 ")).setResultsName('write_input')
+					CLB32_RQ6 CLB32_RQ7 CLB32_RQ0 CLB32_RQ1 CLB33_RQ0 CLB33_RQ1 CLB33_RQ2 CLB33_RQ3 CLB33_RQ4 CLB33_RQ5 CLB33_RQ6 CLB33_RQ7 \
+					CLB00_CY0 CLB00_CY1 CLB00_CY2 CLB00_CY3 CLB00_CY4 CLB00_CY5 CLB00_CY6 CLB00_CY7 CLB01_CY0 CLB01_CY1 \
+					CLB01_CY2 CLB01_CY3 CLB01_CY4 CLB01_CY5 CLB01_CY6 CLB01_CY7 CLB02_CY2 CLB02_CY3 CLB02_CY4 CLB02_CY5 CLB02_CY6 CLB02_CY7 CLB02_CY0 CLB02_CY1 CLB03_CY0 CLB03_CY1 CLB03_CY2 CLB03_CY3 CLB03_CY4 CLB03_CY5 CLB03_CY6 CLB03_CY7 \
+					CLB10_CY0 CLB10_CY1 CLB10_CY2 CLB10_CY3 CLB10_CY4 CLB10_CY5 CLB10_CY6 CLB10_CY7 CLB11_CY0 CLB11_CY1 \
+					CLB11_CY2 CLB11_CY3 CLB11_CY4 CLB11_CY5 CLB11_CY6 CLB11_CY7 CLB12_CY2 CLB12_CY3 CLB12_CY4 CLB12_CY5 CLB12_CY6 CLB12_CY7 CLB12_CY0 CLB12_CY1 CLB13_CY0 CLB13_CY1 CLB13_CY2 CLB13_CY3 CLB13_CY4 CLB13_CY5 CLB13_CY6 CLB13_CY7 \
+					CLB20_CY0 CLB20_CY1 CLB20_CY2 CLB20_CY3 CLB20_CY4 CLB20_CY5 CLB20_CY6 CLB20_CY7 CLB21_CY0 CLB21_CY1 \
+					CLB21_CY2 CLB21_CY3 CLB21_CY4 CLB21_CY5 CLB21_CY6 CLB21_CY7 CLB22_CY2 CLB22_CY3 CLB22_CY4 CLB22_CY5 CLB22_CY6 CLB22_CY7 CLB22_CY0 CLB22_CY1 CLB23_CY0 CLB23_CY1 CLB23_CY2 CLB23_CY3 CLB23_CY4 CLB23_CY5 CLB23_CY6 CLB23_CY7 \
+					CLB30_CY0 CLB30_CY1 CLB30_CY2 CLB30_CY3 CLB30_CY4 CLB30_CY5 CLB30_CY6 CLB30_CY7 CLB31_CY0 CLB31_CY1 \
+					CLB31_CY2 CLB31_CY3 CLB31_CY4 CLB31_CY5 CLB31_CY6 CLB31_CY7 CLB32_CY2 CLB32_CY3 CLB32_CY4 CLB32_CY5 CLB32_CY6 CLB32_CY7 CLB32_CY0 CLB32_CY1 CLB33_CY0 CLB33_CY1 CLB33_CY2 CLB33_CY3 CLB33_CY4 CLB33_CY5 CLB33_CY6 CLB33_CY7 \
+					")).setResultsName('DReg_inp')
 
 
 operand1 = (input_port | output_port).setResultsName('op1')
@@ -509,7 +540,7 @@ expression =  output_port + equal + op + sqopen + lut_rhs + sqclose + CarryGen +
               config_code + sqopen + switchId+ sqclose + equal + sqopen + fromFace + fromFaceIndex + comma + toFace + toFaceIndex + sqclose | \
               config_code + sqopen + IOId + sqclose + equal + sqopen + io_rhs + sqclose | \
 			  config_code + sqopen + CBId + sqclose + equal + sqopen + cb_rhs + sqclose | \
-			  D_FF + equal + sqopen + (input_port).setResultsName('DReg_inp') + sqclose 
+			  D_FF + equal + sqopen + write_input + sqclose 
 
 config=OneOrMore(expression)
 
@@ -560,3 +591,15 @@ file.write("IO_config_stream[191:0]=192'b"+IO_bit_stream+";")
 
 file.close()
 '''
+print 'LUT CLB00_Q0 bitstream = %s'%lutobjectDictionary['CLB00_Q0'].bits()
+
+print 'LUT CLB30_Q0 bitstream = %s'%lutobjectDictionary['CLB30_Q0'].bits()
+
+print 'LUT CLB21_RQ0 bitstream = %s'%lutobjectDictionary[Logic_Objects['CLB21_RQ0']].bits()
+
+print 'LUT CLB23_RQ0 bitstream = %s'%lutobjectDictionary[Logic_Objects['CLB23_RQ0']].bits()
+
+print 'LUT CLB31_RQ0 bitstream = %s'%lutobjectDictionary[Logic_Objects['CLB31_RQ0']].bits()
+
+print 'LUT CLB31_RQ1 bitstream = %s'%lutobjectDictionary[Logic_Objects['CLB31_RQ1']].bits()
+
