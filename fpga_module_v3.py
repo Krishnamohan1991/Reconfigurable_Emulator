@@ -30,6 +30,12 @@ def configureLUT(lutid,lutfunc,inp1,inp2,inp3,inp4,CarryGenerateConfig,data_writ
 
 
 def begins(cls):
+	if(LUT_connect.get(cls.LUTID,0)):
+		isRegOutput=cls.LUTID[-3:]
+		Reg_obj_key=cls.LUTID[:6]+'R'+cls.LUTID[-1:]
+		if(isRegOutput[0]=='R' and LUTReg_objectDictionary[Reg_obj_key].status==1 and LUTReg_objectDictionary[Reg_obj_key].src!='X'):
+			print 'ERROR: cannot configure the registered output of LUT %s as the register in the logic pair is already used by %s '%(cls.LUTID,LUTReg_objectDictionary[Reg_obj_key].src)
+			return 1
 
 	if(LUT_connect.get(cls.LUTID,0) or LUT_connect.get(cls.LUT_Reg,0)): #revisit this condition
 		op1=cls.op1
