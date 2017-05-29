@@ -1,5 +1,6 @@
 module CLB(I0,I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,bit_in,clk,reset,prgm_b,CLB_prgm_b,CLB_prgm_b_in,CLB_prgm_b_out,carry_chain_in,
-RQ0,RQ1,RQ2,RQ3,RQ4,RQ5,RQ6,RQ7,CYO_0,CYO_1,CYO_2,CYO_3,CYO_4,CYO_5,CYO_6,CYO_7,Q0,Q1,Q2,Q3,Q4,Q5,Q6,Q7,LUT0_WE,LUT1_WE,LUT2_WE,LUT3_WE,LUT4_WE,LUT5_WE,LUT6_WE,LUT7_WE,GWE);
+RQ0,RQ1,RQ2,RQ3,RQ4,RQ5,RQ6,RQ7,CYO_0,CYO_1,CYO_2,CYO_3,CYO_4,CYO_5,CYO_6,carry_chain_out,Q0,Q1,Q2,Q3,Q4,Q5,Q6,Q7,
+LUT0_WE,LUT1_WE,LUT2_WE,LUT3_WE,LUT4_WE,LUT5_WE,LUT6_WE,LUT7_WE,GWE);
 
 input I0,I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,bit_in,clk,reset,prgm_b,CLB_prgm_b,CLB_prgm_b_in,carry_chain_in;
 
@@ -11,7 +12,7 @@ wire LUT0_CLB_prgm_b_out,LUT1_CLB_prgm_b_out,LUT2_CLB_prgm_b_out,LUT3_CLB_prgm_b
 
 output Q0,CYO_0,RQ0,Q1,CYO_1,RQ1,Q2,CYO_2,RQ2,
 Q3,CYO_3,RQ3,Q4,CYO_4,RQ4,Q5,CYO_5,RQ5,
-Q6,CYO_6,RQ6,Q7,CYO_7,RQ7;
+Q6,CYO_6,RQ6,Q7,carry_chain_out,RQ7;
 
 
 //wire [15:0] look_up_t1;     	wire [15:0] look_up_t5;
@@ -131,159 +132,156 @@ look_up_table_interconnect_config LUT7_conf(.bit_in(bit_in),.prgm_b(prgm_b),.clk
 
 //each inout line of the 4-input LUT can be connected to any one of the 18 input lines (I1-I18) or to any one of the 8 output lines of the LUT(IQ1-IQ8)
 
-
-
 interconnect_unit LUT0_X3(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT0_3),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut0_x3));
+	,.interconnect_switch(LUT0_3),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut0_x3));
 
 interconnect_unit LUT0_X2(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT0_2),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut0_x2));
+	,.interconnect_switch(LUT0_2),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut0_x2));
 
 interconnect_unit LUT0_X1(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT0_1),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut0_x1));
+	,.interconnect_switch(LUT0_1),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut0_x1));
 
 interconnect_unit LUT0_X0(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT0_0),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut0_x0));
+	,.interconnect_switch(LUT0_0),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut0_x0));
 
 interconnect_unit LUT0_Data(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT0_DataIn),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(DataIn_LUT0));
+	,.interconnect_switch(LUT0_DataIn),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(DataIn_LUT0));
 
 interconnect_unit LUT0_BY(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT0_Bypass),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(BY_LUT0));
+	,.interconnect_switch(LUT0_Bypass),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(BY_LUT0));
 
 
 interconnect_unit LUT1_X3(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT1_3),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut1_x3));
+	,.interconnect_switch(LUT1_3),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut1_x3));
 
 interconnect_unit LUT1_X2(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT1_2),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut1_x2));
+	,.interconnect_switch(LUT1_2),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut1_x2));
 
 interconnect_unit LUT1_X1(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT1_1),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut1_x1));
+	,.interconnect_switch(LUT1_1),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut1_x1));
 
 interconnect_unit LUT1_X0(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT1_0),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut1_x0));
+	,.interconnect_switch(LUT1_0),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut1_x0));
 
 interconnect_unit LUT1_Data(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT1_DataIn),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(DataIn_LUT1));
+	,.interconnect_switch(LUT1_DataIn),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(DataIn_LUT1));
 
 interconnect_unit LUT1_BY(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT1_Bypass),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(BY_LUT1));
+	,.interconnect_switch(LUT1_Bypass),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(BY_LUT1));
 
 
 interconnect_unit LUT2_X3(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT2_3),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut2_x3));
+	,.interconnect_switch(LUT2_3),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut2_x3));
 
 interconnect_unit LUT2_X2(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT2_2),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut2_x2));
+	,.interconnect_switch(LUT2_2),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut2_x2));
 
 interconnect_unit LUT2_X1(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT2_1),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut2_x1));
+	,.interconnect_switch(LUT2_1),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut2_x1));
 
 interconnect_unit LUT2_X0(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT2_0),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut2_x0));
+	,.interconnect_switch(LUT2_0),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut2_x0));
 
 interconnect_unit LUT2_Data(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT2_DataIn),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(DataIn_LUT2));
+	,.interconnect_switch(LUT2_DataIn),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(DataIn_LUT2));
 
 interconnect_unit LUT2_BY(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT2_Bypass),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(BY_LUT2));
+	,.interconnect_switch(LUT2_Bypass),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(BY_LUT2));
 
 
 interconnect_unit LUT3_X3(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT3_3),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut3_x3));
+	,.interconnect_switch(LUT3_3),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut3_x3));
 
 interconnect_unit LUT3_X2(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT3_2),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut3_x2));
+	,.interconnect_switch(LUT3_2),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut3_x2));
 
 interconnect_unit LUT3_X1(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT3_1),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut3_x1));
+	,.interconnect_switch(LUT3_1),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut3_x1));
 
 interconnect_unit LUT3_X0(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT3_0),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut3_x0));
+	,.interconnect_switch(LUT3_0),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut3_x0));
 
 interconnect_unit LUT3_Data(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT3_DataIn),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(DataIn_LUT3));
+	,.interconnect_switch(LUT3_DataIn),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(DataIn_LUT3));
 
 interconnect_unit LUT3_BY(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT3_Bypass),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(BY_LUT3));
+	,.interconnect_switch(LUT3_Bypass),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(BY_LUT3));
 
 
 interconnect_unit LUT4_X3(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT4_3),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut4_x3));
+	,.interconnect_switch(LUT4_3),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut4_x3));
 
 interconnect_unit LUT4_X2(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT4_2),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut4_x2));
+	,.interconnect_switch(LUT4_2),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut4_x2));
 
 interconnect_unit LUT4_X1(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT4_1),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut4_x1));
+	,.interconnect_switch(LUT4_1),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut4_x1));
 
 interconnect_unit LUT4_X0(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT4_0),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut4_x0));
+	,.interconnect_switch(LUT4_0),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut4_x0));
 
 interconnect_unit LUT4_Data(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT4_DataIn),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(DataIn_LUT4));
+	,.interconnect_switch(LUT4_DataIn),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(DataIn_LUT4));
 
 interconnect_unit LUT4_BY(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT4_Bypass),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(BY_LUT4));
+	,.interconnect_switch(LUT4_Bypass),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(BY_LUT4));
 
 
 interconnect_unit LUT5_X3(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT5_3),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut5_x3));
+	,.interconnect_switch(LUT5_3),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut5_x3));
 
 interconnect_unit LUT5_X2(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT5_2),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut5_x2));
+	,.interconnect_switch(LUT5_2),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut5_x2));
 
 interconnect_unit LUT5_X1(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT5_1),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut5_x1));
+	,.interconnect_switch(LUT5_1),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut5_x1));
 
 interconnect_unit LUT5_X0(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT5_0),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut5_x0));
+	,.interconnect_switch(LUT5_0),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut5_x0));
 
 interconnect_unit LUT5_Data(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT5_DataIn),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(DataIn_LUT5));
+	,.interconnect_switch(LUT5_DataIn),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(DataIn_LUT5));
 
 interconnect_unit LUT5_BY(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT5_Bypass),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(BY_LUT5));
+	,.interconnect_switch(LUT5_Bypass),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(BY_LUT5));
 
 
 interconnect_unit LUT6_X3(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT6_3),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut6_x3));
+	,.interconnect_switch(LUT6_3),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut6_x3));
 
 interconnect_unit LUT6_X2(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT6_2),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut6_x2));
+	,.interconnect_switch(LUT6_2),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut6_x2));
 
 interconnect_unit LUT6_X1(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT6_1),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut6_x1));
+	,.interconnect_switch(LUT6_1),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut6_x1));
 
 interconnect_unit LUT6_X0(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT6_0),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut6_x0));
+	,.interconnect_switch(LUT6_0),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut6_x0));
 
 interconnect_unit LUT6_Data(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT6_DataIn),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(DataIn_LUT6));
+	,.interconnect_switch(LUT6_DataIn),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(DataIn_LUT6));
 
 interconnect_unit LUT6_BY(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT6_Bypass),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(BY_LUT6));
+	,.interconnect_switch(LUT6_Bypass),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(BY_LUT6));
 
 
 interconnect_unit LUT7_X3(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT7_3),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut7_x3));
+	,.interconnect_switch(LUT7_3),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut7_x3));
 
 interconnect_unit LUT7_X2(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT7_2),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut7_x2));
+	,.interconnect_switch(LUT7_2),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut7_x2));
 
 interconnect_unit LUT7_X1(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT7_1),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut7_x1));
+	,.interconnect_switch(LUT7_1),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut7_x1));
 
 interconnect_unit LUT7_X0(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT7_0),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut7_x0));
+	,.interconnect_switch(LUT7_0),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(lut7_x0));
 
 interconnect_unit LUT7_Data(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT7_DataIn),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(DataIn_LUT7));
+	,.interconnect_switch(LUT7_DataIn),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(DataIn_LUT7));
 
 interconnect_unit LUT7_BY(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6),.I7(I7),.I8(I8),.I9(I9),.I10(I10),.I11(I11),.I12(I12),.I13(I13),.I14(I14),.I15(I15)
-	,.interconnect_switch(LUT7_Bypass),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.CYO_0(CYO_0),.CYO_1(CYO_1),.CYO_2(CYO_2),.CYO_3(CYO_3),.CYO_4(CYO_4),.CYO_5(CYO_5),.CYO_6(CYO_6),.CYO_7(CYO_7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(BY_LUT7));
-
+	,.interconnect_switch(LUT7_Bypass),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.Q0(Q0),.Q1(Q1),.Q2(Q2),.Q3(Q3),.Q4(Q4),.Q5(Q5),.Q6(Q6),.Q7(Q7),.BY_0(BY_LUT0),.BY_1(BY_LUT1),.BY_2(BY_LUT2),.BY_3(BY_LUT3),.BY_4(BY_LUT4),.BY_5(BY_LUT5),.BY_6(BY_LUT6),.BY_7(BY_LUT7),.RQ0(RQ0),.RQ1(RQ1),.RQ2(RQ2),.RQ3(RQ3),.RQ4(RQ4),.RQ5(RQ5),.RQ6(RQ6),.RQ7(RQ7),.lut_inp(BY_LUT7));
 
 //interconnections made for all LUT inputs
 
@@ -293,7 +291,7 @@ interconnect_unit LUT7_BY(.I0(I0),.I1(I1),.I2(I2),.I3(I3),.I4(I4),.I5(I5),.I6(I6
 //create slices and F5 muxes in here--but then how will you congigure them?--use interconnect unit only
 
 
-logic_pair LUT7(.x3(lut7_x3),.x2(lut7_x2),.x1(lut7_x1),.x0(lut7_x0),.bypass_in(BY_LUT7),.data_in(DataIn_LUT7),.config_data_in(LUT7_conf_bits),.clk(clk),.reset(reset),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.carry_in(CYO_6),.CYO_MUX_SEL(LUT7_CYO_SEL_MUX),.CY0_MUX_SEL(LUT7_CY_GEN_MUX),.GWE(GWE),.WE(LUT7_WE),.CLB_prgm_b_in(CLB_prgm_b_in),.SUM_LUT_MUX_SEL(LUT7_SUM_LUT_SEL_MUX),.SUM_LUT_OUT(Q7),.DFF_INP_MUX_SEL(LUT7_DFF_INP_SEL_MUX),.carry_out(CYO_7),.CLB_prgm_b_out(CLB_prgm_b_out),.DFF_OUT(RQ7));
+logic_pair LUT7(.x3(lut7_x3),.x2(lut7_x2),.x1(lut7_x1),.x0(lut7_x0),.bypass_in(BY_LUT7),.data_in(DataIn_LUT7),.config_data_in(LUT7_conf_bits),.clk(clk),.reset(reset),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.carry_in(CYO_6),.CYO_MUX_SEL(LUT7_CYO_SEL_MUX),.CY0_MUX_SEL(LUT7_CY_GEN_MUX),.GWE(GWE),.WE(LUT7_WE),.CLB_prgm_b_in(CLB_prgm_b_in),.SUM_LUT_MUX_SEL(LUT7_SUM_LUT_SEL_MUX),.SUM_LUT_OUT(Q7),.DFF_INP_MUX_SEL(LUT7_DFF_INP_SEL_MUX),.carry_out(carry_chain_out),.CLB_prgm_b_out(CLB_prgm_b_out),.DFF_OUT(RQ7));
 
 logic_pair LUT6(.x3(lut6_x3),.x2(lut6_x2),.x1(lut6_x1),.x0(lut6_x0),.bypass_in(BY_LUT6),.data_in(DataIn_LUT6),.config_data_in(LUT6_conf_bits),.clk(clk),.reset(reset),.prgm_b(prgm_b),.CLB_prgm_b(CLB_prgm_b),.carry_in(CYO_5),.CYO_MUX_SEL(LUT6_CYO_SEL_MUX),.CY0_MUX_SEL(LUT6_CY_GEN_MUX),.GWE(GWE),.WE(LUT6_WE),.CLB_prgm_b_in(CLB_prgm_b_in),.SUM_LUT_MUX_SEL(LUT6_SUM_LUT_SEL_MUX),.SUM_LUT_OUT(Q6),.DFF_INP_MUX_SEL(LUT6_DFF_INP_SEL_MUX),.carry_out(CYO_6),.CLB_prgm_b_out(LUT6_CLB_prgm_b_out),.DFF_OUT(RQ6));
 

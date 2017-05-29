@@ -101,7 +101,7 @@ cb_prgm_b_in,CLB_prgm_b_in,sb_prgm_b_2,io_prgm_b_in,bit_in_IO,io_prgm_b;
 integer CB_count,SB_count,SB_count_2,CLB_count,CLB_counter,CB_counter,SB_counter,SB_counter_2,IO_counter,IO_count;
 
 
-FPGA FPGA1(.V00_0(V00_0),.V00_1(V00_1),.V00_2(V00_2),.V00_3(V00_3),
+/*FPGA FPGA1(.V00_0(V00_0),.V00_1(V00_1),.V00_2(V00_2),.V00_3(V00_3),
 .V00_4(V00_4),.V00_5(V00_5),.V00_6(V00_6),.V00_7(V00_7),.V01_0(V01_0),
 .V01_1(V01_1),.V01_2(V01_2),.V01_3(V01_3),.V01_4(V01_4),.V01_5(V01_5),
 .V01_6(V01_6),.V01_7(V01_7),.V02_0(V02_0),.V02_1(V02_1),.V02_2(V02_2),
@@ -124,7 +124,7 @@ FPGA FPGA1(.V00_0(V00_0),.V00_1(V00_1),.V00_2(V00_2),.V00_3(V00_3),
 .sb_prgm_b_2(sb_prgm_b_2),.bit_in_CLB(bit_in_CLB),.bit_in_CB(bit_in_CB),
 .sb_prgm_b_in(sb_prgm_b_in),.cb_prgm_b_in(cb_prgm_b_in),.CLB_prgm_b_in(CLB_prgm_b_in),
 .bit_in_SB(bit_in_SB),.bit_in_SB_2(bit_in_SB_2),.io_prgm_b(io_prgm_b),.bit_in_IO(bit_in_IO),.io_prgm_b_in(io_prgm_b_in)); 
-
+*/
 //For all bit-streams the bits are arranged in the decreasing order of their coordinate positions. eg. The bits belonging to the first CLB CLB_00 will be placed at the end of the CLB bitstream
 
 initial begin

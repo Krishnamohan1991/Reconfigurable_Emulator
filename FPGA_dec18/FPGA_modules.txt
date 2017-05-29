@@ -5,7 +5,7 @@ look_up_table_interconnect_config.v
 interconnect_unit.v
 2X1MUX.v
 fast_carry_chain.v
-logic_pair.v
+SLICEM_logicpair.v
 LU.v
 syn_D_FF.v
 MUX_FF_LUT.v

@@ -1,13 +1,13 @@
-`define behavioral
-module CB(x1,x2,x3,x4,q1,q2,G0,G1,G2,G3,G4,G5,G6,G7,
+
+module CB(x1,x2,x3,x4,q1,q2,Rq1,Rq2,Cy1,Cy2,G0,G1,G2,G3,G4,G5,G6,G7,
 	bit_in_CB,cb_prgm_b_in,cb_prgm_b_out,clk,reset,cb_prgm_b,prgm_b);
 
 output  x1,x2,x3,x4,cb_prgm_b_out;
-input q1,q2,bit_in_CB,clk,reset,prgm_b,cb_prgm_b,cb_prgm_b_in;
+input q1,q2,Rq1,Rq2,Cy1,Cy2,bit_in_CB,clk,reset,prgm_b,cb_prgm_b,cb_prgm_b_in;
 inout G0,G1,G2,G3,G4,G5,G6,G7;
 
 
-`ifdef behavioral
+
 
 
 wire x1_G0;wire x1_G1;wire x1_G2;wire x1_G3;wire x2_G0;wire x2_G1;wire x2_G2;wire x2_G3;wire x3_G0;wire x3_G1;wire x3_G2;wire x3_G3;
@@ -79,51 +79,6 @@ unidir_switch G6_q1(.port1(q1),.port2(G6),.enable(q1_G6));  unidir_switch G7_q1(
                                                                            
 unidir_switch G6_q2(.port1(q2),.port2(G6),.enable(q2_G6));  unidir_switch G7_q2(.port1(q2),.port2(G7),.enable(q2_G7));
 
- 
-
-`else
-
-wire x1_G0,x1_G1,x1_G2,x1_G3,x2_G0,x2_G1,x2_G2,x2_G3,x3_G0,x3_G1,x3_G2,x3_G3,
-x4_G0,x4_G1,x4_G2,x4_G3,x5_G0,x5_G1,x5_G2,x5_G3,
-x6_G0,x6_G1,x6_G2,x6_G3,x7_G0,x7_G1,x7_G2,x7_G3,
-x8_G0,x8_G1,x8_G2,x8_G3,x9_G0,x9_G1,x9_G2,x9_G3,
-q1_G0,q1_G1,q1_G2,q1_G3,q2_G0,q2_G1,q2_G2,q2_G3,
-q3_G0,q3_G1,q3_G2,q3_G3,q4_G0,q4_G1,q4_G2,q4_G3,
-x1_G4,x1_G5,x1_G6,x1_G7,x2_G4,x2_G5,x2_G6,x2_G7,
-x3_G4,x3_G5,x3_G6,x3_G7,x4_G4,x4_G5,x4_G6,x4_G7,
-x5_G4,x5_G5,x5_G6,x5_G7,x6_G4,x6_G5,x6_G6,x6_G7,
-x7_G4,x7_G5,x7_G6,x7_G7,x8_G4,x8_G5,x8_G6,x8_G7,
-x9_G4,x9_G5,x9_G6,x9_G7,q1_G4,q1_G5,q1_G6,q1_G7,
-q2_G4,q2_G5,q2_G6,q2_G7,q3_G4,q3_G5,q3_G6,q3_G7,
-q4_G4,q4_G5,q4_G6,q4_G7;
-
-config_cb CB_conf(.bit_in_CB(bit_in_CB),.bit_out_CB(bit_out_CB),.clk(clk),.reset(reset),.prgm_b(prgm_b),.cb_prgm_b(cb_prgm_b),
-.x1_G0(x1_G0),.x1_G1(x1_G1),.x1_G2(x1_G2),.x1_G3(x1_G3),.x2_G0(x2_G0),.x2_G1(x2_G1),.x2_G2(x2_G2),.x2_G3(x2_G3),
-.x3_G0(x3_G0),.x3_G1(x3_G1),.x3_G2(x3_G2),.x3_G3(x3_G3),.x4_G0(x4_G0),.x4_G1(x4_G1),.x4_G2(x4_G2),.x4_G3(x4_G3),
-
-.q1_G0(q1_G0),.q1_G1(q1_G1),.q1_G2(q1_G2),.q1_G3(q1_G3),
-.q2_G0(q2_G0),.q2_G1(q2_G1),.q2_G2(q2_G2),.q2_G3(q2_G3),.q3_G0(q3_G0),.q3_G1(q3_G1),.q3_G2(q3_G2),.q3_G3(q3_G3),
-.q4_G0(q4_G0),.q4_G1(q4_G1),.q4_G2(q4_G2),.q4_G3(q4_G3),.x1_G4(x1_G4),.x1_G5(x1_G5),.x1_G6(x1_G6),.x1_G7(x1_G7),
-.x2_G4(x2_G4),.x2_G5(x2_G5),.x2_G6(x2_G6),.x2_G7(x2_G7),.x3_G4(x3_G4),.x3_G5(x3_G5),.x3_G6(x3_G6),.x3_G7(x3_G7),
-.x4_G4(x4_G4),.x4_G5(x4_G5),.x4_G6(x4_G6),.x4_G7(x4_G7),
-.q1_G4(q1_G4),.q1_G5(q1_G5),.q1_G6(q1_G6),.q1_G7(q1_G7),.q2_G4(q2_G4),.q2_G5(q2_G5),.q2_G6(q2_G6),.q2_G7(q2_G7),
-);
-
-tranif1(x1,G0,x1_G0);	tranif1(x1,G1,x1_G1);   tranif1(x1,G2,x1_G2);	tranif1(x1,G3,x1_G3);
-tranif1(x2,G0,x2_G0);   tranif1(x2,G1,x2_G1);   tranif1(x2,G2,x2_G2);   tranif1(x2,G3,x2_G3);
-tranif1(x3,G0,x3_G0);   tranif1(x3,G1,x3_G1);   tranif1(x3,G2,x3_G2);   tranif1(x3,G3,x3_G3);
-tranif1(x4,G0,x4_G0);   tranif1(x4,G1,x4_G1);   tranif1(x4,G2,x4_G2);   tranif1(x4,G3,x4_G3);
-tranif1(q1,G0,q1_G0);   tranif1(q1,G1,q1_G1);   tranif1(q1,G2,q1_G2);   tranif1(q1,G3,q1_G3);
-tranif1(q2,G0,q2_G0);   tranif1(q2,G1,q2_G1);   tranif1(q2,G2,q2_G2);   tranif1(q2,G3,q2_G3);
-
-tranif1(x1,G4,x1_G4);	tranif1(x1,G5,x1_G5);   tranif1(x1,G6,x1_G6);	tranif1(x1,G7,x1_G7);
-tranif1(x2,G4,x2_G4);   tranif1(x2,G5,x2_G5);   tranif1(x2,G6,x2_G6);   tranif1(x2,G7,x2_G7);
-tranif1(x3,G4,x3_G4);   tranif1(x3,G5,x3_G5);   tranif1(x3,G6,x3_G6);   tranif1(x3,G7,x3_G7);
-tranif1(x4,G4,x4_G4);   tranif1(x4,G5,x4_G5);   tranif1(x4,G6,x4_G6);   tranif1(x4,G7,x4_G7);
-tranif1(q1,G4,q1_G4);   tranif1(q1,G5,q1_G5);   tranif1(q1,G6,q1_G6);   tranif1(q1,G7,q1_G7);
-tranif1(q2,G4,q2_G4);   tranif1(q2,G5,q2_G5);   tranif1(q2,G6,q2_G6);   tranif1(q2,G7,q2_G7);
-
-`endif
  
 
 

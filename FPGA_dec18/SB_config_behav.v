@@ -1,99 +1,99 @@
 
 		
-	module SB_config_behav(bit_in,prgm_b,clk,reset,sb_prgm_b,A0_B0,A0_B1,A0_B2,A0_B3,A0_B4,A0_B5,A0_B6,A0_B7,A0_C0,A0_C1,A0_C2,A0_C3,A0_C4,A0_C5,A0_C6,A0_C7,A0_D0,A0_D1,A0_D2,A0_D3,A0_D4,A0_D5,A0_D6,A0_D7,A1_B0,
-	A1_B1,A1_B2,A1_B3,A1_B4,A1_B5,A1_B6,A1_B7,A1_C0,A1_C1,A1_C2,A1_C3,A1_C4,A1_C5,A1_C6,A1_C7,A1_D0,A1_D1,A1_D2,A1_D3,A1_D4,A1_D5,A1_D6,A1_D7,A2_B0,A2_B1,
-	A2_B2,A2_B3,A2_B4,A2_B5,A2_B6,A2_B7,A2_C0,A2_C1,A2_C2,A2_C3,A2_C4,A2_C5,A2_C6,A2_C7,A2_D0,A2_D1,A2_D2,A2_D3,A2_D4,A2_D5,A2_D6,A2_D7,A3_B0,A3_B1,A3_B2,
-	A3_B3,A3_B4,A3_B5,A3_B6,A3_B7,A3_C0,A3_C1,A3_C2,A3_C3,A3_C4,A3_C5,A3_C6,A3_C7,A3_D0,A3_D1,A3_D2,A3_D3,A3_D4,A3_D5,A3_D6,A3_D7,A4_B0,A4_B1,A4_B2,A4_B3,
-	A4_B4,A4_B5,A4_B6,A4_B7,A4_C0,A4_C1,A4_C2,A4_C3,A4_C4,A4_C5,A4_C6,A4_C7,A4_D0,A4_D1,A4_D2,A4_D3,A4_D4,A4_D5,A4_D6,A4_D7,A5_B0,A5_B1,A5_B2,A5_B3,A5_B4,
-	A5_B5,A5_B6,A5_B7,A5_C0,A5_C1,A5_C2,A5_C3,A5_C4,A5_C5,A5_C6,A5_C7,A5_D0,A5_D1,A5_D2,A5_D3,A5_D4,A5_D5,A5_D6,A5_D7,A6_B0,A6_B1,A6_B2,A6_B3,A6_B4,A6_B5,
-	A6_B6,A6_B7,A6_C0,A6_C1,A6_C2,A6_C3,A6_C4,A6_C5,A6_C6,A6_C7,A6_D0,A6_D1,A6_D2,A6_D3,A6_D4,A6_D5,A6_D6,A6_D7,A7_B0,A7_B1,A7_B2,A7_B3,A7_B4,A7_B5,A7_B6,
-	A7_B7,A7_C0,A7_C1,A7_C2,A7_C3,A7_C4,A7_C5,A7_C6,A7_C7,A7_D0,A7_D1,A7_D2,A7_D3,A7_D4,A7_D5,A7_D6,A7_D7,B0_D0,B0_D1,B0_D2,B0_D3,B0_D4,B0_D5,B0_D6,B0_D7,
-	B0_C0,B0_C1,B0_C2,B0_C3,B0_C4,B0_C5,B0_C6,B0_C7,B1_D0,B1_D1,B1_D2,B1_D3,B1_D4,B1_D5,B1_D6,B1_D7,B1_C0,B1_C1,B1_C2,B1_C3,B1_C4,B1_C5,B1_C6,B1_C7,B2_D0,
-	B2_D1,B2_D2,B2_D3,B2_D4,B2_D5,B2_D6,B2_D7,B2_C0,B2_C1,B2_C2,B2_C3,B2_C4,B2_C5,B2_C6,B2_C7,B3_D0,B3_D1,B3_D2,B3_D3,B3_D4,B3_D5,B3_D6,B3_D7,B3_C0,B3_C1,
-	B3_C2,B3_C3,B3_C4,B3_C5,B3_C6,B3_C7,B4_D0,B4_D1,B4_D2,B4_D3,B4_D4,B4_D5,B4_D6,B4_D7,B4_C0,B4_C1,B4_C2,B4_C3,B4_C4,B4_C5,B4_C6,B4_C7,B5_D0,B5_D1,B5_D2,
-	B5_D3,B5_D4,B5_D5,B5_D6,B5_D7,B5_C0,B5_C1,B5_C2,B5_C3,B5_C4,B5_C5,B5_C6,B5_C7,B6_D0,B6_D1,B6_D2,B6_D3,B6_D4,B6_D5,B6_D6,B6_D7,B6_C0,B6_C1,B6_C2,B6_C3,
-	B6_C4,B6_C5,B6_C6,B6_C7,B7_D0,B7_D1,B7_D2,B7_D3,B7_D4,B7_D5,B7_D6,B7_D7,B7_C0,B7_C1,B7_C2,B7_C3,B7_C4,B7_C5,B7_C6,B7_C7,C0_D0,C0_D1,C0_D2,C0_D3,C0_D4,
-	C0_D5,C0_D6,C0_D7,C1_D0,C1_D1,C1_D2,C1_D3,C1_D4,C1_D5,C1_D6,C1_D7,C2_D0,C2_D1,C2_D2,C2_D3,C2_D4,C2_D5,C2_D6,C2_D7,C3_D0,C3_D1,C3_D2,C3_D3,C3_D4,C3_D5,
-	C3_D6,C3_D7,C4_D0,C4_D1,C4_D2,C4_D3,C4_D4,C4_D5,C4_D6,C4_D7,C5_D0,C5_D1,C5_D2,C5_D3,C5_D4,C5_D5,C5_D6,C5_D7,C6_D0,C6_D1,C6_D2,C6_D3,C6_D4,C6_D5,C6_D6,
-	C6_D7,C7_D0,C7_D1,C7_D2,C7_D3,C7_D4,C7_D5,C7_D6,C7_D7,sb_prgm_b_in,sb_prgm_b_out);
+	module SB_config_behav(bit_in,prgm_b,clk,reset,sb_prgm_b,N0_E0,N0_E1,N0_E2,N0_E3,N0_E4,N0_E5,N0_E6,N0_E7,N0_S0,N0_S1,N0_S2,N0_S3,N0_S4,N0_S5,N0_S6,N0_S7,N0_W0,N0_W1,N0_W2,N0_W3,N0_W4,N0_W5,N0_W6,N0_W7,N1_E0,
+	N1_E1,N1_E2,N1_E3,N1_E4,N1_E5,N1_E6,N1_E7,N1_S0,N1_S1,N1_S2,N1_S3,N1_S4,N1_S5,N1_S6,N1_S7,N1_W0,N1_W1,N1_W2,N1_W3,N1_W4,N1_W5,N1_W6,N1_W7,N2_E0,N2_E1,
+	N2_E2,N2_E3,N2_E4,N2_E5,N2_E6,N2_E7,N2_S0,N2_S1,N2_S2,N2_S3,N2_S4,N2_S5,N2_S6,N2_S7,N2_W0,N2_W1,N2_W2,N2_W3,N2_W4,N2_W5,N2_W6,N2_W7,N3_E0,N3_E1,N3_E2,
+	N3_E3,N3_E4,N3_E5,N3_E6,N3_E7,N3_S0,N3_S1,N3_S2,N3_S3,N3_S4,N3_S5,N3_S6,N3_S7,N3_W0,N3_W1,N3_W2,N3_W3,N3_W4,N3_W5,N3_W6,N3_W7,N4_E0,N4_E1,N4_E2,N4_E3,
+	N4_E4,N4_E5,N4_E6,N4_E7,N4_S0,N4_S1,N4_S2,N4_S3,N4_S4,N4_S5,N4_S6,N4_S7,N4_W0,N4_W1,N4_W2,N4_W3,N4_W4,N4_W5,N4_W6,N4_W7,N5_E0,N5_E1,N5_E2,N5_E3,N5_E4,
+	N5_E5,N5_E6,N5_E7,N5_S0,N5_S1,N5_S2,N5_S3,N5_S4,N5_S5,N5_S6,N5_S7,N5_W0,N5_W1,N5_W2,N5_W3,N5_W4,N5_W5,N5_W6,N5_W7,N6_E0,N6_E1,N6_E2,N6_E3,N6_E4,N6_E5,
+	N6_E6,N6_E7,N6_S0,N6_S1,N6_S2,N6_S3,N6_S4,N6_S5,N6_S6,N6_S7,N6_W0,N6_W1,N6_W2,N6_W3,N6_W4,N6_W5,N6_W6,N6_W7,N7_E0,N7_E1,N7_E2,N7_E3,N7_E4,N7_E5,N7_E6,
+	N7_E7,N7_S0,N7_S1,N7_S2,N7_S3,N7_S4,N7_S5,N7_S6,N7_S7,N7_W0,N7_W1,N7_W2,N7_W3,N7_W4,N7_W5,N7_W6,N7_W7,E0_W0,E0_W1,E0_W2,E0_W3,E0_W4,E0_W5,E0_W6,E0_W7,
+	E0_S0,E0_S1,E0_S2,E0_S3,E0_S4,E0_S5,E0_S6,E0_S7,E1_W0,E1_W1,E1_W2,E1_W3,E1_W4,E1_W5,E1_W6,E1_W7,E1_S0,E1_S1,E1_S2,E1_S3,E1_S4,E1_S5,E1_S6,E1_S7,E2_W0,
+	E2_W1,E2_W2,E2_W3,E2_W4,E2_W5,E2_W6,E2_W7,E2_S0,E2_S1,E2_S2,E2_S3,E2_S4,E2_S5,E2_S6,E2_S7,E3_W0,E3_W1,E3_W2,E3_W3,E3_W4,E3_W5,E3_W6,E3_W7,E3_S0,E3_S1,
+	E3_S2,E3_S3,E3_S4,E3_S5,E3_S6,E3_S7,E4_W0,E4_W1,E4_W2,E4_W3,E4_W4,E4_W5,E4_W6,E4_W7,E4_S0,E4_S1,E4_S2,E4_S3,E4_S4,E4_S5,E4_S6,E4_S7,E5_W0,E5_W1,E5_W2,
+	E5_W3,E5_W4,E5_W5,E5_W6,E5_W7,E5_S0,E5_S1,E5_S2,E5_S3,E5_S4,E5_S5,E5_S6,E5_S7,E6_W0,E6_W1,E6_W2,E6_W3,E6_W4,E6_W5,E6_W6,E6_W7,E6_S0,E6_S1,E6_S2,E6_S3,
+	E6_S4,E6_S5,E6_S6,E6_S7,E7_W0,E7_W1,E7_W2,E7_W3,E7_W4,E7_W5,E7_W6,E7_W7,E7_S0,E7_S1,E7_S2,E7_S3,E7_S4,E7_S5,E7_S6,E7_S7,S0_W0,S0_W1,S0_W2,S0_W3,S0_W4,
+	S0_W5,S0_W6,S0_W7,S1_W0,S1_W1,S1_W2,S1_W3,S1_W4,S1_W5,S1_W6,S1_W7,S2_W0,S2_W1,S2_W2,S2_W3,S2_W4,S2_W5,S2_W6,S2_W7,S3_W0,S3_W1,S3_W2,S3_W3,S3_W4,S3_W5,
+	S3_W6,S3_W7,S4_W0,S4_W1,S4_W2,S4_W3,S4_W4,S4_W5,S4_W6,S4_W7,S5_W0,S5_W1,S5_W2,S5_W3,S5_W4,S5_W5,S5_W6,S5_W7,S6_W0,S6_W1,S6_W2,S6_W3,S6_W4,S6_W5,S6_W6,
+	S6_W7,S7_W0,S7_W1,S7_W2,S7_W3,S7_W4,S7_W5,S7_W6,S7_W7,sb_prgm_b_in,sb_prgm_b_out);
 	input bit_in,prgm_b,sb_prgm_b,sb_prgm_b_in,clk,reset;
 	output reg sb_prgm_b_out;
 	reg [9:0] count;
 
-	output reg [1:0]A0_B0;output reg [1:0]A0_B1;output reg [1:0]A0_B2;output reg [1:0]A0_B3;output reg [1:0]A0_B4;output reg [1:0]A0_B5;output reg [1:0]A0_B6;output reg [1:0]A0_B7;output reg [1:0]A0_C0;output reg [1:0]A0_C1;output reg [1:0]A0_C2;output reg [1:0]A0_C3;output reg [1:0]A0_C4;output reg [1:0]A0_C5;output reg [1:0]A0_C6;output reg [1:0]A0_C7;output reg [1:0]A0_D0;output reg [1:0]A0_D1;output reg [1:0]A0_D2;output reg [1:0]A0_D3;output reg [1:0]A0_D4;output reg [1:0]A0_D5;output reg [1:0]A0_D6;output reg [1:0]A0_D7;output reg [1:0]A1_B0;
-	output reg [1:0]A1_B1;output reg [1:0]A1_B2;output reg [1:0]A1_B3;output reg [1:0]A1_B4;output reg [1:0]A1_B5;output reg [1:0]A1_B6;output reg [1:0]A1_B7;output reg [1:0]A1_C0;output reg [1:0]A1_C1;output reg [1:0]A1_C2;output reg [1:0]A1_C3;output reg [1:0]A1_C4;output reg [1:0]A1_C5;output reg [1:0]A1_C6;output reg [1:0]A1_C7;output reg [1:0]A1_D0;output reg [1:0]A1_D1;output reg [1:0]A1_D2;output reg [1:0]A1_D3;output reg [1:0]A1_D4;output reg [1:0]A1_D5;output reg [1:0]A1_D6;output reg [1:0]A1_D7;output reg [1:0]A2_B0;output reg [1:0]A2_B1;
-	output reg [1:0]A2_B2;output reg [1:0]A2_B3;output reg [1:0]A2_B4;output reg [1:0]A2_B5;output reg [1:0]A2_B6;output reg [1:0]A2_B7;output reg [1:0]A2_C0;output reg [1:0]A2_C1;output reg [1:0]A2_C2;output reg [1:0]A2_C3;output reg [1:0]A2_C4;output reg [1:0]A2_C5;output reg [1:0]A2_C6;output reg [1:0]A2_C7;output reg [1:0]A2_D0;output reg [1:0]A2_D1;output reg [1:0]A2_D2;output reg [1:0]A2_D3;output reg [1:0]A2_D4;output reg [1:0]A2_D5;output reg [1:0]A2_D6;output reg [1:0]A2_D7;output reg [1:0]A3_B0;output reg [1:0]A3_B1;output reg [1:0]A3_B2;
-	output reg [1:0]A3_B3;output reg [1:0]A3_B4;output reg [1:0]A3_B5;output reg [1:0]A3_B6;output reg [1:0]A3_B7;output reg [1:0]A3_C0;output reg [1:0]A3_C1;output reg [1:0]A3_C2;output reg [1:0]A3_C3;output reg [1:0]A3_C4;output reg [1:0]A3_C5;output reg [1:0]A3_C6;output reg [1:0]A3_C7;output reg [1:0]A3_D0;output reg [1:0]A3_D1;output reg [1:0]A3_D2;output reg [1:0]A3_D3;output reg [1:0]A3_D4;output reg [1:0]A3_D5;output reg [1:0]A3_D6;output reg [1:0]A3_D7;output reg [1:0]A4_B0;output reg [1:0]A4_B1;output reg [1:0]A4_B2;output reg [1:0]A4_B3;
-	output reg [1:0]A4_B4;output reg [1:0]A4_B5;output reg [1:0]A4_B6;output reg [1:0]A4_B7;output reg [1:0]A4_C0;output reg [1:0]A4_C1;output reg [1:0]A4_C2;output reg [1:0]A4_C3;output reg [1:0]A4_C4;output reg [1:0]A4_C5;output reg [1:0]A4_C6;output reg [1:0]A4_C7;output reg [1:0]A4_D0;output reg [1:0]A4_D1;output reg [1:0]A4_D2;output reg [1:0]A4_D3;output reg [1:0]A4_D4;output reg [1:0]A4_D5;output reg [1:0]A4_D6;output reg [1:0]A4_D7;output reg [1:0]A5_B0;output reg [1:0]A5_B1;output reg [1:0]A5_B2;output reg [1:0]A5_B3;output reg [1:0]A5_B4;
-	output reg [1:0]A5_B5;output reg [1:0]A5_B6;output reg [1:0]A5_B7;output reg [1:0]A5_C0;output reg [1:0]A5_C1;output reg [1:0]A5_C2;output reg [1:0]A5_C3;output reg [1:0]A5_C4;output reg [1:0]A5_C5;output reg [1:0]A5_C6;output reg [1:0]A5_C7;output reg [1:0]A5_D0;output reg [1:0]A5_D1;output reg [1:0]A5_D2;output reg [1:0]A5_D3;output reg [1:0]A5_D4;output reg [1:0]A5_D5;output reg [1:0]A5_D6;output reg [1:0]A5_D7;output reg [1:0]A6_B0;output reg [1:0]A6_B1;output reg [1:0]A6_B2;output reg [1:0]A6_B3;output reg [1:0]A6_B4;output reg [1:0]A6_B5;
-	output reg [1:0]A6_B6;output reg [1:0]A6_B7;output reg [1:0]A6_C0;output reg [1:0]A6_C1;output reg [1:0]A6_C2;output reg [1:0]A6_C3;output reg [1:0]A6_C4;output reg [1:0]A6_C5;output reg [1:0]A6_C6;output reg [1:0]A6_C7;output reg [1:0]A6_D0;output reg [1:0]A6_D1;output reg [1:0]A6_D2;output reg [1:0]A6_D3;output reg [1:0]A6_D4;output reg [1:0]A6_D5;output reg [1:0]A6_D6;output reg [1:0]A6_D7;output reg [1:0]A7_B0;output reg [1:0]A7_B1;output reg [1:0]A7_B2;output reg [1:0]A7_B3;output reg [1:0]A7_B4;output reg [1:0]A7_B5;output reg [1:0]A7_B6;
-	output reg [1:0]A7_B7;output reg [1:0]A7_C0;output reg [1:0]A7_C1;output reg [1:0]A7_C2;output reg [1:0]A7_C3;output reg [1:0]A7_C4;output reg [1:0]A7_C5;output reg [1:0]A7_C6;output reg [1:0]A7_C7;output reg [1:0]A7_D0;output reg [1:0]A7_D1;output reg [1:0]A7_D2;output reg [1:0]A7_D3;output reg [1:0]A7_D4;output reg [1:0]A7_D5;output reg [1:0]A7_D6;output reg [1:0]A7_D7;output reg [1:0]B0_D0;output reg [1:0]B0_D1;output reg [1:0]B0_D2;output reg [1:0]B0_D3;output reg [1:0]B0_D4;output reg [1:0]B0_D5;output reg [1:0]B0_D6;output reg [1:0]B0_D7;
-	output reg [1:0]B0_C0;output reg [1:0]B0_C1;output reg [1:0]B0_C2;output reg [1:0]B0_C3;output reg [1:0]B0_C4;output reg [1:0]B0_C5;output reg [1:0]B0_C6;output reg [1:0]B0_C7;output reg [1:0]B1_D0;output reg [1:0]B1_D1;output reg [1:0]B1_D2;output reg [1:0]B1_D3;output reg [1:0]B1_D4;output reg [1:0]B1_D5;output reg [1:0]B1_D6;output reg [1:0]B1_D7;output reg [1:0]B1_C0;output reg [1:0]B1_C1;output reg [1:0]B1_C2;output reg [1:0]B1_C3;output reg [1:0]B1_C4;output reg [1:0]B1_C5;output reg [1:0]B1_C6;output reg [1:0]B1_C7;output reg [1:0]B2_D0;
-	output reg [1:0]B2_D1;output reg [1:0]B2_D2;output reg [1:0]B2_D3;output reg [1:0]B2_D4;output reg [1:0]B2_D5;output reg [1:0]B2_D6;output reg [1:0]B2_D7;output reg [1:0]B2_C0;output reg [1:0]B2_C1;output reg [1:0]B2_C2;output reg [1:0]B2_C3;output reg [1:0]B2_C4;output reg [1:0]B2_C5;output reg [1:0]B2_C6;output reg [1:0]B2_C7;output reg [1:0]B3_D0;output reg [1:0]B3_D1;output reg [1:0]B3_D2;output reg [1:0]B3_D3;output reg [1:0]B3_D4;output reg [1:0]B3_D5;output reg [1:0]B3_D6;output reg [1:0]B3_D7;output reg [1:0]B3_C0;output reg [1:0]B3_C1;
-	output reg [1:0]B3_C2;output reg [1:0]B3_C3;output reg [1:0]B3_C4;output reg [1:0]B3_C5;output reg [1:0]B3_C6;output reg [1:0]B3_C7;output reg [1:0]B4_D0;output reg [1:0]B4_D1;output reg [1:0]B4_D2;output reg [1:0]B4_D3;output reg [1:0]B4_D4;output reg [1:0]B4_D5;output reg [1:0]B4_D6;output reg [1:0]B4_D7;output reg [1:0]B4_C0;output reg [1:0]B4_C1;output reg [1:0]B4_C2;output reg [1:0]B4_C3;output reg [1:0]B4_C4;output reg [1:0]B4_C5;output reg [1:0]B4_C6;output reg [1:0]B4_C7;output reg [1:0]B5_D0;output reg [1:0]B5_D1;output reg [1:0]B5_D2;
-	output reg [1:0]B5_D3;output reg [1:0]B5_D4;output reg [1:0]B5_D5;output reg [1:0]B5_D6;output reg [1:0]B5_D7;output reg [1:0]B5_C0;output reg [1:0]B5_C1;output reg [1:0]B5_C2;output reg [1:0]B5_C3;output reg [1:0]B5_C4;output reg [1:0]B5_C5;output reg [1:0]B5_C6;output reg [1:0]B5_C7;output reg [1:0]B6_D0;output reg [1:0]B6_D1;output reg [1:0]B6_D2;output reg [1:0]B6_D3;output reg [1:0]B6_D4;output reg [1:0]B6_D5;output reg [1:0]B6_D6;output reg [1:0]B6_D7;output reg [1:0]B6_C0;output reg [1:0]B6_C1;output reg [1:0]B6_C2;output reg [1:0]B6_C3;
-	output reg [1:0]B6_C4;output reg [1:0]B6_C5;output reg [1:0]B6_C6;output reg [1:0]B6_C7;output reg [1:0]B7_D0;output reg [1:0]B7_D1;output reg [1:0]B7_D2;output reg [1:0]B7_D3;output reg [1:0]B7_D4;output reg [1:0]B7_D5;output reg [1:0]B7_D6;output reg [1:0]B7_D7;output reg [1:0]B7_C0;output reg [1:0]B7_C1;output reg [1:0]B7_C2;output reg [1:0]B7_C3;output reg [1:0]B7_C4;output reg [1:0]B7_C5;output reg [1:0]B7_C6;output reg [1:0]B7_C7;output reg [1:0]C0_D0;output reg [1:0]C0_D1;output reg [1:0]C0_D2;output reg [1:0]C0_D3;output reg [1:0]C0_D4;
-	output reg [1:0]C0_D5;output reg [1:0]C0_D6;output reg [1:0]C0_D7;output reg [1:0]C1_D0;output reg [1:0]C1_D1;output reg [1:0]C1_D2;output reg [1:0]C1_D3;output reg [1:0]C1_D4;output reg [1:0]C1_D5;output reg [1:0]C1_D6;output reg [1:0]C1_D7;output reg [1:0]C2_D0;output reg [1:0]C2_D1;output reg [1:0]C2_D2;output reg [1:0]C2_D3;output reg [1:0]C2_D4;output reg [1:0]C2_D5;output reg [1:0]C2_D6;output reg [1:0]C2_D7;output reg [1:0]C3_D0;output reg [1:0]C3_D1;output reg [1:0]C3_D2;output reg [1:0]C3_D3;output reg [1:0]C3_D4;output reg [1:0]C3_D5;
-	output reg [1:0]C3_D6;output reg [1:0]C3_D7;output reg [1:0]C4_D0;output reg [1:0]C4_D1;output reg [1:0]C4_D2;output reg [1:0]C4_D3;output reg [1:0]C4_D4;output reg [1:0]C4_D5;output reg [1:0]C4_D6;output reg [1:0]C4_D7;output reg [1:0]C5_D0;output reg [1:0]C5_D1;output reg [1:0]C5_D2;output reg [1:0]C5_D3;output reg [1:0]C5_D4;output reg [1:0]C5_D5;output reg [1:0]C5_D6;output reg [1:0]C5_D7;output reg [1:0]C6_D0;output reg [1:0]C6_D1;output reg [1:0]C6_D2;output reg [1:0]C6_D3;output reg [1:0]C6_D4;output reg [1:0]C6_D5;output reg [1:0]C6_D6;
-	output reg [1:0]C6_D7;output reg [1:0]C7_D0;output reg [1:0]C7_D1;output reg [1:0]C7_D2;output reg [1:0]C7_D3;output reg [1:0]C7_D4;output reg [1:0]C7_D5;output reg [1:0]C7_D6;output reg [1:0]C7_D7;
-	//output reg bit_out;
+	output reg [1:0]N0_E0;output reg [1:0]N0_E1;output reg [1:0]N0_E2;output reg [1:0]N0_E3;output reg [1:0]N0_E4;output reg [1:0]N0_E5;output reg [1:0]N0_E6;output reg [1:0]N0_E7;output reg [1:0]N0_S0;output reg [1:0]N0_S1;output reg [1:0]N0_S2;output reg [1:0]N0_S3;output reg [1:0]N0_S4;output reg [1:0]N0_S5;output reg [1:0]N0_S6;output reg [1:0]N0_S7;output reg [1:0]N0_W0;output reg [1:0]N0_W1;output reg [1:0]N0_W2;output reg [1:0]N0_W3;output reg [1:0]N0_W4;output reg [1:0]N0_W5;output reg [1:0]N0_W6;output reg [1:0]N0_W7;output reg [1:0]N1_E0;
+	output reg [1:0]N1_E1;output reg [1:0]N1_E2;output reg [1:0]N1_E3;output reg [1:0]N1_E4;output reg [1:0]N1_E5;output reg [1:0]N1_E6;output reg [1:0]N1_E7;output reg [1:0]N1_S0;output reg [1:0]N1_S1;output reg [1:0]N1_S2;output reg [1:0]N1_S3;output reg [1:0]N1_S4;output reg [1:0]N1_S5;output reg [1:0]N1_S6;output reg [1:0]N1_S7;output reg [1:0]N1_W0;output reg [1:0]N1_W1;output reg [1:0]N1_W2;output reg [1:0]N1_W3;output reg [1:0]N1_W4;output reg [1:0]N1_W5;output reg [1:0]N1_W6;output reg [1:0]N1_W7;output reg [1:0]N2_E0;output reg [1:0]N2_E1;
+	output reg [1:0]N2_E2;output reg [1:0]N2_E3;output reg [1:0]N2_E4;output reg [1:0]N2_E5;output reg [1:0]N2_E6;output reg [1:0]N2_E7;output reg [1:0]N2_S0;output reg [1:0]N2_S1;output reg [1:0]N2_S2;output reg [1:0]N2_S3;output reg [1:0]N2_S4;output reg [1:0]N2_S5;output reg [1:0]N2_S6;output reg [1:0]N2_S7;output reg [1:0]N2_W0;output reg [1:0]N2_W1;output reg [1:0]N2_W2;output reg [1:0]N2_W3;output reg [1:0]N2_W4;output reg [1:0]N2_W5;output reg [1:0]N2_W6;output reg [1:0]N2_W7;output reg [1:0]N3_E0;output reg [1:0]N3_E1;output reg [1:0]N3_E2;
+	output reg [1:0]N3_E3;output reg [1:0]N3_E4;output reg [1:0]N3_E5;output reg [1:0]N3_E6;output reg [1:0]N3_E7;output reg [1:0]N3_S0;output reg [1:0]N3_S1;output reg [1:0]N3_S2;output reg [1:0]N3_S3;output reg [1:0]N3_S4;output reg [1:0]N3_S5;output reg [1:0]N3_S6;output reg [1:0]N3_S7;output reg [1:0]N3_W0;output reg [1:0]N3_W1;output reg [1:0]N3_W2;output reg [1:0]N3_W3;output reg [1:0]N3_W4;output reg [1:0]N3_W5;output reg [1:0]N3_W6;output reg [1:0]N3_W7;output reg [1:0]N4_E0;output reg [1:0]N4_E1;output reg [1:0]N4_E2;output reg [1:0]N4_E3;
+	output reg [1:0]N4_E4;output reg [1:0]N4_E5;output reg [1:0]N4_E6;output reg [1:0]N4_E7;output reg [1:0]N4_S0;output reg [1:0]N4_S1;output reg [1:0]N4_S2;output reg [1:0]N4_S3;output reg [1:0]N4_S4;output reg [1:0]N4_S5;output reg [1:0]N4_S6;output reg [1:0]N4_S7;output reg [1:0]N4_W0;output reg [1:0]N4_W1;output reg [1:0]N4_W2;output reg [1:0]N4_W3;output reg [1:0]N4_W4;output reg [1:0]N4_W5;output reg [1:0]N4_W6;output reg [1:0]N4_W7;output reg [1:0]N5_E0;output reg [1:0]N5_E1;output reg [1:0]N5_E2;output reg [1:0]N5_E3;output reg [1:0]N5_E4;
+	output reg [1:0]N5_E5;output reg [1:0]N5_E6;output reg [1:0]N5_E7;output reg [1:0]N5_S0;output reg [1:0]N5_S1;output reg [1:0]N5_S2;output reg [1:0]N5_S3;output reg [1:0]N5_S4;output reg [1:0]N5_S5;output reg [1:0]N5_S6;output reg [1:0]N5_S7;output reg [1:0]N5_W0;output reg [1:0]N5_W1;output reg [1:0]N5_W2;output reg [1:0]N5_W3;output reg [1:0]N5_W4;output reg [1:0]N5_W5;output reg [1:0]N5_W6;output reg [1:0]N5_W7;output reg [1:0]N6_E0;output reg [1:0]N6_E1;output reg [1:0]N6_E2;output reg [1:0]N6_E3;output reg [1:0]N6_E4;output reg [1:0]N6_E5;
+	output reg [1:0]N6_E6;output reg [1:0]N6_E7;output reg [1:0]N6_S0;output reg [1:0]N6_S1;output reg [1:0]N6_S2;output reg [1:0]N6_S3;output reg [1:0]N6_S4;output reg [1:0]N6_S5;output reg [1:0]N6_S6;output reg [1:0]N6_S7;output reg [1:0]N6_W0;output reg [1:0]N6_W1;output reg [1:0]N6_W2;output reg [1:0]N6_W3;output reg [1:0]N6_W4;output reg [1:0]N6_W5;output reg [1:0]N6_W6;output reg [1:0]N6_W7;output reg [1:0]N7_E0;output reg [1:0]N7_E1;output reg [1:0]N7_E2;output reg [1:0]N7_E3;output reg [1:0]N7_E4;output reg [1:0]N7_E5;output reg [1:0]N7_E6;
+	output reg [1:0]N7_E7;output reg [1:0]N7_S0;output reg [1:0]N7_S1;output reg [1:0]N7_S2;output reg [1:0]N7_S3;output reg [1:0]N7_S4;output reg [1:0]N7_S5;output reg [1:0]N7_S6;output reg [1:0]N7_S7;output reg [1:0]N7_W0;output reg [1:0]N7_W1;output reg [1:0]N7_W2;output reg [1:0]N7_W3;output reg [1:0]N7_W4;output reg [1:0]N7_W5;output reg [1:0]N7_W6;output reg [1:0]N7_W7;output reg [1:0]E0_W0;output reg [1:0]E0_W1;output reg [1:0]E0_W2;output reg [1:0]E0_W3;output reg [1:0]E0_W4;output reg [1:0]E0_W5;output reg [1:0]E0_W6;output reg [1:0]E0_W7;
+	output reg [1:0]E0_S0;output reg [1:0]E0_S1;output reg [1:0]E0_S2;output reg [1:0]E0_S3;output reg [1:0]E0_S4;output reg [1:0]E0_S5;output reg [1:0]E0_S6;output reg [1:0]E0_S7;output reg [1:0]E1_W0;output reg [1:0]E1_W1;output reg [1:0]E1_W2;output reg [1:0]E1_W3;output reg [1:0]E1_W4;output reg [1:0]E1_W5;output reg [1:0]E1_W6;output reg [1:0]E1_W7;output reg [1:0]E1_S0;output reg [1:0]E1_S1;output reg [1:0]E1_S2;output reg [1:0]E1_S3;output reg [1:0]E1_S4;output reg [1:0]E1_S5;output reg [1:0]E1_S6;output reg [1:0]E1_S7;output reg [1:0]E2_W0;
+	output reg [1:0]E2_W1;output reg [1:0]E2_W2;output reg [1:0]E2_W3;output reg [1:0]E2_W4;output reg [1:0]E2_W5;output reg [1:0]E2_W6;output reg [1:0]E2_W7;output reg [1:0]E2_S0;output reg [1:0]E2_S1;output reg [1:0]E2_S2;output reg [1:0]E2_S3;output reg [1:0]E2_S4;output reg [1:0]E2_S5;output reg [1:0]E2_S6;output reg [1:0]E2_S7;output reg [1:0]E3_W0;output reg [1:0]E3_W1;output reg [1:0]E3_W2;output reg [1:0]E3_W3;output reg [1:0]E3_W4;output reg [1:0]E3_W5;output reg [1:0]E3_W6;output reg [1:0]E3_W7;output reg [1:0]E3_S0;output reg [1:0]E3_S1;
+	output reg [1:0]E3_S2;output reg [1:0]E3_S3;output reg [1:0]E3_S4;output reg [1:0]E3_S5;output reg [1:0]E3_S6;output reg [1:0]E3_S7;output reg [1:0]E4_W0;output reg [1:0]E4_W1;output reg [1:0]E4_W2;output reg [1:0]E4_W3;output reg [1:0]E4_W4;output reg [1:0]E4_W5;output reg [1:0]E4_W6;output reg [1:0]E4_W7;output reg [1:0]E4_S0;output reg [1:0]E4_S1;output reg [1:0]E4_S2;output reg [1:0]E4_S3;output reg [1:0]E4_S4;output reg [1:0]E4_S5;output reg [1:0]E4_S6;output reg [1:0]E4_S7;output reg [1:0]E5_W0;output reg [1:0]E5_W1;output reg [1:0]E5_W2;
+	output reg [1:0]E5_W3;output reg [1:0]E5_W4;output reg [1:0]E5_W5;output reg [1:0]E5_W6;output reg [1:0]E5_W7;output reg [1:0]E5_S0;output reg [1:0]E5_S1;output reg [1:0]E5_S2;output reg [1:0]E5_S3;output reg [1:0]E5_S4;output reg [1:0]E5_S5;output reg [1:0]E5_S6;output reg [1:0]E5_S7;output reg [1:0]E6_W0;output reg [1:0]E6_W1;output reg [1:0]E6_W2;output reg [1:0]E6_W3;output reg [1:0]E6_W4;output reg [1:0]E6_W5;output reg [1:0]E6_W6;output reg [1:0]E6_W7;output reg [1:0]E6_S0;output reg [1:0]E6_S1;output reg [1:0]E6_S2;output reg [1:0]E6_S3;
+	output reg [1:0]E6_S4;output reg [1:0]E6_S5;output reg [1:0]E6_S6;output reg [1:0]E6_S7;output reg [1:0]E7_W0;output reg [1:0]E7_W1;output reg [1:0]E7_W2;output reg [1:0]E7_W3;output reg [1:0]E7_W4;output reg [1:0]E7_W5;output reg [1:0]E7_W6;output reg [1:0]E7_W7;output reg [1:0]E7_S0;output reg [1:0]E7_S1;output reg [1:0]E7_S2;output reg [1:0]E7_S3;output reg [1:0]E7_S4;output reg [1:0]E7_S5;output reg [1:0]E7_S6;output reg [1:0]E7_S7;output reg [1:0]S0_W0;output reg [1:0]S0_W1;output reg [1:0]S0_W2;output reg [1:0]S0_W3;output reg [1:0]S0_W4;
+	output reg [1:0]S0_W5;output reg [1:0]S0_W6;output reg [1:0]S0_W7;output reg [1:0]S1_W0;output reg [1:0]S1_W1;output reg [1:0]S1_W2;output reg [1:0]S1_W3;output reg [1:0]S1_W4;output reg [1:0]S1_W5;output reg [1:0]S1_W6;output reg [1:0]S1_W7;output reg [1:0]S2_W0;output reg [1:0]S2_W1;output reg [1:0]S2_W2;output reg [1:0]S2_W3;output reg [1:0]S2_W4;output reg [1:0]S2_W5;output reg [1:0]S2_W6;output reg [1:0]S2_W7;output reg [1:0]S3_W0;output reg [1:0]S3_W1;output reg [1:0]S3_W2;output reg [1:0]S3_W3;output reg [1:0]S3_W4;output reg [1:0]S3_W5;
+	output reg [1:0]S3_W6;output reg [1:0]S3_W7;output reg [1:0]S4_W0;output reg [1:0]S4_W1;output reg [1:0]S4_W2;output reg [1:0]S4_W3;output reg [1:0]S4_W4;output reg [1:0]S4_W5;output reg [1:0]S4_W6;output reg [1:0]S4_W7;output reg [1:0]S5_W0;output reg [1:0]S5_W1;output reg [1:0]S5_W2;output reg [1:0]S5_W3;output reg [1:0]S5_W4;output reg [1:0]S5_W5;output reg [1:0]S5_W6;output reg [1:0]S5_W7;output reg [1:0]S6_W0;output reg [1:0]S6_W1;output reg [1:0]S6_W2;output reg [1:0]S6_W3;output reg [1:0]S6_W4;output reg [1:0]S6_W5;output reg [1:0]S6_W6;
+	output reg [1:0]S6_W7;output reg [1:0]S7_W0;output reg [1:0]S7_W1;output reg [1:0]S7_W2;output reg [1:0]S7_W3;output reg [1:0]S7_W4;output reg [1:0]S7_W5;output reg [1:0]S7_W6;output reg [1:0]S7_W7;
+		
+		//output reg bit_out;
 	
 
 
   initial begin
 	count[9:0]=10'b0000000000;
 	sb_prgm_b_out=1'b0;
-	A0_B0[1:0] <= 2'b00;	 A2_B2[1:0] <= 2'b00;    A4_B4[1:0] <= 2'b00;   A6_B6[1:0] <= 2'b00;   B0_C0[1:0] <= 2'b00;    B3_C2[1:0] <= 2'b00;   B6_C4[1:0] <= 2'b00;   C3_D6[1:0] <= 2'b00;
-	A0_B1[1:0] <= 2'b00;     A2_B3[1:0] <= 2'b00;    A4_B5[1:0] <= 2'b00;   A6_B7[1:0] <= 2'b00;   B0_C1[1:0] <= 2'b00;    B3_C3[1:0] <= 2'b00;   B6_C5[1:0] <= 2'b00;   C3_D7[1:0] <= 2'b00;
-	A0_B2[1:0] <= 2'b00;     A2_B4[1:0] <= 2'b00;    A4_B6[1:0] <= 2'b00;   A6_C0[1:0] <= 2'b00;   B0_C2[1:0] <= 2'b00;    B3_C4[1:0] <= 2'b00;   B6_C6[1:0] <= 2'b00;   C4_D0[1:0] <= 2'b00;
-	A0_B3[1:0] <= 2'b00;     A2_B5[1:0] <= 2'b00;    A4_B7[1:0] <= 2'b00;   A6_C1[1:0] <= 2'b00;   B0_C3[1:0] <= 2'b00;    B3_C5[1:0] <= 2'b00;   B6_C7[1:0] <= 2'b00;   C4_D1[1:0] <= 2'b00;
-	A0_B4[1:0] <= 2'b00;     A2_B6[1:0] <= 2'b00;    A4_C0[1:0] <= 2'b00;   A6_C2[1:0] <= 2'b00;   B0_C4[1:0] <= 2'b00;    B3_C6[1:0] <= 2'b00;   B7_D0[1:0] <= 2'b00;   C4_D2[1:0] <= 2'b00;
-	A0_B5[1:0] <= 2'b00;     A2_B7[1:0] <= 2'b00;    A4_C1[1:0] <= 2'b00;   A6_C3[1:0] <= 2'b00;   B0_C5[1:0] <= 2'b00;    B3_C7[1:0] <= 2'b00;   B7_D1[1:0] <= 2'b00;   C4_D3[1:0] <= 2'b00;
-	A0_B6[1:0] <= 2'b00;     A2_C0[1:0] <= 2'b00;    A4_C2[1:0] <= 2'b00;   A6_C4[1:0] <= 2'b00;   B0_C6[1:0] <= 2'b00;    B4_D0[1:0] <= 2'b00;   B7_D2[1:0] <= 2'b00;   C4_D4[1:0] <= 2'b00;
-	A0_B7[1:0] <= 2'b00;     A2_C1[1:0] <= 2'b00;    A4_C3[1:0] <= 2'b00;   A6_C5[1:0] <= 2'b00;   B0_C7[1:0] <= 2'b00;    B4_D1[1:0] <= 2'b00;   B7_D3[1:0] <= 2'b00;   C4_D5[1:0] <= 2'b00;
-	A0_C0[1:0] <= 2'b00;     A2_C2[1:0] <= 2'b00;    A4_C4[1:0] <= 2'b00;   A6_C6[1:0] <= 2'b00;   B1_D0[1:0] <= 2'b00;    B4_D2[1:0] <= 2'b00;   B7_D4[1:0] <= 2'b00;   C4_D6[1:0] <= 2'b00;
-	A0_C1[1:0] <= 2'b00;     A2_C3[1:0] <= 2'b00;    A4_C5[1:0] <= 2'b00;   A6_C7[1:0] <= 2'b00;   B1_D1[1:0] <= 2'b00;    B4_D3[1:0] <= 2'b00;   B7_D5[1:0] <= 2'b00;   C4_D7[1:0] <= 2'b00;
-	A0_C2[1:0] <= 2'b00;     A2_C4[1:0] <= 2'b00;    A4_C6[1:0] <= 2'b00;   A6_D0[1:0] <= 2'b00;   B1_D2[1:0] <= 2'b00;    B4_D4[1:0] <= 2'b00;   B7_D6[1:0] <= 2'b00;   C5_D0[1:0] <= 2'b00;
-	A0_C3[1:0] <= 2'b00;     A2_C5[1:0] <= 2'b00;    A4_C7[1:0] <= 2'b00;   A6_D1[1:0] <= 2'b00;   B1_D3[1:0] <= 2'b00;    B4_D5[1:0] <= 2'b00;   B7_D7[1:0] <= 2'b00;   C5_D1[1:0] <= 2'b00;
-	A0_C4[1:0] <= 2'b00;     A2_C6[1:0] <= 2'b00;    A4_D0[1:0] <= 2'b00;   A6_D2[1:0] <= 2'b00;   B1_D4[1:0] <= 2'b00;    B4_D6[1:0] <= 2'b00;   B7_C0[1:0] <= 2'b00;   C5_D2[1:0] <= 2'b00;
-	A0_C5[1:0] <= 2'b00;     A2_C7[1:0] <= 2'b00;    A4_D1[1:0] <= 2'b00;   A6_D3[1:0] <= 2'b00;   B1_D5[1:0] <= 2'b00;    B4_D7[1:0] <= 2'b00;   B7_C1[1:0] <= 2'b00;   C5_D3[1:0] <= 2'b00;
-	A0_C6[1:0] <= 2'b00;     A2_D0[1:0] <= 2'b00;    A4_D2[1:0] <= 2'b00;   A6_D4[1:0] <= 2'b00;   B1_D6[1:0] <= 2'b00;    B4_C0[1:0] <= 2'b00;   B7_C2[1:0] <= 2'b00;   C5_D4[1:0] <= 2'b00;
-	A0_C7[1:0] <= 2'b00;     A2_D1[1:0] <= 2'b00;    A4_D3[1:0] <= 2'b00;   A6_D5[1:0] <= 2'b00;   B1_D7[1:0] <= 2'b00;    B4_C1[1:0] <= 2'b00;   B7_C3[1:0] <= 2'b00;   C5_D5[1:0] <= 2'b00;
-	A0_D0[1:0] <= 2'b00;     A2_D2[1:0] <= 2'b00;    A4_D4[1:0] <= 2'b00;   A6_D6[1:0] <= 2'b00;   B1_C0[1:0] <= 2'b00;    B4_C2[1:0] <= 2'b00;   B7_C4[1:0] <= 2'b00;   C5_D6[1:0] <= 2'b00;
-	A0_D1[1:0] <= 2'b00;     A2_D3[1:0] <= 2'b00;    A4_D5[1:0] <= 2'b00;   A6_D7[1:0] <= 2'b00;   B1_C1[1:0] <= 2'b00;    B4_C3[1:0] <= 2'b00;   B7_C5[1:0] <= 2'b00;   C5_D7[1:0] <= 2'b00;
-	A0_D2[1:0] <= 2'b00;     A2_D4[1:0] <= 2'b00;    A4_D6[1:0] <= 2'b00;   A7_B0[1:0] <= 2'b00;   B1_C2[1:0] <= 2'b00;    B4_C4[1:0] <= 2'b00;   B7_C6[1:0] <= 2'b00;   C6_D0[1:0] <= 2'b00;
-	A0_D3[1:0] <= 2'b00;     A2_D5[1:0] <= 2'b00;    A4_D7[1:0] <= 2'b00;   A7_B1[1:0] <= 2'b00;   B1_C3[1:0] <= 2'b00;    B4_C5[1:0] <= 2'b00;   B7_C7[1:0] <= 2'b00;   C6_D1[1:0] <= 2'b00;
-	A0_D4[1:0] <= 2'b00;     A2_D6[1:0] <= 2'b00;    A5_B0[1:0] <= 2'b00;   A7_B2[1:0] <= 2'b00;   B1_C4[1:0] <= 2'b00;    B4_C6[1:0] <= 2'b00;   C0_D0[1:0] <= 2'b00;   C6_D2[1:0] <= 2'b00;
-	A0_D5[1:0] <= 2'b00;     A2_D7[1:0] <= 2'b00;    A5_B1[1:0] <= 2'b00;   A7_B3[1:0] <= 2'b00;   B1_C5[1:0] <= 2'b00;    B4_C7[1:0] <= 2'b00;   C0_D1[1:0] <= 2'b00;   C6_D3[1:0] <= 2'b00;
-	A0_D6[1:0] <= 2'b00;     A3_B0[1:0] <= 2'b00;    A5_B2[1:0] <= 2'b00;   A7_B4[1:0] <= 2'b00;   B1_C6[1:0] <= 2'b00;    B5_D0[1:0] <= 2'b00;   C0_D2[1:0] <= 2'b00;   C6_D4[1:0] <= 2'b00;
-	A0_D7[1:0] <= 2'b00;     A3_B1[1:0] <= 2'b00;    A5_B3[1:0] <= 2'b00;   A7_B5[1:0] <= 2'b00;   B1_C7[1:0] <= 2'b00;    B5_D1[1:0] <= 2'b00;   C0_D3[1:0] <= 2'b00;   C6_D5[1:0] <= 2'b00;
-	A1_B0[1:0] <= 2'b00;     A3_B2[1:0] <= 2'b00;    A5_B4[1:0] <= 2'b00;   A7_B6[1:0] <= 2'b00;   B2_D0[1:0] <= 2'b00;    B5_D2[1:0] <= 2'b00;   C0_D4[1:0] <= 2'b00;   C6_D6[1:0] <= 2'b00;
-	A1_B1[1:0] <= 2'b00;     A3_B3[1:0] <= 2'b00;    A5_B5[1:0] <= 2'b00;   A7_B7[1:0] <= 2'b00;   B2_D1[1:0] <= 2'b00;    B5_D3[1:0] <= 2'b00;   C0_D5[1:0] <= 2'b00;   C6_D7[1:0] <= 2'b00;
-	A1_B2[1:0] <= 2'b00;     A3_B4[1:0] <= 2'b00;    A5_B6[1:0] <= 2'b00;   A7_C0[1:0] <= 2'b00;   B2_D2[1:0] <= 2'b00;    B5_D4[1:0] <= 2'b00;   C0_D6[1:0] <= 2'b00;   C7_D0[1:0] <= 2'b00;
-	A1_B3[1:0] <= 2'b00;     A3_B5[1:0] <= 2'b00;    A5_B7[1:0] <= 2'b00;   A7_C1[1:0] <= 2'b00;   B2_D3[1:0] <= 2'b00;    B5_D5[1:0] <= 2'b00;   C0_D7[1:0] <= 2'b00;   C7_D1[1:0] <= 2'b00;
-	A1_B4[1:0] <= 2'b00;     A3_B6[1:0] <= 2'b00;    A5_C0[1:0] <= 2'b00;   A7_C2[1:0] <= 2'b00;   B2_D4[1:0] <= 2'b00;    B5_D6[1:0] <= 2'b00;   C1_D0[1:0] <= 2'b00;   C7_D2[1:0] <= 2'b00;
-	A1_B5[1:0] <= 2'b00;     A3_B7[1:0] <= 2'b00;    A5_C1[1:0] <= 2'b00;   A7_C3[1:0] <= 2'b00;   B2_D5[1:0] <= 2'b00;    B5_D7[1:0] <= 2'b00;   C1_D1[1:0] <= 2'b00;   C7_D3[1:0] <= 2'b00;
-	A1_B6[1:0] <= 2'b00;     A3_C0[1:0] <= 2'b00;    A5_C2[1:0] <= 2'b00;   A7_C4[1:0] <= 2'b00;   B2_D6[1:0] <= 2'b00;    B5_C0[1:0] <= 2'b00;   C1_D2[1:0] <= 2'b00;   C7_D4[1:0] <= 2'b00;
-	A1_B7[1:0] <= 2'b00;     A3_C1[1:0] <= 2'b00;    A5_C3[1:0] <= 2'b00;   A7_C5[1:0] <= 2'b00;   B2_D7[1:0] <= 2'b00;    B5_C1[1:0] <= 2'b00;   C1_D3[1:0] <= 2'b00;   C7_D5[1:0] <= 2'b00;
-	A1_C0[1:0] <= 2'b00;     A3_C2[1:0] <= 2'b00;    A5_C4[1:0] <= 2'b00;   A7_C6[1:0] <= 2'b00;   B2_C0[1:0] <= 2'b00;    B5_C2[1:0] <= 2'b00;   C1_D4[1:0] <= 2'b00;   C7_D6[1:0] <= 2'b00;
-	A1_C1[1:0] <= 2'b00;     A3_C3[1:0] <= 2'b00;    A5_C5[1:0] <= 2'b00;   A7_C7[1:0] <= 2'b00;   B2_C1[1:0] <= 2'b00;    B5_C3[1:0] <= 2'b00;   C1_D5[1:0] <= 2'b00;   C7_D7[1:0] <= 2'b00;
-	A1_C2[1:0] <= 2'b00;     A3_C4[1:0] <= 2'b00;    A5_C6[1:0] <= 2'b00;   A7_D0[1:0] <= 2'b00;   B2_C2[1:0] <= 2'b00;    B5_C4[1:0] <= 2'b00;   C1_D6[1:0] <= 2'b00;  
-	A1_C3[1:0] <= 2'b00;     A3_C5[1:0] <= 2'b00;    A5_C7[1:0] <= 2'b00;   A7_D1[1:0] <= 2'b00;   B2_C3[1:0] <= 2'b00;    B5_C5[1:0] <= 2'b00;   C1_D7[1:0] <= 2'b00;
-	A1_C4[1:0] <= 2'b00;     A3_C6[1:0] <= 2'b00;    A5_D0[1:0] <= 2'b00;   A7_D2[1:0] <= 2'b00;   B2_C4[1:0] <= 2'b00;    B5_C6[1:0] <= 2'b00;   C2_D0[1:0] <= 2'b00;
-	A1_C5[1:0] <= 2'b00;     A3_C7[1:0] <= 2'b00;    A5_D1[1:0] <= 2'b00;   A7_D3[1:0] <= 2'b00;   B2_C5[1:0] <= 2'b00;    B5_C7[1:0] <= 2'b00;   C2_D1[1:0] <= 2'b00;
-	A1_C6[1:0] <= 2'b00;     A3_D0[1:0] <= 2'b00;    A5_D2[1:0] <= 2'b00;   A7_D4[1:0] <= 2'b00;   B2_C6[1:0] <= 2'b00;    B6_D0[1:0] <= 2'b00;   C2_D2[1:0] <= 2'b00;
-	A1_C7[1:0] <= 2'b00;     A3_D1[1:0] <= 2'b00;    A5_D3[1:0] <= 2'b00;   A7_D5[1:0] <= 2'b00;   B2_C7[1:0] <= 2'b00;    B6_D1[1:0] <= 2'b00;   C2_D3[1:0] <= 2'b00;
-	A1_D0[1:0] <= 2'b00;     A3_D2[1:0] <= 2'b00;    A5_D4[1:0] <= 2'b00;   A7_D6[1:0] <= 2'b00;   B3_D0[1:0] <= 2'b00;    B6_D2[1:0] <= 2'b00;   C2_D4[1:0] <= 2'b00;
-	A1_D1[1:0] <= 2'b00;     A3_D3[1:0] <= 2'b00;    A5_D5[1:0] <= 2'b00;   A7_D7[1:0] <= 2'b00;   B3_D1[1:0] <= 2'b00;    B6_D3[1:0] <= 2'b00;   C2_D5[1:0] <= 2'b00;
-	A1_D2[1:0] <= 2'b00;     A3_D4[1:0] <= 2'b00;    A5_D6[1:0] <= 2'b00;   B0_D0[1:0] <= 2'b00;   B3_D2[1:0] <= 2'b00;    B6_D4[1:0] <= 2'b00;   C2_D6[1:0] <= 2'b00;
-	A1_D3[1:0] <= 2'b00;     A3_D5[1:0] <= 2'b00;    A5_D7[1:0] <= 2'b00;   B0_D1[1:0] <= 2'b00;   B3_D3[1:0] <= 2'b00;    B6_D5[1:0] <= 2'b00;   C2_D7[1:0] <= 2'b00;
-	A1_D4[1:0] <= 2'b00;     A3_D6[1:0] <= 2'b00;    A6_B0[1:0] <= 2'b00;   B0_D2[1:0] <= 2'b00;   B3_D4[1:0] <= 2'b00;    B6_D6[1:0] <= 2'b00;   C3_D0[1:0] <= 2'b00;
-	A1_D5[1:0] <= 2'b00;     A3_D7[1:0] <= 2'b00;    A6_B1[1:0] <= 2'b00;   B0_D3[1:0] <= 2'b00;   B3_D5[1:0] <= 2'b00;    B6_D7[1:0] <= 2'b00;   C3_D1[1:0] <= 2'b00;
-	A1_D6[1:0] <= 2'b00;     A4_B0[1:0] <= 2'b00;    A6_B2[1:0] <= 2'b00;   B0_D4[1:0] <= 2'b00;   B3_D6[1:0] <= 2'b00;    B6_C0[1:0] <= 2'b00;   C3_D2[1:0] <= 2'b00;
-	A1_D7[1:0] <= 2'b00;     A4_B1[1:0] <= 2'b00;    A6_B3[1:0] <= 2'b00;   B0_D5[1:0] <= 2'b00;   B3_D7[1:0] <= 2'b00;    B6_C1[1:0] <= 2'b00;   C3_D3[1:0] <= 2'b00;
-	A2_B0[1:0] <= 2'b00;     A4_B2[1:0] <= 2'b00;    A6_B4[1:0] <= 2'b00;   B0_D6[1:0] <= 2'b00;   B3_C0[1:0] <= 2'b00;    B6_C2[1:0] <= 2'b00;   C3_D4[1:0] <= 2'b00;
-	A2_B1[1:0] <= 2'b00;     A4_B3[1:0] <= 2'b00;    A6_B5[1:0] <= 2'b00;   B0_D7[1:0] <= 2'b00;   B3_C1[1:0] <= 2'b00;    B6_C3[1:0] <= 2'b00;   C3_D5[1:0] <= 2'b00;
-
+	N0_E0[1:0] <= 2'b00;	 N2_E2[1:0] <= 2'b00;    N4_E4[1:0] <= 2'b00;   N6_E6[1:0] <= 2'b00;   E0_S0[1:0] <= 2'b00;    E3_S2[1:0] <= 2'b00;   E6_S4[1:0] <= 2'b00;   S3_W6[1:0] <= 2'b00;
+	N0_E1[1:0] <= 2'b00;     N2_E3[1:0] <= 2'b00;    N4_E5[1:0] <= 2'b00;   N6_E7[1:0] <= 2'b00;   E0_S1[1:0] <= 2'b00;    E3_S3[1:0] <= 2'b00;   E6_S5[1:0] <= 2'b00;   S3_W7[1:0] <= 2'b00;
+	N0_E2[1:0] <= 2'b00;     N2_E4[1:0] <= 2'b00;    N4_E6[1:0] <= 2'b00;   N6_S0[1:0] <= 2'b00;   E0_S2[1:0] <= 2'b00;    E3_S4[1:0] <= 2'b00;   E6_S6[1:0] <= 2'b00;   S4_W0[1:0] <= 2'b00;
+	N0_E3[1:0] <= 2'b00;     N2_E5[1:0] <= 2'b00;    N4_E7[1:0] <= 2'b00;   N6_S1[1:0] <= 2'b00;   E0_S3[1:0] <= 2'b00;    E3_S5[1:0] <= 2'b00;   E6_S7[1:0] <= 2'b00;   S4_W1[1:0] <= 2'b00;
+	N0_E4[1:0] <= 2'b00;     N2_E6[1:0] <= 2'b00;    N4_S0[1:0] <= 2'b00;   N6_S2[1:0] <= 2'b00;   E0_S4[1:0] <= 2'b00;    E3_S6[1:0] <= 2'b00;   E7_W0[1:0] <= 2'b00;   S4_W2[1:0] <= 2'b00;
+	N0_E5[1:0] <= 2'b00;     N2_E7[1:0] <= 2'b00;    N4_S1[1:0] <= 2'b00;   N6_S3[1:0] <= 2'b00;   E0_S5[1:0] <= 2'b00;    E3_S7[1:0] <= 2'b00;   E7_W1[1:0] <= 2'b00;   S4_W3[1:0] <= 2'b00;
+	N0_E6[1:0] <= 2'b00;     N2_S0[1:0] <= 2'b00;    N4_S2[1:0] <= 2'b00;   N6_S4[1:0] <= 2'b00;   E0_S6[1:0] <= 2'b00;    E4_W0[1:0] <= 2'b00;   E7_W2[1:0] <= 2'b00;   S4_W4[1:0] <= 2'b00;
+	N0_E7[1:0] <= 2'b00;     N2_S1[1:0] <= 2'b00;    N4_S3[1:0] <= 2'b00;   N6_S5[1:0] <= 2'b00;   E0_S7[1:0] <= 2'b00;    E4_W1[1:0] <= 2'b00;   E7_W3[1:0] <= 2'b00;   S4_W5[1:0] <= 2'b00;
+	N0_S0[1:0] <= 2'b00;     N2_S2[1:0] <= 2'b00;    N4_S4[1:0] <= 2'b00;   N6_S6[1:0] <= 2'b00;   E1_W0[1:0] <= 2'b00;    E4_W2[1:0] <= 2'b00;   E7_W4[1:0] <= 2'b00;   S4_W6[1:0] <= 2'b00;
+	N0_S1[1:0] <= 2'b00;     N2_S3[1:0] <= 2'b00;    N4_S5[1:0] <= 2'b00;   N6_S7[1:0] <= 2'b00;   E1_W1[1:0] <= 2'b00;    E4_W3[1:0] <= 2'b00;   E7_W5[1:0] <= 2'b00;   S4_W7[1:0] <= 2'b00;
+	N0_S2[1:0] <= 2'b00;     N2_S4[1:0] <= 2'b00;    N4_S6[1:0] <= 2'b00;   N6_W0[1:0] <= 2'b00;   E1_W2[1:0] <= 2'b00;    E4_W4[1:0] <= 2'b00;   E7_W6[1:0] <= 2'b00;   S5_W0[1:0] <= 2'b00;
+	N0_S3[1:0] <= 2'b00;     N2_S5[1:0] <= 2'b00;    N4_S7[1:0] <= 2'b00;   N6_W1[1:0] <= 2'b00;   E1_W3[1:0] <= 2'b00;    E4_W5[1:0] <= 2'b00;   E7_W7[1:0] <= 2'b00;   S5_W1[1:0] <= 2'b00;
+	N0_S4[1:0] <= 2'b00;     N2_S6[1:0] <= 2'b00;    N4_W0[1:0] <= 2'b00;   N6_W2[1:0] <= 2'b00;   E1_W4[1:0] <= 2'b00;    E4_W6[1:0] <= 2'b00;   E7_S0[1:0] <= 2'b00;   S5_W2[1:0] <= 2'b00;
+	N0_S5[1:0] <= 2'b00;     N2_S7[1:0] <= 2'b00;    N4_W1[1:0] <= 2'b00;   N6_W3[1:0] <= 2'b00;   E1_W5[1:0] <= 2'b00;    E4_W7[1:0] <= 2'b00;   E7_S1[1:0] <= 2'b00;   S5_W3[1:0] <= 2'b00;
+	N0_S6[1:0] <= 2'b00;     N2_W0[1:0] <= 2'b00;    N4_W2[1:0] <= 2'b00;   N6_W4[1:0] <= 2'b00;   E1_W6[1:0] <= 2'b00;    E4_S0[1:0] <= 2'b00;   E7_S2[1:0] <= 2'b00;   S5_W4[1:0] <= 2'b00;
+	N0_S7[1:0] <= 2'b00;     N2_W1[1:0] <= 2'b00;    N4_W3[1:0] <= 2'b00;   N6_W5[1:0] <= 2'b00;   E1_W7[1:0] <= 2'b00;    E4_S1[1:0] <= 2'b00;   E7_S3[1:0] <= 2'b00;   S5_W5[1:0] <= 2'b00;
+	N0_W0[1:0] <= 2'b00;     N2_W2[1:0] <= 2'b00;    N4_W4[1:0] <= 2'b00;   N6_W6[1:0] <= 2'b00;   E1_S0[1:0] <= 2'b00;    E4_S2[1:0] <= 2'b00;   E7_S4[1:0] <= 2'b00;   S5_W6[1:0] <= 2'b00;
+	N0_W1[1:0] <= 2'b00;     N2_W3[1:0] <= 2'b00;    N4_W5[1:0] <= 2'b00;   N6_W7[1:0] <= 2'b00;   E1_S1[1:0] <= 2'b00;    E4_S3[1:0] <= 2'b00;   E7_S5[1:0] <= 2'b00;   S5_W7[1:0] <= 2'b00;
+	N0_W2[1:0] <= 2'b00;     N2_W4[1:0] <= 2'b00;    N4_W6[1:0] <= 2'b00;   N7_E0[1:0] <= 2'b00;   E1_S2[1:0] <= 2'b00;    E4_S4[1:0] <= 2'b00;   E7_S6[1:0] <= 2'b00;   S6_W0[1:0] <= 2'b00;
+	N0_W3[1:0] <= 2'b00;     N2_W5[1:0] <= 2'b00;    N4_W7[1:0] <= 2'b00;   N7_E1[1:0] <= 2'b00;   E1_S3[1:0] <= 2'b00;    E4_S5[1:0] <= 2'b00;   E7_S7[1:0] <= 2'b00;   S6_W1[1:0] <= 2'b00;
+	N0_W4[1:0] <= 2'b00;     N2_W6[1:0] <= 2'b00;    N5_E0[1:0] <= 2'b00;   N7_E2[1:0] <= 2'b00;   E1_S4[1:0] <= 2'b00;    E4_S6[1:0] <= 2'b00;   S0_W0[1:0] <= 2'b00;   S6_W2[1:0] <= 2'b00;
+	N0_W5[1:0] <= 2'b00;     N2_W7[1:0] <= 2'b00;    N5_E1[1:0] <= 2'b00;   N7_E3[1:0] <= 2'b00;   E1_S5[1:0] <= 2'b00;    E4_S7[1:0] <= 2'b00;   S0_W1[1:0] <= 2'b00;   S6_W3[1:0] <= 2'b00;
+	N0_W6[1:0] <= 2'b00;     N3_E0[1:0] <= 2'b00;    N5_E2[1:0] <= 2'b00;   N7_E4[1:0] <= 2'b00;   E1_S6[1:0] <= 2'b00;    E5_W0[1:0] <= 2'b00;   S0_W2[1:0] <= 2'b00;   S6_W4[1:0] <= 2'b00;
+	N0_W7[1:0] <= 2'b00;     N3_E1[1:0] <= 2'b00;    N5_E3[1:0] <= 2'b00;   N7_E5[1:0] <= 2'b00;   E1_S7[1:0] <= 2'b00;    E5_W1[1:0] <= 2'b00;   S0_W3[1:0] <= 2'b00;   S6_W5[1:0] <= 2'b00;
+	N1_E0[1:0] <= 2'b00;     N3_E2[1:0] <= 2'b00;    N5_E4[1:0] <= 2'b00;   N7_E6[1:0] <= 2'b00;   E2_W0[1:0] <= 2'b00;    E5_W2[1:0] <= 2'b00;   S0_W4[1:0] <= 2'b00;   S6_W6[1:0] <= 2'b00;
+	N1_E1[1:0] <= 2'b00;     N3_E3[1:0] <= 2'b00;    N5_E5[1:0] <= 2'b00;   N7_E7[1:0] <= 2'b00;   E2_W1[1:0] <= 2'b00;    E5_W3[1:0] <= 2'b00;   S0_W5[1:0] <= 2'b00;   S6_W7[1:0] <= 2'b00;
+	N1_E2[1:0] <= 2'b00;     N3_E4[1:0] <= 2'b00;    N5_E6[1:0] <= 2'b00;   N7_S0[1:0] <= 2'b00;   E2_W2[1:0] <= 2'b00;    E5_W4[1:0] <= 2'b00;   S0_W6[1:0] <= 2'b00;   S7_W0[1:0] <= 2'b00;
+	N1_E3[1:0] <= 2'b00;     N3_E5[1:0] <= 2'b00;    N5_E7[1:0] <= 2'b00;   N7_S1[1:0] <= 2'b00;   E2_W3[1:0] <= 2'b00;    E5_W5[1:0] <= 2'b00;   S0_W7[1:0] <= 2'b00;   S7_W1[1:0] <= 2'b00;
+	N1_E4[1:0] <= 2'b00;     N3_E6[1:0] <= 2'b00;    N5_S0[1:0] <= 2'b00;   N7_S2[1:0] <= 2'b00;   E2_W4[1:0] <= 2'b00;    E5_W6[1:0] <= 2'b00;   S1_W0[1:0] <= 2'b00;   S7_W2[1:0] <= 2'b00;
+	N1_E5[1:0] <= 2'b00;     N3_E7[1:0] <= 2'b00;    N5_S1[1:0] <= 2'b00;   N7_S3[1:0] <= 2'b00;   E2_W5[1:0] <= 2'b00;    E5_W7[1:0] <= 2'b00;   S1_W1[1:0] <= 2'b00;   S7_W3[1:0] <= 2'b00;
+	N1_E6[1:0] <= 2'b00;     N3_S0[1:0] <= 2'b00;    N5_S2[1:0] <= 2'b00;   N7_S4[1:0] <= 2'b00;   E2_W6[1:0] <= 2'b00;    E5_S0[1:0] <= 2'b00;   S1_W2[1:0] <= 2'b00;   S7_W4[1:0] <= 2'b00;
+	N1_E7[1:0] <= 2'b00;     N3_S1[1:0] <= 2'b00;    N5_S3[1:0] <= 2'b00;   N7_S5[1:0] <= 2'b00;   E2_W7[1:0] <= 2'b00;    E5_S1[1:0] <= 2'b00;   S1_W3[1:0] <= 2'b00;   S7_W5[1:0] <= 2'b00;
+	N1_S0[1:0] <= 2'b00;     N3_S2[1:0] <= 2'b00;    N5_S4[1:0] <= 2'b00;   N7_S6[1:0] <= 2'b00;   E2_S0[1:0] <= 2'b00;    E5_S2[1:0] <= 2'b00;   S1_W4[1:0] <= 2'b00;   S7_W6[1:0] <= 2'b00;
+	N1_S1[1:0] <= 2'b00;     N3_S3[1:0] <= 2'b00;    N5_S5[1:0] <= 2'b00;   N7_S7[1:0] <= 2'b00;   E2_S1[1:0] <= 2'b00;    E5_S3[1:0] <= 2'b00;   S1_W5[1:0] <= 2'b00;   S7_W7[1:0] <= 2'b00;
+	N1_S2[1:0] <= 2'b00;     N3_S4[1:0] <= 2'b00;    N5_S6[1:0] <= 2'b00;   N7_W0[1:0] <= 2'b00;   E2_S2[1:0] <= 2'b00;    E5_S4[1:0] <= 2'b00;   S1_W6[1:0] <= 2'b00;  
+	N1_S3[1:0] <= 2'b00;     N3_S5[1:0] <= 2'b00;    N5_S7[1:0] <= 2'b00;   N7_W1[1:0] <= 2'b00;   E2_S3[1:0] <= 2'b00;    E5_S5[1:0] <= 2'b00;   S1_W7[1:0] <= 2'b00;
+	N1_S4[1:0] <= 2'b00;     N3_S6[1:0] <= 2'b00;    N5_W0[1:0] <= 2'b00;   N7_W2[1:0] <= 2'b00;   E2_S4[1:0] <= 2'b00;    E5_S6[1:0] <= 2'b00;   S2_W0[1:0] <= 2'b00;
+	N1_S5[1:0] <= 2'b00;     N3_S7[1:0] <= 2'b00;    N5_W1[1:0] <= 2'b00;   N7_W3[1:0] <= 2'b00;   E2_S5[1:0] <= 2'b00;    E5_S7[1:0] <= 2'b00;   S2_W1[1:0] <= 2'b00;
+	N1_S6[1:0] <= 2'b00;     N3_W0[1:0] <= 2'b00;    N5_W2[1:0] <= 2'b00;   N7_W4[1:0] <= 2'b00;   E2_S6[1:0] <= 2'b00;    E6_W0[1:0] <= 2'b00;   S2_W2[1:0] <= 2'b00;
+	N1_S7[1:0] <= 2'b00;     N3_W1[1:0] <= 2'b00;    N5_W3[1:0] <= 2'b00;   N7_W5[1:0] <= 2'b00;   E2_S7[1:0] <= 2'b00;    E6_W1[1:0] <= 2'b00;   S2_W3[1:0] <= 2'b00;
+	N1_W0[1:0] <= 2'b00;     N3_W2[1:0] <= 2'b00;    N5_W4[1:0] <= 2'b00;   N7_W6[1:0] <= 2'b00;   E3_W0[1:0] <= 2'b00;    E6_W2[1:0] <= 2'b00;   S2_W4[1:0] <= 2'b00;
+	N1_W1[1:0] <= 2'b00;     N3_W3[1:0] <= 2'b00;    N5_W5[1:0] <= 2'b00;   N7_W7[1:0] <= 2'b00;   E3_W1[1:0] <= 2'b00;    E6_W3[1:0] <= 2'b00;   S2_W5[1:0] <= 2'b00;
+	N1_W2[1:0] <= 2'b00;     N3_W4[1:0] <= 2'b00;    N5_W6[1:0] <= 2'b00;   E0_W0[1:0] <= 2'b00;   E3_W2[1:0] <= 2'b00;    E6_W4[1:0] <= 2'b00;   S2_W6[1:0] <= 2'b00;
+	N1_W3[1:0] <= 2'b00;     N3_W5[1:0] <= 2'b00;    N5_W7[1:0] <= 2'b00;   E0_W1[1:0] <= 2'b00;   E3_W3[1:0] <= 2'b00;    E6_W5[1:0] <= 2'b00;   S2_W7[1:0] <= 2'b00;
+	N1_W4[1:0] <= 2'b00;     N3_W6[1:0] <= 2'b00;    N6_E0[1:0] <= 2'b00;   E0_W2[1:0] <= 2'b00;   E3_W4[1:0] <= 2'b00;    E6_W6[1:0] <= 2'b00;   S3_W0[1:0] <= 2'b00;
+	N1_W5[1:0] <= 2'b00;     N3_W7[1:0] <= 2'b00;    N6_E1[1:0] <= 2'b00;   E0_W3[1:0] <= 2'b00;   E3_W5[1:0] <= 2'b00;    E6_W7[1:0] <= 2'b00;   S3_W1[1:0] <= 2'b00;
+	N1_W6[1:0] <= 2'b00;     N4_E0[1:0] <= 2'b00;    N6_E2[1:0] <= 2'b00;   E0_W4[1:0] <= 2'b00;   E3_W6[1:0] <= 2'b00;    E6_S0[1:0] <= 2'b00;   S3_W2[1:0] <= 2'b00;
+	N1_W7[1:0] <= 2'b00;     N4_E1[1:0] <= 2'b00;    N6_E3[1:0] <= 2'b00;   E0_W5[1:0] <= 2'b00;   E3_W7[1:0] <= 2'b00;    E6_S1[1:0] <= 2'b00;   S3_W3[1:0] <= 2'b00;
+	N2_E0[1:0] <= 2'b00;     N4_E2[1:0] <= 2'b00;    N6_E4[1:0] <= 2'b00;   E0_W6[1:0] <= 2'b00;   E3_S0[1:0] <= 2'b00;    E6_S2[1:0] <= 2'b00;   S3_W4[1:0] <= 2'b00;
+	N2_E1[1:0] <= 2'b00;     N4_E3[1:0] <= 2'b00;    N6_E5[1:0] <= 2'b00;   E0_W7[1:0] <= 2'b00;   E3_S1[1:0] <= 2'b00;    E6_S3[1:0] <= 2'b00;   S3_W5[1:0] <= 2'b00;
 
 end
 
@@ -126,161 +126,162 @@ end //always block ends
 	begin
 	if (prgm_b==1'b0 && sb_prgm_b_in==1'b1 && sb_prgm_b_out!=1'b1 && sb_prgm_b==1'b1) begin
 	if(reset) begin
-	A0_B0[1:0] <= 2'b00;	 A2_B2[1:0] <= 2'b00;    A4_B4[1:0] <= 2'b00;   A6_B6[1:0] <= 2'b00;   B0_C0[1:0] <= 2'b00;    B3_C2[1:0] <= 2'b00;   B6_C4[1:0] <= 2'b00;   C3_D6[1:0] <= 2'b00;
-	A0_B1[1:0] <= 2'b00;     A2_B3[1:0] <= 2'b00;    A4_B5[1:0] <= 2'b00;   A6_B7[1:0] <= 2'b00;   B0_C1[1:0] <= 2'b00;    B3_C3[1:0] <= 2'b00;   B6_C5[1:0] <= 2'b00;   C3_D7[1:0] <= 2'b00;
-	A0_B2[1:0] <= 2'b00;     A2_B4[1:0] <= 2'b00;    A4_B6[1:0] <= 2'b00;   A6_C0[1:0] <= 2'b00;   B0_C2[1:0] <= 2'b00;    B3_C4[1:0] <= 2'b00;   B6_C6[1:0] <= 2'b00;   C4_D0[1:0] <= 2'b00;
-	A0_B3[1:0] <= 2'b00;     A2_B5[1:0] <= 2'b00;    A4_B7[1:0] <= 2'b00;   A6_C1[1:0] <= 2'b00;   B0_C3[1:0] <= 2'b00;    B3_C5[1:0] <= 2'b00;   B6_C7[1:0] <= 2'b00;   C4_D1[1:0] <= 2'b00;
-	A0_B4[1:0] <= 2'b00;     A2_B6[1:0] <= 2'b00;    A4_C0[1:0] <= 2'b00;   A6_C2[1:0] <= 2'b00;   B0_C4[1:0] <= 2'b00;    B3_C6[1:0] <= 2'b00;   B7_D0[1:0] <= 2'b00;   C4_D2[1:0] <= 2'b00;
-	A0_B5[1:0] <= 2'b00;     A2_B7[1:0] <= 2'b00;    A4_C1[1:0] <= 2'b00;   A6_C3[1:0] <= 2'b00;   B0_C5[1:0] <= 2'b00;    B3_C7[1:0] <= 2'b00;   B7_D1[1:0] <= 2'b00;   C4_D3[1:0] <= 2'b00;
-	A0_B6[1:0] <= 2'b00;     A2_C0[1:0] <= 2'b00;    A4_C2[1:0] <= 2'b00;   A6_C4[1:0] <= 2'b00;   B0_C6[1:0] <= 2'b00;    B4_D0[1:0] <= 2'b00;   B7_D2[1:0] <= 2'b00;   C4_D4[1:0] <= 2'b00;
-	A0_B7[1:0] <= 2'b00;     A2_C1[1:0] <= 2'b00;    A4_C3[1:0] <= 2'b00;   A6_C5[1:0] <= 2'b00;   B0_C7[1:0] <= 2'b00;    B4_D1[1:0] <= 2'b00;   B7_D3[1:0] <= 2'b00;   C4_D5[1:0] <= 2'b00;
-	A0_C0[1:0] <= 2'b00;     A2_C2[1:0] <= 2'b00;    A4_C4[1:0] <= 2'b00;   A6_C6[1:0] <= 2'b00;   B1_D0[1:0] <= 2'b00;    B4_D2[1:0] <= 2'b00;   B7_D4[1:0] <= 2'b00;   C4_D6[1:0] <= 2'b00;
-	A0_C1[1:0] <= 2'b00;     A2_C3[1:0] <= 2'b00;    A4_C5[1:0] <= 2'b00;   A6_C7[1:0] <= 2'b00;   B1_D1[1:0] <= 2'b00;    B4_D3[1:0] <= 2'b00;   B7_D5[1:0] <= 2'b00;   C4_D7[1:0] <= 2'b00;
-	A0_C2[1:0] <= 2'b00;     A2_C4[1:0] <= 2'b00;    A4_C6[1:0] <= 2'b00;   A6_D0[1:0] <= 2'b00;   B1_D2[1:0] <= 2'b00;    B4_D4[1:0] <= 2'b00;   B7_D6[1:0] <= 2'b00;   C5_D0[1:0] <= 2'b00;
-	A0_C3[1:0] <= 2'b00;     A2_C5[1:0] <= 2'b00;    A4_C7[1:0] <= 2'b00;   A6_D1[1:0] <= 2'b00;   B1_D3[1:0] <= 2'b00;    B4_D5[1:0] <= 2'b00;   B7_D7[1:0] <= 2'b00;   C5_D1[1:0] <= 2'b00;
-	A0_C4[1:0] <= 2'b00;     A2_C6[1:0] <= 2'b00;    A4_D0[1:0] <= 2'b00;   A6_D2[1:0] <= 2'b00;   B1_D4[1:0] <= 2'b00;    B4_D6[1:0] <= 2'b00;   B7_C0[1:0] <= 2'b00;   C5_D2[1:0] <= 2'b00;
-	A0_C5[1:0] <= 2'b00;     A2_C7[1:0] <= 2'b00;    A4_D1[1:0] <= 2'b00;   A6_D3[1:0] <= 2'b00;   B1_D5[1:0] <= 2'b00;    B4_D7[1:0] <= 2'b00;   B7_C1[1:0] <= 2'b00;   C5_D3[1:0] <= 2'b00;
-	A0_C6[1:0] <= 2'b00;     A2_D0[1:0] <= 2'b00;    A4_D2[1:0] <= 2'b00;   A6_D4[1:0] <= 2'b00;   B1_D6[1:0] <= 2'b00;    B4_C0[1:0] <= 2'b00;   B7_C2[1:0] <= 2'b00;   C5_D4[1:0] <= 2'b00;
-	A0_C7[1:0] <= 2'b00;     A2_D1[1:0] <= 2'b00;    A4_D3[1:0] <= 2'b00;   A6_D5[1:0] <= 2'b00;   B1_D7[1:0] <= 2'b00;    B4_C1[1:0] <= 2'b00;   B7_C3[1:0] <= 2'b00;   C5_D5[1:0] <= 2'b00;
-	A0_D0[1:0] <= 2'b00;     A2_D2[1:0] <= 2'b00;    A4_D4[1:0] <= 2'b00;   A6_D6[1:0] <= 2'b00;   B1_C0[1:0] <= 2'b00;    B4_C2[1:0] <= 2'b00;   B7_C4[1:0] <= 2'b00;   C5_D6[1:0] <= 2'b00;
-	A0_D1[1:0] <= 2'b00;     A2_D3[1:0] <= 2'b00;    A4_D5[1:0] <= 2'b00;   A6_D7[1:0] <= 2'b00;   B1_C1[1:0] <= 2'b00;    B4_C3[1:0] <= 2'b00;   B7_C5[1:0] <= 2'b00;   C5_D7[1:0] <= 2'b00;
-	A0_D2[1:0] <= 2'b00;     A2_D4[1:0] <= 2'b00;    A4_D6[1:0] <= 2'b00;   A7_B0[1:0] <= 2'b00;   B1_C2[1:0] <= 2'b00;    B4_C4[1:0] <= 2'b00;   B7_C6[1:0] <= 2'b00;   C6_D0[1:0] <= 2'b00;
-	A0_D3[1:0] <= 2'b00;     A2_D5[1:0] <= 2'b00;    A4_D7[1:0] <= 2'b00;   A7_B1[1:0] <= 2'b00;   B1_C3[1:0] <= 2'b00;    B4_C5[1:0] <= 2'b00;   B7_C7[1:0] <= 2'b00;   C6_D1[1:0] <= 2'b00;
-	A0_D4[1:0] <= 2'b00;     A2_D6[1:0] <= 2'b00;    A5_B0[1:0] <= 2'b00;   A7_B2[1:0] <= 2'b00;   B1_C4[1:0] <= 2'b00;    B4_C6[1:0] <= 2'b00;   C0_D0[1:0] <= 2'b00;   C6_D2[1:0] <= 2'b00;
-	A0_D5[1:0] <= 2'b00;     A2_D7[1:0] <= 2'b00;    A5_B1[1:0] <= 2'b00;   A7_B3[1:0] <= 2'b00;   B1_C5[1:0] <= 2'b00;    B4_C7[1:0] <= 2'b00;   C0_D1[1:0] <= 2'b00;   C6_D3[1:0] <= 2'b00;
-	A0_D6[1:0] <= 2'b00;     A3_B0[1:0] <= 2'b00;    A5_B2[1:0] <= 2'b00;   A7_B4[1:0] <= 2'b00;   B1_C6[1:0] <= 2'b00;    B5_D0[1:0] <= 2'b00;   C0_D2[1:0] <= 2'b00;   C6_D4[1:0] <= 2'b00;
-	A0_D7[1:0] <= 2'b00;     A3_B1[1:0] <= 2'b00;    A5_B3[1:0] <= 2'b00;   A7_B5[1:0] <= 2'b00;   B1_C7[1:0] <= 2'b00;    B5_D1[1:0] <= 2'b00;   C0_D3[1:0] <= 2'b00;   C6_D5[1:0] <= 2'b00;
-	A1_B0[1:0] <= 2'b00;     A3_B2[1:0] <= 2'b00;    A5_B4[1:0] <= 2'b00;   A7_B6[1:0] <= 2'b00;   B2_D0[1:0] <= 2'b00;    B5_D2[1:0] <= 2'b00;   C0_D4[1:0] <= 2'b00;   C6_D6[1:0] <= 2'b00;
-	A1_B1[1:0] <= 2'b00;     A3_B3[1:0] <= 2'b00;    A5_B5[1:0] <= 2'b00;   A7_B7[1:0] <= 2'b00;   B2_D1[1:0] <= 2'b00;    B5_D3[1:0] <= 2'b00;   C0_D5[1:0] <= 2'b00;   C6_D7[1:0] <= 2'b00;
-	A1_B2[1:0] <= 2'b00;     A3_B4[1:0] <= 2'b00;    A5_B6[1:0] <= 2'b00;   A7_C0[1:0] <= 2'b00;   B2_D2[1:0] <= 2'b00;    B5_D4[1:0] <= 2'b00;   C0_D6[1:0] <= 2'b00;   C7_D0[1:0] <= 2'b00;
-	A1_B3[1:0] <= 2'b00;     A3_B5[1:0] <= 2'b00;    A5_B7[1:0] <= 2'b00;   A7_C1[1:0] <= 2'b00;   B2_D3[1:0] <= 2'b00;    B5_D5[1:0] <= 2'b00;   C0_D7[1:0] <= 2'b00;   C7_D1[1:0] <= 2'b00;
-	A1_B4[1:0] <= 2'b00;     A3_B6[1:0] <= 2'b00;    A5_C0[1:0] <= 2'b00;   A7_C2[1:0] <= 2'b00;   B2_D4[1:0] <= 2'b00;    B5_D6[1:0] <= 2'b00;   C1_D0[1:0] <= 2'b00;   C7_D2[1:0] <= 2'b00;
-	A1_B5[1:0] <= 2'b00;     A3_B7[1:0] <= 2'b00;    A5_C1[1:0] <= 2'b00;   A7_C3[1:0] <= 2'b00;   B2_D5[1:0] <= 2'b00;    B5_D7[1:0] <= 2'b00;   C1_D1[1:0] <= 2'b00;   C7_D3[1:0] <= 2'b00;
-	A1_B6[1:0] <= 2'b00;     A3_C0[1:0] <= 2'b00;    A5_C2[1:0] <= 2'b00;   A7_C4[1:0] <= 2'b00;   B2_D6[1:0] <= 2'b00;    B5_C0[1:0] <= 2'b00;   C1_D2[1:0] <= 2'b00;   C7_D4[1:0] <= 2'b00;
-	A1_B7[1:0] <= 2'b00;     A3_C1[1:0] <= 2'b00;    A5_C3[1:0] <= 2'b00;   A7_C5[1:0] <= 2'b00;   B2_D7[1:0] <= 2'b00;    B5_C1[1:0] <= 2'b00;   C1_D3[1:0] <= 2'b00;   C7_D5[1:0] <= 2'b00;
-	A1_C0[1:0] <= 2'b00;     A3_C2[1:0] <= 2'b00;    A5_C4[1:0] <= 2'b00;   A7_C6[1:0] <= 2'b00;   B2_C0[1:0] <= 2'b00;    B5_C2[1:0] <= 2'b00;   C1_D4[1:0] <= 2'b00;   C7_D6[1:0] <= 2'b00;
-	A1_C1[1:0] <= 2'b00;     A3_C3[1:0] <= 2'b00;    A5_C5[1:0] <= 2'b00;   A7_C7[1:0] <= 2'b00;   B2_C1[1:0] <= 2'b00;    B5_C3[1:0] <= 2'b00;   C1_D5[1:0] <= 2'b00;   C7_D7[1:0] <= 2'b00;
-	A1_C2[1:0] <= 2'b00;     A3_C4[1:0] <= 2'b00;    A5_C6[1:0] <= 2'b00;   A7_D0[1:0] <= 2'b00;   B2_C2[1:0] <= 2'b00;    B5_C4[1:0] <= 2'b00;   C1_D6[1:0] <= 2'b00;  
-	A1_C3[1:0] <= 2'b00;     A3_C5[1:0] <= 2'b00;    A5_C7[1:0] <= 2'b00;   A7_D1[1:0] <= 2'b00;   B2_C3[1:0] <= 2'b00;    B5_C5[1:0] <= 2'b00;   C1_D7[1:0] <= 2'b00;
-	A1_C4[1:0] <= 2'b00;     A3_C6[1:0] <= 2'b00;    A5_D0[1:0] <= 2'b00;   A7_D2[1:0] <= 2'b00;   B2_C4[1:0] <= 2'b00;    B5_C6[1:0] <= 2'b00;   C2_D0[1:0] <= 2'b00;
-	A1_C5[1:0] <= 2'b00;     A3_C7[1:0] <= 2'b00;    A5_D1[1:0] <= 2'b00;   A7_D3[1:0] <= 2'b00;   B2_C5[1:0] <= 2'b00;    B5_C7[1:0] <= 2'b00;   C2_D1[1:0] <= 2'b00;
-	A1_C6[1:0] <= 2'b00;     A3_D0[1:0] <= 2'b00;    A5_D2[1:0] <= 2'b00;   A7_D4[1:0] <= 2'b00;   B2_C6[1:0] <= 2'b00;    B6_D0[1:0] <= 2'b00;   C2_D2[1:0] <= 2'b00;
-	A1_C7[1:0] <= 2'b00;     A3_D1[1:0] <= 2'b00;    A5_D3[1:0] <= 2'b00;   A7_D5[1:0] <= 2'b00;   B2_C7[1:0] <= 2'b00;    B6_D1[1:0] <= 2'b00;   C2_D3[1:0] <= 2'b00;
-	A1_D0[1:0] <= 2'b00;     A3_D2[1:0] <= 2'b00;    A5_D4[1:0] <= 2'b00;   A7_D6[1:0] <= 2'b00;   B3_D0[1:0] <= 2'b00;    B6_D2[1:0] <= 2'b00;   C2_D4[1:0] <= 2'b00;
-	A1_D1[1:0] <= 2'b00;     A3_D3[1:0] <= 2'b00;    A5_D5[1:0] <= 2'b00;   A7_D7[1:0] <= 2'b00;   B3_D1[1:0] <= 2'b00;    B6_D3[1:0] <= 2'b00;   C2_D5[1:0] <= 2'b00;
-	A1_D2[1:0] <= 2'b00;     A3_D4[1:0] <= 2'b00;    A5_D6[1:0] <= 2'b00;   B0_D0[1:0] <= 2'b00;   B3_D2[1:0] <= 2'b00;    B6_D4[1:0] <= 2'b00;   C2_D6[1:0] <= 2'b00;
-	A1_D3[1:0] <= 2'b00;     A3_D5[1:0] <= 2'b00;    A5_D7[1:0] <= 2'b00;   B0_D1[1:0] <= 2'b00;   B3_D3[1:0] <= 2'b00;    B6_D5[1:0] <= 2'b00;   C2_D7[1:0] <= 2'b00;
-	A1_D4[1:0] <= 2'b00;     A3_D6[1:0] <= 2'b00;    A6_B0[1:0] <= 2'b00;   B0_D2[1:0] <= 2'b00;   B3_D4[1:0] <= 2'b00;    B6_D6[1:0] <= 2'b00;   C3_D0[1:0] <= 2'b00;
-	A1_D5[1:0] <= 2'b00;     A3_D7[1:0] <= 2'b00;    A6_B1[1:0] <= 2'b00;   B0_D3[1:0] <= 2'b00;   B3_D5[1:0] <= 2'b00;    B6_D7[1:0] <= 2'b00;   C3_D1[1:0] <= 2'b00;
-	A1_D6[1:0] <= 2'b00;     A4_B0[1:0] <= 2'b00;    A6_B2[1:0] <= 2'b00;   B0_D4[1:0] <= 2'b00;   B3_D6[1:0] <= 2'b00;    B6_C0[1:0] <= 2'b00;   C3_D2[1:0] <= 2'b00;
-	A1_D7[1:0] <= 2'b00;     A4_B1[1:0] <= 2'b00;    A6_B3[1:0] <= 2'b00;   B0_D5[1:0] <= 2'b00;   B3_D7[1:0] <= 2'b00;    B6_C1[1:0] <= 2'b00;   C3_D3[1:0] <= 2'b00;
-	A2_B0[1:0] <= 2'b00;     A4_B2[1:0] <= 2'b00;    A6_B4[1:0] <= 2'b00;   B0_D6[1:0] <= 2'b00;   B3_C0[1:0] <= 2'b00;    B6_C2[1:0] <= 2'b00;   C3_D4[1:0] <= 2'b00;
-	A2_B1[1:0] <= 2'b00;     A4_B3[1:0] <= 2'b00;    A6_B5[1:0] <= 2'b00;   B0_D7[1:0] <= 2'b00;   B3_C1[1:0] <= 2'b00;    B6_C3[1:0] <= 2'b00;   C3_D5[1:0] <= 2'b00;
+	N0_E0[1:0] <= 2'b00;	 N2_E2[1:0] <= 2'b00;    N4_E4[1:0] <= 2'b00;   N6_E6[1:0] <= 2'b00;   E0_S0[1:0] <= 2'b00;    E3_S2[1:0] <= 2'b00;   E6_S4[1:0] <= 2'b00;   S3_W6[1:0] <= 2'b00;
+	N0_E1[1:0] <= 2'b00;     N2_E3[1:0] <= 2'b00;    N4_E5[1:0] <= 2'b00;   N6_E7[1:0] <= 2'b00;   E0_S1[1:0] <= 2'b00;    E3_S3[1:0] <= 2'b00;   E6_S5[1:0] <= 2'b00;   S3_W7[1:0] <= 2'b00;
+	N0_E2[1:0] <= 2'b00;     N2_E4[1:0] <= 2'b00;    N4_E6[1:0] <= 2'b00;   N6_S0[1:0] <= 2'b00;   E0_S2[1:0] <= 2'b00;    E3_S4[1:0] <= 2'b00;   E6_S6[1:0] <= 2'b00;   S4_W0[1:0] <= 2'b00;
+	N0_E3[1:0] <= 2'b00;     N2_E5[1:0] <= 2'b00;    N4_E7[1:0] <= 2'b00;   N6_S1[1:0] <= 2'b00;   E0_S3[1:0] <= 2'b00;    E3_S5[1:0] <= 2'b00;   E6_S7[1:0] <= 2'b00;   S4_W1[1:0] <= 2'b00;
+	N0_E4[1:0] <= 2'b00;     N2_E6[1:0] <= 2'b00;    N4_S0[1:0] <= 2'b00;   N6_S2[1:0] <= 2'b00;   E0_S4[1:0] <= 2'b00;    E3_S6[1:0] <= 2'b00;   E7_W0[1:0] <= 2'b00;   S4_W2[1:0] <= 2'b00;
+	N0_E5[1:0] <= 2'b00;     N2_E7[1:0] <= 2'b00;    N4_S1[1:0] <= 2'b00;   N6_S3[1:0] <= 2'b00;   E0_S5[1:0] <= 2'b00;    E3_S7[1:0] <= 2'b00;   E7_W1[1:0] <= 2'b00;   S4_W3[1:0] <= 2'b00;
+	N0_E6[1:0] <= 2'b00;     N2_S0[1:0] <= 2'b00;    N4_S2[1:0] <= 2'b00;   N6_S4[1:0] <= 2'b00;   E0_S6[1:0] <= 2'b00;    E4_W0[1:0] <= 2'b00;   E7_W2[1:0] <= 2'b00;   S4_W4[1:0] <= 2'b00;
+	N0_E7[1:0] <= 2'b00;     N2_S1[1:0] <= 2'b00;    N4_S3[1:0] <= 2'b00;   N6_S5[1:0] <= 2'b00;   E0_S7[1:0] <= 2'b00;    E4_W1[1:0] <= 2'b00;   E7_W3[1:0] <= 2'b00;   S4_W5[1:0] <= 2'b00;
+	N0_S0[1:0] <= 2'b00;     N2_S2[1:0] <= 2'b00;    N4_S4[1:0] <= 2'b00;   N6_S6[1:0] <= 2'b00;   E1_W0[1:0] <= 2'b00;    E4_W2[1:0] <= 2'b00;   E7_W4[1:0] <= 2'b00;   S4_W6[1:0] <= 2'b00;
+	N0_S1[1:0] <= 2'b00;     N2_S3[1:0] <= 2'b00;    N4_S5[1:0] <= 2'b00;   N6_S7[1:0] <= 2'b00;   E1_W1[1:0] <= 2'b00;    E4_W3[1:0] <= 2'b00;   E7_W5[1:0] <= 2'b00;   S4_W7[1:0] <= 2'b00;
+	N0_S2[1:0] <= 2'b00;     N2_S4[1:0] <= 2'b00;    N4_S6[1:0] <= 2'b00;   N6_W0[1:0] <= 2'b00;   E1_W2[1:0] <= 2'b00;    E4_W4[1:0] <= 2'b00;   E7_W6[1:0] <= 2'b00;   S5_W0[1:0] <= 2'b00;
+	N0_S3[1:0] <= 2'b00;     N2_S5[1:0] <= 2'b00;    N4_S7[1:0] <= 2'b00;   N6_W1[1:0] <= 2'b00;   E1_W3[1:0] <= 2'b00;    E4_W5[1:0] <= 2'b00;   E7_W7[1:0] <= 2'b00;   S5_W1[1:0] <= 2'b00;
+	N0_S4[1:0] <= 2'b00;     N2_S6[1:0] <= 2'b00;    N4_W0[1:0] <= 2'b00;   N6_W2[1:0] <= 2'b00;   E1_W4[1:0] <= 2'b00;    E4_W6[1:0] <= 2'b00;   E7_S0[1:0] <= 2'b00;   S5_W2[1:0] <= 2'b00;
+	N0_S5[1:0] <= 2'b00;     N2_S7[1:0] <= 2'b00;    N4_W1[1:0] <= 2'b00;   N6_W3[1:0] <= 2'b00;   E1_W5[1:0] <= 2'b00;    E4_W7[1:0] <= 2'b00;   E7_S1[1:0] <= 2'b00;   S5_W3[1:0] <= 2'b00;
+	N0_S6[1:0] <= 2'b00;     N2_W0[1:0] <= 2'b00;    N4_W2[1:0] <= 2'b00;   N6_W4[1:0] <= 2'b00;   E1_W6[1:0] <= 2'b00;    E4_S0[1:0] <= 2'b00;   E7_S2[1:0] <= 2'b00;   S5_W4[1:0] <= 2'b00;
+	N0_S7[1:0] <= 2'b00;     N2_W1[1:0] <= 2'b00;    N4_W3[1:0] <= 2'b00;   N6_W5[1:0] <= 2'b00;   E1_W7[1:0] <= 2'b00;    E4_S1[1:0] <= 2'b00;   E7_S3[1:0] <= 2'b00;   S5_W5[1:0] <= 2'b00;
+	N0_W0[1:0] <= 2'b00;     N2_W2[1:0] <= 2'b00;    N4_W4[1:0] <= 2'b00;   N6_W6[1:0] <= 2'b00;   E1_S0[1:0] <= 2'b00;    E4_S2[1:0] <= 2'b00;   E7_S4[1:0] <= 2'b00;   S5_W6[1:0] <= 2'b00;
+	N0_W1[1:0] <= 2'b00;     N2_W3[1:0] <= 2'b00;    N4_W5[1:0] <= 2'b00;   N6_W7[1:0] <= 2'b00;   E1_S1[1:0] <= 2'b00;    E4_S3[1:0] <= 2'b00;   E7_S5[1:0] <= 2'b00;   S5_W7[1:0] <= 2'b00;
+	N0_W2[1:0] <= 2'b00;     N2_W4[1:0] <= 2'b00;    N4_W6[1:0] <= 2'b00;   N7_E0[1:0] <= 2'b00;   E1_S2[1:0] <= 2'b00;    E4_S4[1:0] <= 2'b00;   E7_S6[1:0] <= 2'b00;   S6_W0[1:0] <= 2'b00;
+	N0_W3[1:0] <= 2'b00;     N2_W5[1:0] <= 2'b00;    N4_W7[1:0] <= 2'b00;   N7_E1[1:0] <= 2'b00;   E1_S3[1:0] <= 2'b00;    E4_S5[1:0] <= 2'b00;   E7_S7[1:0] <= 2'b00;   S6_W1[1:0] <= 2'b00;
+	N0_W4[1:0] <= 2'b00;     N2_W6[1:0] <= 2'b00;    N5_E0[1:0] <= 2'b00;   N7_E2[1:0] <= 2'b00;   E1_S4[1:0] <= 2'b00;    E4_S6[1:0] <= 2'b00;   S0_W0[1:0] <= 2'b00;   S6_W2[1:0] <= 2'b00;
+	N0_W5[1:0] <= 2'b00;     N2_W7[1:0] <= 2'b00;    N5_E1[1:0] <= 2'b00;   N7_E3[1:0] <= 2'b00;   E1_S5[1:0] <= 2'b00;    E4_S7[1:0] <= 2'b00;   S0_W1[1:0] <= 2'b00;   S6_W3[1:0] <= 2'b00;
+	N0_W6[1:0] <= 2'b00;     N3_E0[1:0] <= 2'b00;    N5_E2[1:0] <= 2'b00;   N7_E4[1:0] <= 2'b00;   E1_S6[1:0] <= 2'b00;    E5_W0[1:0] <= 2'b00;   S0_W2[1:0] <= 2'b00;   S6_W4[1:0] <= 2'b00;
+	N0_W7[1:0] <= 2'b00;     N3_E1[1:0] <= 2'b00;    N5_E3[1:0] <= 2'b00;   N7_E5[1:0] <= 2'b00;   E1_S7[1:0] <= 2'b00;    E5_W1[1:0] <= 2'b00;   S0_W3[1:0] <= 2'b00;   S6_W5[1:0] <= 2'b00;
+	N1_E0[1:0] <= 2'b00;     N3_E2[1:0] <= 2'b00;    N5_E4[1:0] <= 2'b00;   N7_E6[1:0] <= 2'b00;   E2_W0[1:0] <= 2'b00;    E5_W2[1:0] <= 2'b00;   S0_W4[1:0] <= 2'b00;   S6_W6[1:0] <= 2'b00;
+	N1_E1[1:0] <= 2'b00;     N3_E3[1:0] <= 2'b00;    N5_E5[1:0] <= 2'b00;   N7_E7[1:0] <= 2'b00;   E2_W1[1:0] <= 2'b00;    E5_W3[1:0] <= 2'b00;   S0_W5[1:0] <= 2'b00;   S6_W7[1:0] <= 2'b00;
+	N1_E2[1:0] <= 2'b00;     N3_E4[1:0] <= 2'b00;    N5_E6[1:0] <= 2'b00;   N7_S0[1:0] <= 2'b00;   E2_W2[1:0] <= 2'b00;    E5_W4[1:0] <= 2'b00;   S0_W6[1:0] <= 2'b00;   S7_W0[1:0] <= 2'b00;
+	N1_E3[1:0] <= 2'b00;     N3_E5[1:0] <= 2'b00;    N5_E7[1:0] <= 2'b00;   N7_S1[1:0] <= 2'b00;   E2_W3[1:0] <= 2'b00;    E5_W5[1:0] <= 2'b00;   S0_W7[1:0] <= 2'b00;   S7_W1[1:0] <= 2'b00;
+	N1_E4[1:0] <= 2'b00;     N3_E6[1:0] <= 2'b00;    N5_S0[1:0] <= 2'b00;   N7_S2[1:0] <= 2'b00;   E2_W4[1:0] <= 2'b00;    E5_W6[1:0] <= 2'b00;   S1_W0[1:0] <= 2'b00;   S7_W2[1:0] <= 2'b00;
+	N1_E5[1:0] <= 2'b00;     N3_E7[1:0] <= 2'b00;    N5_S1[1:0] <= 2'b00;   N7_S3[1:0] <= 2'b00;   E2_W5[1:0] <= 2'b00;    E5_W7[1:0] <= 2'b00;   S1_W1[1:0] <= 2'b00;   S7_W3[1:0] <= 2'b00;
+	N1_E6[1:0] <= 2'b00;     N3_S0[1:0] <= 2'b00;    N5_S2[1:0] <= 2'b00;   N7_S4[1:0] <= 2'b00;   E2_W6[1:0] <= 2'b00;    E5_S0[1:0] <= 2'b00;   S1_W2[1:0] <= 2'b00;   S7_W4[1:0] <= 2'b00;
+	N1_E7[1:0] <= 2'b00;     N3_S1[1:0] <= 2'b00;    N5_S3[1:0] <= 2'b00;   N7_S5[1:0] <= 2'b00;   E2_W7[1:0] <= 2'b00;    E5_S1[1:0] <= 2'b00;   S1_W3[1:0] <= 2'b00;   S7_W5[1:0] <= 2'b00;
+	N1_S0[1:0] <= 2'b00;     N3_S2[1:0] <= 2'b00;    N5_S4[1:0] <= 2'b00;   N7_S6[1:0] <= 2'b00;   E2_S0[1:0] <= 2'b00;    E5_S2[1:0] <= 2'b00;   S1_W4[1:0] <= 2'b00;   S7_W6[1:0] <= 2'b00;
+	N1_S1[1:0] <= 2'b00;     N3_S3[1:0] <= 2'b00;    N5_S5[1:0] <= 2'b00;   N7_S7[1:0] <= 2'b00;   E2_S1[1:0] <= 2'b00;    E5_S3[1:0] <= 2'b00;   S1_W5[1:0] <= 2'b00;   S7_W7[1:0] <= 2'b00;
+	N1_S2[1:0] <= 2'b00;     N3_S4[1:0] <= 2'b00;    N5_S6[1:0] <= 2'b00;   N7_W0[1:0] <= 2'b00;   E2_S2[1:0] <= 2'b00;    E5_S4[1:0] <= 2'b00;   S1_W6[1:0] <= 2'b00;  
+	N1_S3[1:0] <= 2'b00;     N3_S5[1:0] <= 2'b00;    N5_S7[1:0] <= 2'b00;   N7_W1[1:0] <= 2'b00;   E2_S3[1:0] <= 2'b00;    E5_S5[1:0] <= 2'b00;   S1_W7[1:0] <= 2'b00;
+	N1_S4[1:0] <= 2'b00;     N3_S6[1:0] <= 2'b00;    N5_W0[1:0] <= 2'b00;   N7_W2[1:0] <= 2'b00;   E2_S4[1:0] <= 2'b00;    E5_S6[1:0] <= 2'b00;   S2_W0[1:0] <= 2'b00;
+	N1_S5[1:0] <= 2'b00;     N3_S7[1:0] <= 2'b00;    N5_W1[1:0] <= 2'b00;   N7_W3[1:0] <= 2'b00;   E2_S5[1:0] <= 2'b00;    E5_S7[1:0] <= 2'b00;   S2_W1[1:0] <= 2'b00;
+	N1_S6[1:0] <= 2'b00;     N3_W0[1:0] <= 2'b00;    N5_W2[1:0] <= 2'b00;   N7_W4[1:0] <= 2'b00;   E2_S6[1:0] <= 2'b00;    E6_W0[1:0] <= 2'b00;   S2_W2[1:0] <= 2'b00;
+	N1_S7[1:0] <= 2'b00;     N3_W1[1:0] <= 2'b00;    N5_W3[1:0] <= 2'b00;   N7_W5[1:0] <= 2'b00;   E2_S7[1:0] <= 2'b00;    E6_W1[1:0] <= 2'b00;   S2_W3[1:0] <= 2'b00;
+	N1_W0[1:0] <= 2'b00;     N3_W2[1:0] <= 2'b00;    N5_W4[1:0] <= 2'b00;   N7_W6[1:0] <= 2'b00;   E3_W0[1:0] <= 2'b00;    E6_W2[1:0] <= 2'b00;   S2_W4[1:0] <= 2'b00;
+	N1_W1[1:0] <= 2'b00;     N3_W3[1:0] <= 2'b00;    N5_W5[1:0] <= 2'b00;   N7_W7[1:0] <= 2'b00;   E3_W1[1:0] <= 2'b00;    E6_W3[1:0] <= 2'b00;   S2_W5[1:0] <= 2'b00;
+	N1_W2[1:0] <= 2'b00;     N3_W4[1:0] <= 2'b00;    N5_W6[1:0] <= 2'b00;   E0_W0[1:0] <= 2'b00;   E3_W2[1:0] <= 2'b00;    E6_W4[1:0] <= 2'b00;   S2_W6[1:0] <= 2'b00;
+	N1_W3[1:0] <= 2'b00;     N3_W5[1:0] <= 2'b00;    N5_W7[1:0] <= 2'b00;   E0_W1[1:0] <= 2'b00;   E3_W3[1:0] <= 2'b00;    E6_W5[1:0] <= 2'b00;   S2_W7[1:0] <= 2'b00;
+	N1_W4[1:0] <= 2'b00;     N3_W6[1:0] <= 2'b00;    N6_E0[1:0] <= 2'b00;   E0_W2[1:0] <= 2'b00;   E3_W4[1:0] <= 2'b00;    E6_W6[1:0] <= 2'b00;   S3_W0[1:0] <= 2'b00;
+	N1_W5[1:0] <= 2'b00;     N3_W7[1:0] <= 2'b00;    N6_E1[1:0] <= 2'b00;   E0_W3[1:0] <= 2'b00;   E3_W5[1:0] <= 2'b00;    E6_W7[1:0] <= 2'b00;   S3_W1[1:0] <= 2'b00;
+	N1_W6[1:0] <= 2'b00;     N4_E0[1:0] <= 2'b00;    N6_E2[1:0] <= 2'b00;   E0_W4[1:0] <= 2'b00;   E3_W6[1:0] <= 2'b00;    E6_S0[1:0] <= 2'b00;   S3_W2[1:0] <= 2'b00;
+	N1_W7[1:0] <= 2'b00;     N4_E1[1:0] <= 2'b00;    N6_E3[1:0] <= 2'b00;   E0_W5[1:0] <= 2'b00;   E3_W7[1:0] <= 2'b00;    E6_S1[1:0] <= 2'b00;   S3_W3[1:0] <= 2'b00;
+	N2_E0[1:0] <= 2'b00;     N4_E2[1:0] <= 2'b00;    N6_E4[1:0] <= 2'b00;   E0_W6[1:0] <= 2'b00;   E3_S0[1:0] <= 2'b00;    E6_S2[1:0] <= 2'b00;   S3_W4[1:0] <= 2'b00;
+	N2_E1[1:0] <= 2'b00;     N4_E3[1:0] <= 2'b00;    N6_E5[1:0] <= 2'b00;   E0_W7[1:0] <= 2'b00;   E3_S1[1:0] <= 2'b00;    E6_S3[1:0] <= 2'b00;   S3_W5[1:0] <= 2'b00;
 
   
 
 	end
 	else begin
-	A0_B0[1] <= bit_in  ;    A2_B2[1] <= A2_B1[0];   A4_B4[1] <= A4_B3[0];   A6_B6[1] <= A6_B5[0];   B0_C0[1] <= B0_D7[0];   B3_C2[1] <= B3_C1[0];   B6_C4[1] <= B6_C3[0]; C3_D6[1] <= C3_D5[0];
-	A0_B0[0] <= A0_B0[1];    A2_B2[0] <= A2_B2[1];   A4_B4[0] <= A4_B4[1];   A6_B6[0] <= A6_B6[1];   B0_C0[0] <= B0_C0[1];   B3_C2[0] <= B3_C2[1];   B6_C4[0] <= B6_C4[1]; C3_D6[0] <= C3_D6[1];
-	A0_B1[1] <= A0_B0[0];    A2_B3[1] <= A2_B2[0];   A4_B5[1] <= A4_B4[0];   A6_B7[1] <= A6_B6[0];   B0_C1[1] <= B0_C0[0];   B3_C3[1] <= B3_C2[0];   B6_C5[1] <= B6_C4[0]; C3_D7[1] <= C3_D6[0];
-	A0_B1[0] <= A0_B1[1];    A2_B3[0] <= A2_B3[1];   A4_B5[0] <= A4_B5[1];   A6_B7[0] <= A6_B7[1];   B0_C1[0] <= B0_C1[1];   B3_C3[0] <= B3_C3[1];   B6_C5[0] <= B6_C5[1]; C3_D7[0] <= C3_D7[1];
-	A0_B2[1] <= A0_B1[0];    A2_B4[1] <= A2_B3[0];   A4_B6[1] <= A4_B5[0];   A6_C0[1] <= A6_B7[0];   B0_C2[1] <= B0_C1[0];   B3_C4[1] <= B3_C3[0];   B6_C6[1] <= B6_C5[0]; C4_D0[1] <= C3_D7[0];
-	A0_B2[0] <= A0_B2[1];    A2_B4[0] <= A2_B4[1];   A4_B6[0] <= A4_B6[1];   A6_C0[0] <= A6_C0[1];   B0_C2[0] <= B0_C2[1];   B3_C4[0] <= B3_C4[1];   B6_C6[0] <= B6_C6[1]; C4_D0[0] <= C4_D0[1];
-	A0_B3[1] <= A0_B2[0];    A2_B5[1] <= A2_B4[0];   A4_B7[1] <= A4_B6[0];   A6_C1[1] <= A6_C0[0];   B0_C3[1] <= B0_C2[0];   B3_C5[1] <= B3_C4[0];   B6_C7[1] <= B6_C6[0]; C4_D1[1] <= C4_D0[0];
-	A0_B3[0] <= A0_B3[1];    A2_B5[0] <= A2_B5[1];   A4_B7[0] <= A4_B7[1];   A6_C1[0] <= A6_C1[1];   B0_C3[0] <= B0_C3[1];   B3_C5[0] <= B3_C5[1];   B6_C7[0] <= B6_C7[1]; C4_D1[0] <= C4_D1[1];
-	A0_B4[1] <= A0_B3[0];    A2_B6[1] <= A2_B5[0];   A4_C0[1] <= A4_B7[0];   A6_C2[1] <= A6_C1[0];   B0_C4[1] <= B0_C3[0];   B3_C6[1] <= B3_C5[0];   B7_D0[1] <= B6_C7[0]; C4_D2[1] <= C4_D1[0];
-	A0_B4[0] <= A0_B4[1];    A2_B6[0] <= A2_B6[1];   A4_C0[0] <= A4_C0[1];   A6_C2[0] <= A6_C2[1];   B0_C4[0] <= B0_C4[1];   B3_C6[0] <= B3_C6[1];   B7_D0[0] <= B7_D0[1]; C4_D2[0] <= C4_D2[1];
-	A0_B5[1] <= A0_B4[0];    A2_B7[1] <= A2_B6[0];   A4_C1[1] <= A4_C0[0];   A6_C3[1] <= A6_C2[0];   B0_C5[1] <= B0_C4[0];   B3_C7[1] <= B3_C6[0];   B7_D1[1] <= B7_D0[0]; C4_D3[1] <= C4_D2[0];
-	A0_B5[0] <= A0_B5[1];    A2_B7[0] <= A2_B7[1];   A4_C1[0] <= A4_C1[1];   A6_C3[0] <= A6_C3[1];   B0_C5[0] <= B0_C5[1];   B3_C7[0] <= B3_C7[1];   B7_D1[0] <= B7_D1[1]; C4_D3[0] <= C4_D3[1];
-	A0_B6[1] <= A0_B5[0];    A2_C0[1] <= A2_B7[0];   A4_C2[1] <= A4_C1[0];   A6_C4[1] <= A6_C3[0];   B0_C6[1] <= B0_C5[0];   B4_D0[1] <= B3_C7[0];   B7_D2[1] <= B7_D1[0]; C4_D4[1] <= C4_D3[0];
-	A0_B6[0] <= A0_B6[1];    A2_C0[0] <= A2_C0[1];   A4_C2[0] <= A4_C2[1];   A6_C4[0] <= A6_C4[1];   B0_C6[0] <= B0_C6[1];   B4_D0[0] <= B4_D0[1];   B7_D2[0] <= B7_D2[1]; C4_D4[0] <= C4_D4[1];
-	A0_B7[1] <= A0_B6[0];    A2_C1[1] <= A2_C0[0];   A4_C3[1] <= A4_C2[0];   A6_C5[1] <= A6_C4[0];   B0_C7[1] <= B0_C6[0];   B4_D1[1] <= B4_D0[0];   B7_D3[1] <= B7_D2[0]; C4_D5[1] <= C4_D4[0];
-	A0_B7[0] <= A0_B7[1];    A2_C1[0] <= A2_C1[1];   A4_C3[0] <= A4_C3[1];   A6_C5[0] <= A6_C5[1];   B0_C7[0] <= B0_C7[1];   B4_D1[0] <= B4_D1[1];   B7_D3[0] <= B7_D3[1]; C4_D5[0] <= C4_D5[1];
-	A0_C0[1] <= A0_B7[0];    A2_C2[1] <= A2_C1[0];   A4_C4[1] <= A4_C3[0];   A6_C6[1] <= A6_C5[0];   B1_D0[1] <= B0_C7[0];   B4_D2[1] <= B4_D1[0];   B7_D4[1] <= B7_D3[0]; C4_D6[1] <= C4_D5[0];
-	A0_C0[0] <= A0_C0[1];    A2_C2[0] <= A2_C2[1];   A4_C4[0] <= A4_C4[1];   A6_C6[0] <= A6_C6[1];   B1_D0[0] <= B1_D0[1];   B4_D2[0] <= B4_D2[1];   B7_D4[0] <= B7_D4[1]; C4_D6[0] <= C4_D6[1];
-	A0_C1[1] <= A0_C0[0];    A2_C3[1] <= A2_C2[0];   A4_C5[1] <= A4_C4[0];   A6_C7[1] <= A6_C6[0];   B1_D1[1] <= B1_D0[0];   B4_D3[1] <= B4_D2[0];   B7_D5[1] <= B7_D4[0]; C4_D7[1] <= C4_D6[0];
-	A0_C1[0] <= A0_C1[1];    A2_C3[0] <= A2_C3[1];   A4_C5[0] <= A4_C5[1];   A6_C7[0] <= A6_C7[1];   B1_D1[0] <= B1_D1[1];   B4_D3[0] <= B4_D3[1];   B7_D5[0] <= B7_D5[1]; C4_D7[0] <= C4_D7[1];
-	A0_C2[1] <= A0_C1[0];    A2_C4[1] <= A2_C3[0];   A4_C6[1] <= A4_C5[0];   A6_D0[1] <= A6_C7[0];   B1_D2[1] <= B1_D1[0];   B4_D4[1] <= B4_D3[0];   B7_D6[1] <= B7_D5[0]; C5_D0[1] <= C4_D7[0];
-	A0_C2[0] <= A0_C2[1];    A2_C4[0] <= A2_C4[1];   A4_C6[0] <= A4_C6[1];   A6_D0[0] <= A6_D0[1];   B1_D2[0] <= B1_D2[1];   B4_D4[0] <= B4_D4[1];   B7_D6[0] <= B7_D6[1]; C5_D0[0] <= C5_D0[1];
-	A0_C3[1] <= A0_C2[0];    A2_C5[1] <= A2_C4[0];   A4_C7[1] <= A4_C6[0];   A6_D1[1] <= A6_D0[0];   B1_D3[1] <= B1_D2[0];   B4_D5[1] <= B4_D4[0];   B7_D7[1] <= B7_D6[0]; C5_D1[1] <= C5_D0[0];
-	A0_C3[0] <= A0_C3[1];    A2_C5[0] <= A2_C5[1];   A4_C7[0] <= A4_C7[1];   A6_D1[0] <= A6_D1[1];   B1_D3[0] <= B1_D3[1];   B4_D5[0] <= B4_D5[1];   B7_D7[0] <= B7_D7[1]; C5_D1[0] <= C5_D1[1];
-	A0_C4[1] <= A0_C3[0];    A2_C6[1] <= A2_C5[0];   A4_D0[1] <= A4_C7[0];   A6_D2[1] <= A6_D1[0];   B1_D4[1] <= B1_D3[0];   B4_D6[1] <= B4_D5[0];   B7_C0[1] <= B7_D7[0]; C5_D2[1] <= C5_D1[0];
-	A0_C4[0] <= A0_C4[1];    A2_C6[0] <= A2_C6[1];   A4_D0[0] <= A4_D0[1];   A6_D2[0] <= A6_D2[1];   B1_D4[0] <= B1_D4[1];   B4_D6[0] <= B4_D6[1];   B7_C0[0] <= B7_C0[1]; C5_D2[0] <= C5_D2[1];
-	A0_C5[1] <= A0_C4[0];    A2_C7[1] <= A2_C6[0];   A4_D1[1] <= A4_D0[0];   A6_D3[1] <= A6_D2[0];   B1_D5[1] <= B1_D4[0];   B4_D7[1] <= B4_D6[0];   B7_C1[1] <= B7_C0[0]; C5_D3[1] <= C5_D2[0];
-	A0_C5[0] <= A0_C5[1];    A2_C7[0] <= A2_C7[1];   A4_D1[0] <= A4_D1[1];   A6_D3[0] <= A6_D3[1];   B1_D5[0] <= B1_D5[1];   B4_D7[0] <= B4_D7[1];   B7_C1[0] <= B7_C1[1]; C5_D3[0] <= C5_D3[1];
-	A0_C6[1] <= A0_C5[0];    A2_D0[1] <= A2_C7[0];   A4_D2[1] <= A4_D1[0];   A6_D4[1] <= A6_D3[0];   B1_D6[1] <= B1_D5[0];   B4_C0[1] <= B4_D7[0];   B7_C2[1] <= B7_C1[0]; C5_D4[1] <= C5_D3[0];
-	A0_C6[0] <= A0_C6[1];    A2_D0[0] <= A2_D0[1];   A4_D2[0] <= A4_D2[1];   A6_D4[0] <= A6_D4[1];   B1_D6[0] <= B1_D6[1];   B4_C0[0] <= B4_C0[1];   B7_C2[0] <= B7_C2[1]; C5_D4[0] <= C5_D4[1];
-	A0_C7[1] <= A0_C6[0];    A2_D1[1] <= A2_D0[0];   A4_D3[1] <= A4_D2[0];   A6_D5[1] <= A6_D4[0];   B1_D7[1] <= B1_D6[0];   B4_C1[1] <= B4_C0[0];   B7_C3[1] <= B7_C2[0]; C5_D5[1] <= C5_D4[0];
-	A0_C7[0] <= A0_C7[1];    A2_D1[0] <= A2_D1[1];   A4_D3[0] <= A4_D3[1];   A6_D5[0] <= A6_D5[1];   B1_D7[0] <= B1_D7[1];   B4_C1[0] <= B4_C1[1];   B7_C3[0] <= B7_C3[1]; C5_D5[0] <= C5_D5[1];
-	A0_D0[1] <= A0_C7[0];    A2_D2[1] <= A2_D1[0];   A4_D4[1] <= A4_D3[0];   A6_D6[1] <= A6_D5[0];   B1_C0[1] <= B1_D7[0];   B4_C2[1] <= B4_C1[0];   B7_C4[1] <= B7_C3[0]; C5_D6[1] <= C5_D5[0];
-	A0_D0[0] <= A0_D0[1];    A2_D2[0] <= A2_D2[1];   A4_D4[0] <= A4_D4[1];   A6_D6[0] <= A6_D6[1];   B1_C0[0] <= B1_C0[1];   B4_C2[0] <= B4_C2[1];   B7_C4[0] <= B7_C4[1]; C5_D6[0] <= C5_D6[1];
-	A0_D1[1] <= A0_D0[0];    A2_D3[1] <= A2_D2[0];   A4_D5[1] <= A4_D4[0];   A6_D7[1] <= A6_D6[0];   B1_C1[1] <= B1_C0[0];   B4_C3[1] <= B4_C2[0];   B7_C5[1] <= B7_C4[0]; C5_D7[1] <= C5_D6[0];
-	A0_D1[0] <= A0_D1[1];    A2_D3[0] <= A2_D3[1];   A4_D5[0] <= A4_D5[1];   A6_D7[0] <= A6_D7[1];   B1_C1[0] <= B1_C1[1];   B4_C3[0] <= B4_C3[1];   B7_C5[0] <= B7_C5[1]; C5_D7[0] <= C5_D7[1];
-	A0_D2[1] <= A0_D1[0];    A2_D4[1] <= A2_D3[0];   A4_D6[1] <= A4_D5[0];   A7_B0[1] <= A6_D7[0];   B1_C2[1] <= B1_C1[0];   B4_C4[1] <= B4_C3[0];   B7_C6[1] <= B7_C5[0]; C6_D0[1] <= C5_D7[0];
-	A0_D2[0] <= A0_D2[1];    A2_D4[0] <= A2_D4[1];   A4_D6[0] <= A4_D6[1];   A7_B0[0] <= A7_B0[1];   B1_C2[0] <= B1_C2[1];   B4_C4[0] <= B4_C4[1];   B7_C6[0] <= B7_C6[1]; C6_D0[0] <= C6_D0[1];
-	A0_D3[1] <= A0_D2[0];    A2_D5[1] <= A2_D4[0];   A4_D7[1] <= A4_D6[0];   A7_B1[1] <= A7_B0[0];   B1_C3[1] <= B1_C2[0];   B4_C5[1] <= B4_C4[0];   B7_C7[1] <= B7_C6[0]; C6_D1[1] <= C6_D0[0];
-	A0_D3[0] <= A0_D3[1];    A2_D5[0] <= A2_D5[1];   A4_D7[0] <= A4_D7[1];   A7_B1[0] <= A7_B1[1];   B1_C3[0] <= B1_C3[1];   B4_C5[0] <= B4_C5[1];   B7_C7[0] <= B7_C7[1]; C6_D1[0] <= C6_D1[1];
-	A0_D4[1] <= A0_D3[0];    A2_D6[1] <= A2_D5[0];   A5_B0[1] <= A4_D7[0];   A7_B2[1] <= A7_B1[0];   B1_C4[1] <= B1_C3[0];   B4_C6[1] <= B4_C5[0];   C0_D0[1] <= B7_C7[0]; C6_D2[1] <= C6_D1[0];
-	A0_D4[0] <= A0_D4[1];    A2_D6[0] <= A2_D6[1];   A5_B0[0] <= A5_B0[1];   A7_B2[0] <= A7_B2[1];   B1_C4[0] <= B1_C4[1];   B4_C6[0] <= B4_C6[1];   C0_D0[0] <= C0_D0[1]; C6_D2[0] <= C6_D2[1];
-	A0_D5[1] <= A0_D4[0];    A2_D7[1] <= A2_D6[0];   A5_B1[1] <= A5_B0[0];   A7_B3[1] <= A7_B2[0];   B1_C5[1] <= B1_C4[0];   B4_C7[1] <= B4_C6[0];   C0_D1[1] <= C0_D0[0]; C6_D3[1] <= C6_D2[0];
-	A0_D5[0] <= A0_D5[1];    A2_D7[0] <= A2_D7[1];   A5_B1[0] <= A5_B1[1];   A7_B3[0] <= A7_B3[1];   B1_C5[0] <= B1_C5[1];   B4_C7[0] <= B4_C7[1];   C0_D1[0] <= C0_D1[1]; C6_D3[0] <= C6_D3[1];
-	A0_D6[1] <= A0_D5[0];    A3_B0[1] <= A2_D7[0];   A5_B2[1] <= A5_B1[0];   A7_B4[1] <= A7_B3[0];   B1_C6[1] <= B1_C5[0];   B5_D0[1] <= B4_C7[0];   C0_D2[1] <= C0_D1[0]; C6_D4[1] <= C6_D3[0];
-	A0_D6[0] <= A0_D6[1];    A3_B0[0] <= A3_B0[1];   A5_B2[0] <= A5_B2[1];   A7_B4[0] <= A7_B4[1];   B1_C6[0] <= B1_C6[1];   B5_D0[0] <= B5_D0[1];   C0_D2[0] <= C0_D2[1]; C6_D4[0] <= C6_D4[1];
-	A0_D7[1] <= A0_D6[0];    A3_B1[1] <= A3_B0[0];   A5_B3[1] <= A5_B2[0];   A7_B5[1] <= A7_B4[0];   B1_C7[1] <= B1_C6[0];   B5_D1[1] <= B5_D0[0];   C0_D3[1] <= C0_D2[0]; C6_D5[1] <= C6_D4[0];
-	A0_D7[0] <= A0_D7[1];    A3_B1[0] <= A3_B1[1];   A5_B3[0] <= A5_B3[1];   A7_B5[0] <= A7_B5[1];   B1_C7[0] <= B1_C7[1];   B5_D1[0] <= B5_D1[1];   C0_D3[0] <= C0_D3[1]; C6_D5[0] <= C6_D5[1];
-	A1_B0[1] <= A0_D7[0];    A3_B2[1] <= A3_B1[0];   A5_B4[1] <= A5_B3[0];   A7_B6[1] <= A7_B5[0];   B2_D0[1] <= B1_C7[0];   B5_D2[1] <= B5_D1[0];   C0_D4[1] <= C0_D3[0]; C6_D6[1] <= C6_D5[0];
-	A1_B0[0] <= A1_B0[1];    A3_B2[0] <= A3_B2[1];   A5_B4[0] <= A5_B4[1];   A7_B6[0] <= A7_B6[1];   B2_D0[0] <= B2_D0[1];   B5_D2[0] <= B5_D2[1];   C0_D4[0] <= C0_D4[1]; C6_D6[0] <= C6_D6[1];
-	A1_B1[1] <= A1_B0[0];    A3_B3[1] <= A3_B2[0];   A5_B5[1] <= A5_B4[0];   A7_B7[1] <= A7_B6[0];   B2_D1[1] <= B2_D0[0];   B5_D3[1] <= B5_D2[0];   C0_D5[1] <= C0_D4[0]; C6_D7[1] <= C6_D6[0];
-	A1_B1[0] <= A1_B1[1];    A3_B3[0] <= A3_B3[1];   A5_B5[0] <= A5_B5[1];   A7_B7[0] <= A7_B7[1];   B2_D1[0] <= B2_D1[1];   B5_D3[0] <= B5_D3[1];   C0_D5[0] <= C0_D5[1]; C6_D7[0] <= C6_D7[1];
-	A1_B2[1] <= A1_B1[0];    A3_B4[1] <= A3_B3[0];   A5_B6[1] <= A5_B5[0];   A7_C0[1] <= A7_B7[0];   B2_D2[1] <= B2_D1[0];   B5_D4[1] <= B5_D3[0];   C0_D6[1] <= C0_D5[0]; C7_D0[1] <= C6_D7[0];
-	A1_B2[0] <= A1_B2[1];    A3_B4[0] <= A3_B4[1];   A5_B6[0] <= A5_B6[1];   A7_C0[0] <= A7_C0[1];   B2_D2[0] <= B2_D2[1];   B5_D4[0] <= B5_D4[1];   C0_D6[0] <= C0_D6[1]; C7_D0[0] <= C7_D0[1];
-	A1_B3[1] <= A1_B2[0];    A3_B5[1] <= A3_B4[0];   A5_B7[1] <= A5_B6[0];   A7_C1[1] <= A7_C0[0];   B2_D3[1] <= B2_D2[0];   B5_D5[1] <= B5_D4[0];   C0_D7[1] <= C0_D6[0]; C7_D1[1] <= C7_D0[0];
-	A1_B3[0] <= A1_B3[1];    A3_B5[0] <= A3_B5[1];   A5_B7[0] <= A5_B7[1];   A7_C1[0] <= A7_C1[1];   B2_D3[0] <= B2_D3[1];   B5_D5[0] <= B5_D5[1];   C0_D7[0] <= C0_D7[1]; C7_D1[0] <= C7_D1[1];
-	A1_B4[1] <= A1_B3[0];    A3_B6[1] <= A3_B5[0];   A5_C0[1] <= A5_B7[0];   A7_C2[1] <= A7_C1[0];   B2_D4[1] <= B2_D3[0];   B5_D6[1] <= B5_D5[0];   C1_D0[1] <= C0_D7[0]; C7_D2[1] <= C7_D1[0];
-	A1_B4[0] <= A1_B4[1];    A3_B6[0] <= A3_B6[1];   A5_C0[0] <= A5_C0[1];   A7_C2[0] <= A7_C2[1];   B2_D4[0] <= B2_D4[1];   B5_D6[0] <= B5_D6[1];   C1_D0[0] <= C1_D0[1]; C7_D2[0] <= C7_D2[1];
-	A1_B5[1] <= A1_B4[0];    A3_B7[1] <= A3_B6[0];   A5_C1[1] <= A5_C0[0];   A7_C3[1] <= A7_C2[0];   B2_D5[1] <= B2_D4[0];   B5_D7[1] <= B5_D6[0];   C1_D1[1] <= C1_D0[0]; C7_D3[1] <= C7_D2[0];
-	A1_B5[0] <= A1_B5[1];    A3_B7[0] <= A3_B7[1];   A5_C1[0] <= A5_C1[1];   A7_C3[0] <= A7_C3[1];   B2_D5[0] <= B2_D5[1];   B5_D7[0] <= B5_D7[1];   C1_D1[0] <= C1_D1[1]; C7_D3[0] <= C7_D3[1];
-	A1_B6[1] <= A1_B5[0];    A3_C0[1] <= A3_B7[0];   A5_C2[1] <= A5_C1[0];   A7_C4[1] <= A7_C3[0];   B2_D6[1] <= B2_D5[0];   B5_C0[1] <= B5_D7[0];   C1_D2[1] <= C1_D1[0]; C7_D4[1] <= C7_D3[0];
-	A1_B6[0] <= A1_B6[1];    A3_C0[0] <= A3_C0[1];   A5_C2[0] <= A5_C2[1];   A7_C4[0] <= A7_C4[1];   B2_D6[0] <= B2_D6[1];   B5_C0[0] <= B5_C0[1];   C1_D2[0] <= C1_D2[1]; C7_D4[0] <= C7_D4[1];
-	A1_B7[1] <= A1_B6[0];    A3_C1[1] <= A3_C0[0];   A5_C3[1] <= A5_C2[0];   A7_C5[1] <= A7_C4[0];   B2_D7[1] <= B2_D6[0];   B5_C1[1] <= B5_C0[0];   C1_D3[1] <= C1_D2[0]; C7_D5[1] <= C7_D4[0];
-	A1_B7[0] <= A1_B7[1];    A3_C1[0] <= A3_C1[1];   A5_C3[0] <= A5_C3[1];   A7_C5[0] <= A7_C5[1];   B2_D7[0] <= B2_D7[1];   B5_C1[0] <= B5_C1[1];   C1_D3[0] <= C1_D3[1]; C7_D5[0] <= C7_D5[1];
-	A1_C0[1] <= A1_B7[0];    A3_C2[1] <= A3_C1[0];   A5_C4[1] <= A5_C3[0];   A7_C6[1] <= A7_C5[0];   B2_C0[1] <= B2_D7[0];   B5_C2[1] <= B5_C1[0];   C1_D4[1] <= C1_D3[0]; C7_D6[1] <= C7_D5[0];
-	A1_C0[0] <= A1_C0[1];    A3_C2[0] <= A3_C2[1];   A5_C4[0] <= A5_C4[1];   A7_C6[0] <= A7_C6[1];   B2_C0[0] <= B2_C0[1];   B5_C2[0] <= B5_C2[1];   C1_D4[0] <= C1_D4[1]; C7_D6[0] <= C7_D6[1];
-	A1_C1[1] <= A1_C0[0];    A3_C3[1] <= A3_C2[0];   A5_C5[1] <= A5_C4[0];   A7_C7[1] <= A7_C6[0];   B2_C1[1] <= B2_C0[0];   B5_C3[1] <= B5_C2[0];   C1_D5[1] <= C1_D4[0]; C7_D7[1] <= C7_D6[0];
-	A1_C1[0] <= A1_C1[1];    A3_C3[0] <= A3_C3[1];   A5_C5[0] <= A5_C5[1];   A7_C7[0] <= A7_C7[1];   B2_C1[0] <= B2_C1[1];   B5_C3[0] <= B5_C3[1];   C1_D5[0] <= C1_D5[1]; C7_D7[0] <= C7_D7[1];
-	A1_C2[1] <= A1_C1[0];    A3_C4[1] <= A3_C3[0];   A5_C6[1] <= A5_C5[0];   A7_D0[1] <= A7_C7[0];   B2_C2[1] <= B2_C1[0];   B5_C4[1] <= B5_C3[0];   C1_D6[1] <= C1_D5[0];                  
-	A1_C2[0] <= A1_C2[1];    A3_C4[0] <= A3_C4[1];   A5_C6[0] <= A5_C6[1];   A7_D0[0] <= A7_D0[1];   B2_C2[0] <= B2_C2[1];   B5_C4[0] <= B5_C4[1];   C1_D6[0] <= C1_D6[1];                  
-	A1_C3[1] <= A1_C2[0];    A3_C5[1] <= A3_C4[0];   A5_C7[1] <= A5_C6[0];   A7_D1[1] <= A7_D0[0];   B2_C3[1] <= B2_C2[0];   B5_C5[1] <= B5_C4[0];   C1_D7[1] <= C1_D6[0];                  
-	A1_C3[0] <= A1_C3[1];    A3_C5[0] <= A3_C5[1];   A5_C7[0] <= A5_C7[1];   A7_D1[0] <= A7_D1[1];   B2_C3[0] <= B2_C3[1];   B5_C5[0] <= B5_C5[1];   C1_D7[0] <= C1_D7[1];                  
-	A1_C4[1] <= A1_C3[0];    A3_C6[1] <= A3_C5[0];   A5_D0[1] <= A5_C7[0];   A7_D2[1] <= A7_D1[0];   B2_C4[1] <= B2_C3[0];   B5_C6[1] <= B5_C5[0];   C2_D0[1] <= C1_D7[0];                  
-	A1_C4[0] <= A1_C4[1];    A3_C6[0] <= A3_C6[1];   A5_D0[0] <= A5_D0[1];   A7_D2[0] <= A7_D2[1];   B2_C4[0] <= B2_C4[1];   B5_C6[0] <= B5_C6[1];   C2_D0[0] <= C2_D0[1];                  
-	A1_C5[1] <= A1_C4[0];    A3_C7[1] <= A3_C6[0];   A5_D1[1] <= A5_D0[0];   A7_D3[1] <= A7_D2[0];   B2_C5[1] <= B2_C4[0];   B5_C7[1] <= B5_C6[0];   C2_D1[1] <= C2_D0[0];                  
-	A1_C5[0] <= A1_C5[1];    A3_C7[0] <= A3_C7[1];   A5_D1[0] <= A5_D1[1];   A7_D3[0] <= A7_D3[1];   B2_C5[0] <= B2_C5[1];   B5_C7[0] <= B5_C7[1];   C2_D1[0] <= C2_D1[1];                  
-	A1_C6[1] <= A1_C5[0];    A3_D0[1] <= A3_C7[0];   A5_D2[1] <= A5_D1[0];   A7_D4[1] <= A7_D3[0];   B2_C6[1] <= B2_C5[0];   B6_D0[1] <= B5_C7[0];   C2_D2[1] <= C2_D1[0];                  
-	A1_C6[0] <= A1_C6[1];    A3_D0[0] <= A3_D0[1];   A5_D2[0] <= A5_D2[1];   A7_D4[0] <= A7_D4[1];   B2_C6[0] <= B2_C6[1];   B6_D0[0] <= B6_D0[1];   C2_D2[0] <= C2_D2[1];                  
-	A1_C7[1] <= A1_C6[0];    A3_D1[1] <= A3_D0[0];   A5_D3[1] <= A5_D2[0];   A7_D5[1] <= A7_D4[0];   B2_C7[1] <= B2_C6[0];   B6_D1[1] <= B6_D0[0];   C2_D3[1] <= C2_D2[0];                  
-	A1_C7[0] <= A1_C7[1];    A3_D1[0] <= A3_D1[1];   A5_D3[0] <= A5_D3[1];   A7_D5[0] <= A7_D5[1];   B2_C7[0] <= B2_C7[1];   B6_D1[0] <= B6_D1[1];   C2_D3[0] <= C2_D3[1];                  
-	A1_D0[1] <= A1_C7[0];    A3_D2[1] <= A3_D1[0];   A5_D4[1] <= A5_D3[0];   A7_D6[1] <= A7_D5[0];   B3_D0[1] <= B2_C7[0];   B6_D2[1] <= B6_D1[0];   C2_D4[1] <= C2_D3[0];                  
-	A1_D0[0] <= A1_D0[1];    A3_D2[0] <= A3_D2[1];   A5_D4[0] <= A5_D4[1];   A7_D6[0] <= A7_D6[1];   B3_D0[0] <= B3_D0[1];   B6_D2[0] <= B6_D2[1];   C2_D4[0] <= C2_D4[1];                  
-	A1_D1[1] <= A1_D0[0];    A3_D3[1] <= A3_D2[0];   A5_D5[1] <= A5_D4[0];   A7_D7[1] <= A7_D6[0];   B3_D1[1] <= B3_D0[0];   B6_D3[1] <= B6_D2[0];   C2_D5[1] <= C2_D4[0];                  
-	A1_D1[0] <= A1_D1[1];    A3_D3[0] <= A3_D3[1];   A5_D5[0] <= A5_D5[1];   A7_D7[0] <= A7_D7[1];   B3_D1[0] <= B3_D1[1];   B6_D3[0] <= B6_D3[1];   C2_D5[0] <= C2_D5[1];                  
-	A1_D2[1] <= A1_D1[0];    A3_D4[1] <= A3_D3[0];   A5_D6[1] <= A5_D5[0];   B0_D0[1] <= A7_D7[0];   B3_D2[1] <= B3_D1[0];   B6_D4[1] <= B6_D3[0];   C2_D6[1] <= C2_D5[0];                  
-	A1_D2[0] <= A1_D2[1];    A3_D4[0] <= A3_D4[1];   A5_D6[0] <= A5_D6[1];   B0_D0[0] <= B0_D0[1];   B3_D2[0] <= B3_D2[1];   B6_D4[0] <= B6_D4[1];   C2_D6[0] <= C2_D6[1];                  
-	A1_D3[1] <= A1_D2[0];    A3_D5[1] <= A3_D4[0];   A5_D7[1] <= A5_D6[0];   B0_D1[1] <= B0_D0[0];   B3_D3[1] <= B3_D2[0];   B6_D5[1] <= B6_D4[0];   C2_D7[1] <= C2_D6[0];                  
-	A1_D3[0] <= A1_D3[1];    A3_D5[0] <= A3_D5[1];   A5_D7[0] <= A5_D7[1];   B0_D1[0] <= B0_D1[1];   B3_D3[0] <= B3_D3[1];   B6_D5[0] <= B6_D5[1];   C2_D7[0] <= C2_D7[1];                  
-	A1_D4[1] <= A1_D3[0];    A3_D6[1] <= A3_D5[0];   A6_B0[1] <= A5_D7[0];   B0_D2[1] <= B0_D1[0];   B3_D4[1] <= B3_D3[0];   B6_D6[1] <= B6_D5[0];   C3_D0[1] <= C2_D7[0];                  
-	A1_D4[0] <= A1_D4[1];    A3_D6[0] <= A3_D6[1];   A6_B0[0] <= A6_B0[1];   B0_D2[0] <= B0_D2[1];   B3_D4[0] <= B3_D4[1];   B6_D6[0] <= B6_D6[1];   C3_D0[0] <= C3_D0[1];                  
-	A1_D5[1] <= A1_D4[0];    A3_D7[1] <= A3_D6[0];   A6_B1[1] <= A6_B0[0];   B0_D3[1] <= B0_D2[0];   B3_D5[1] <= B3_D4[0];   B6_D7[1] <= B6_D6[0];   C3_D1[1] <= C3_D0[0];                  
-	A1_D5[0] <= A1_D5[1];    A3_D7[0] <= A3_D7[1];   A6_B1[0] <= A6_B1[1];   B0_D3[0] <= B0_D3[1];   B3_D5[0] <= B3_D5[1];   B6_D7[0] <= B6_D7[1];   C3_D1[0] <= C3_D1[1];                  
-	A1_D6[1] <= A1_D5[0];    A4_B0[1] <= A3_D7[0];   A6_B2[1] <= A6_B1[0];   B0_D4[1] <= B0_D3[0];   B3_D6[1] <= B3_D5[0];   B6_C0[1] <= B6_D7[0];   C3_D2[1] <= C3_D1[0];                  
-	A1_D6[0] <= A1_D6[1];    A4_B0[0] <= A4_B0[1];   A6_B2[0] <= A6_B2[1];   B0_D4[0] <= B0_D4[1];   B3_D6[0] <= B3_D6[1];   B6_C0[0] <= B6_C0[1];   C3_D2[0] <= C3_D2[1];                  
-	A1_D7[1] <= A1_D6[0];    A4_B1[1] <= A4_B0[0];   A6_B3[1] <= A6_B2[0];   B0_D5[1] <= B0_D4[0];   B3_D7[1] <= B3_D6[0];   B6_C1[1] <= B6_C0[0];   C3_D3[1] <= C3_D2[0];                  
-	A1_D7[0] <= A1_D7[1];    A4_B1[0] <= A4_B1[1];   A6_B3[0] <= A6_B3[1];   B0_D5[0] <= B0_D5[1];   B3_D7[0] <= B3_D7[1];   B6_C1[0] <= B6_C1[1];   C3_D3[0] <= C3_D3[1];                  
-	A2_B0[1] <= A1_D7[0];    A4_B2[1] <= A4_B1[0];   A6_B4[1] <= A6_B3[0];   B0_D6[1] <= B0_D5[0];   B3_C0[1] <= B3_D7[0];   B6_C2[1] <= B6_C1[0];   C3_D4[1] <= C3_D3[0];                  
-	A2_B0[0] <= A2_B0[1];    A4_B2[0] <= A4_B2[1];   A6_B4[0] <= A6_B4[1];   B0_D6[0] <= B0_D6[1];   B3_C0[0] <= B3_C0[1];   B6_C2[0] <= B6_C2[1];   C3_D4[0] <= C3_D4[1];                  
-	A2_B1[1] <= A2_B0[0];    A4_B3[1] <= A4_B2[0];   A6_B5[1] <= A6_B4[0];   B0_D7[1] <= B0_D6[0];   B3_C1[1] <= B3_C0[0];   B6_C3[1] <= B6_C2[0];   C3_D5[1] <= C3_D4[0];                  
-	A2_B1[0] <= A2_B1[1];    A4_B3[0] <= A4_B3[1];   A6_B5[0] <= A6_B5[1];   B0_D7[0] <= B0_D7[1];   B3_C1[0] <= B3_C1[1];   B6_C3[0] <= B6_C3[1];   C3_D5[0] <= C3_D5[1];                  
+	N0_E0[1] <= bit_in  ;    N2_E2[1] <= N2_E1[0];   N4_E4[1] <= N4_E3[0];   N6_E6[1] <= N6_E5[0];   E0_S0[1] <= E0_W7[0];   E3_S2[1] <= E3_S1[0];   E6_S4[1] <= E6_S3[0]; S3_W6[1] <= S3_W5[0];
+	N0_E0[0] <= N0_E0[1];    N2_E2[0] <= N2_E2[1];   N4_E4[0] <= N4_E4[1];   N6_E6[0] <= N6_E6[1];   E0_S0[0] <= E0_S0[1];   E3_S2[0] <= E3_S2[1];   E6_S4[0] <= E6_S4[1]; S3_W6[0] <= S3_W6[1];
+	N0_E1[1] <= N0_E0[0];    N2_E3[1] <= N2_E2[0];   N4_E5[1] <= N4_E4[0];   N6_E7[1] <= N6_E6[0];   E0_S1[1] <= E0_S0[0];   E3_S3[1] <= E3_S2[0];   E6_S5[1] <= E6_S4[0]; S3_W7[1] <= S3_W6[0];
+	N0_E1[0] <= N0_E1[1];    N2_E3[0] <= N2_E3[1];   N4_E5[0] <= N4_E5[1];   N6_E7[0] <= N6_E7[1];   E0_S1[0] <= E0_S1[1];   E3_S3[0] <= E3_S3[1];   E6_S5[0] <= E6_S5[1]; S3_W7[0] <= S3_W7[1];
+	N0_E2[1] <= N0_E1[0];    N2_E4[1] <= N2_E3[0];   N4_E6[1] <= N4_E5[0];   N6_S0[1] <= N6_E7[0];   E0_S2[1] <= E0_S1[0];   E3_S4[1] <= E3_S3[0];   E6_S6[1] <= E6_S5[0]; S4_W0[1] <= S3_W7[0];
+	N0_E2[0] <= N0_E2[1];    N2_E4[0] <= N2_E4[1];   N4_E6[0] <= N4_E6[1];   N6_S0[0] <= N6_S0[1];   E0_S2[0] <= E0_S2[1];   E3_S4[0] <= E3_S4[1];   E6_S6[0] <= E6_S6[1]; S4_W0[0] <= S4_W0[1];
+	N0_E3[1] <= N0_E2[0];    N2_E5[1] <= N2_E4[0];   N4_E7[1] <= N4_E6[0];   N6_S1[1] <= N6_S0[0];   E0_S3[1] <= E0_S2[0];   E3_S5[1] <= E3_S4[0];   E6_S7[1] <= E6_S6[0]; S4_W1[1] <= S4_W0[0];
+	N0_E3[0] <= N0_E3[1];    N2_E5[0] <= N2_E5[1];   N4_E7[0] <= N4_E7[1];   N6_S1[0] <= N6_S1[1];   E0_S3[0] <= E0_S3[1];   E3_S5[0] <= E3_S5[1];   E6_S7[0] <= E6_S7[1]; S4_W1[0] <= S4_W1[1];
+	N0_E4[1] <= N0_E3[0];    N2_E6[1] <= N2_E5[0];   N4_S0[1] <= N4_E7[0];   N6_S2[1] <= N6_S1[0];   E0_S4[1] <= E0_S3[0];   E3_S6[1] <= E3_S5[0];   E7_W0[1] <= E6_S7[0]; S4_W2[1] <= S4_W1[0];
+	N0_E4[0] <= N0_E4[1];    N2_E6[0] <= N2_E6[1];   N4_S0[0] <= N4_S0[1];   N6_S2[0] <= N6_S2[1];   E0_S4[0] <= E0_S4[1];   E3_S6[0] <= E3_S6[1];   E7_W0[0] <= E7_W0[1]; S4_W2[0] <= S4_W2[1];
+	N0_E5[1] <= N0_E4[0];    N2_E7[1] <= N2_E6[0];   N4_S1[1] <= N4_S0[0];   N6_S3[1] <= N6_S2[0];   E0_S5[1] <= E0_S4[0];   E3_S7[1] <= E3_S6[0];   E7_W1[1] <= E7_W0[0]; S4_W3[1] <= S4_W2[0];
+	N0_E5[0] <= N0_E5[1];    N2_E7[0] <= N2_E7[1];   N4_S1[0] <= N4_S1[1];   N6_S3[0] <= N6_S3[1];   E0_S5[0] <= E0_S5[1];   E3_S7[0] <= E3_S7[1];   E7_W1[0] <= E7_W1[1]; S4_W3[0] <= S4_W3[1];
+	N0_E6[1] <= N0_E5[0];    N2_S0[1] <= N2_E7[0];   N4_S2[1] <= N4_S1[0];   N6_S4[1] <= N6_S3[0];   E0_S6[1] <= E0_S5[0];   E4_W0[1] <= E3_S7[0];   E7_W2[1] <= E7_W1[0]; S4_W4[1] <= S4_W3[0];
+	N0_E6[0] <= N0_E6[1];    N2_S0[0] <= N2_S0[1];   N4_S2[0] <= N4_S2[1];   N6_S4[0] <= N6_S4[1];   E0_S6[0] <= E0_S6[1];   E4_W0[0] <= E4_W0[1];   E7_W2[0] <= E7_W2[1]; S4_W4[0] <= S4_W4[1];
+	N0_E7[1] <= N0_E6[0];    N2_S1[1] <= N2_S0[0];   N4_S3[1] <= N4_S2[0];   N6_S5[1] <= N6_S4[0];   E0_S7[1] <= E0_S6[0];   E4_W1[1] <= E4_W0[0];   E7_W3[1] <= E7_W2[0]; S4_W5[1] <= S4_W4[0];
+	N0_E7[0] <= N0_E7[1];    N2_S1[0] <= N2_S1[1];   N4_S3[0] <= N4_S3[1];   N6_S5[0] <= N6_S5[1];   E0_S7[0] <= E0_S7[1];   E4_W1[0] <= E4_W1[1];   E7_W3[0] <= E7_W3[1]; S4_W5[0] <= S4_W5[1];
+	N0_S0[1] <= N0_E7[0];    N2_S2[1] <= N2_S1[0];   N4_S4[1] <= N4_S3[0];   N6_S6[1] <= N6_S5[0];   E1_W0[1] <= E0_S7[0];   E4_W2[1] <= E4_W1[0];   E7_W4[1] <= E7_W3[0]; S4_W6[1] <= S4_W5[0];
+	N0_S0[0] <= N0_S0[1];    N2_S2[0] <= N2_S2[1];   N4_S4[0] <= N4_S4[1];   N6_S6[0] <= N6_S6[1];   E1_W0[0] <= E1_W0[1];   E4_W2[0] <= E4_W2[1];   E7_W4[0] <= E7_W4[1]; S4_W6[0] <= S4_W6[1];
+	N0_S1[1] <= N0_S0[0];    N2_S3[1] <= N2_S2[0];   N4_S5[1] <= N4_S4[0];   N6_S7[1] <= N6_S6[0];   E1_W1[1] <= E1_W0[0];   E4_W3[1] <= E4_W2[0];   E7_W5[1] <= E7_W4[0]; S4_W7[1] <= S4_W6[0];
+	N0_S1[0] <= N0_S1[1];    N2_S3[0] <= N2_S3[1];   N4_S5[0] <= N4_S5[1];   N6_S7[0] <= N6_S7[1];   E1_W1[0] <= E1_W1[1];   E4_W3[0] <= E4_W3[1];   E7_W5[0] <= E7_W5[1]; S4_W7[0] <= S4_W7[1];
+	N0_S2[1] <= N0_S1[0];    N2_S4[1] <= N2_S3[0];   N4_S6[1] <= N4_S5[0];   N6_W0[1] <= N6_S7[0];   E1_W2[1] <= E1_W1[0];   E4_W4[1] <= E4_W3[0];   E7_W6[1] <= E7_W5[0]; S5_W0[1] <= S4_W7[0];
+	N0_S2[0] <= N0_S2[1];    N2_S4[0] <= N2_S4[1];   N4_S6[0] <= N4_S6[1];   N6_W0[0] <= N6_W0[1];   E1_W2[0] <= E1_W2[1];   E4_W4[0] <= E4_W4[1];   E7_W6[0] <= E7_W6[1]; S5_W0[0] <= S5_W0[1];
+	N0_S3[1] <= N0_S2[0];    N2_S5[1] <= N2_S4[0];   N4_S7[1] <= N4_S6[0];   N6_W1[1] <= N6_W0[0];   E1_W3[1] <= E1_W2[0];   E4_W5[1] <= E4_W4[0];   E7_W7[1] <= E7_W6[0]; S5_W1[1] <= S5_W0[0];
+	N0_S3[0] <= N0_S3[1];    N2_S5[0] <= N2_S5[1];   N4_S7[0] <= N4_S7[1];   N6_W1[0] <= N6_W1[1];   E1_W3[0] <= E1_W3[1];   E4_W5[0] <= E4_W5[1];   E7_W7[0] <= E7_W7[1]; S5_W1[0] <= S5_W1[1];
+	N0_S4[1] <= N0_S3[0];    N2_S6[1] <= N2_S5[0];   N4_W0[1] <= N4_S7[0];   N6_W2[1] <= N6_W1[0];   E1_W4[1] <= E1_W3[0];   E4_W6[1] <= E4_W5[0];   E7_S0[1] <= E7_W7[0]; S5_W2[1] <= S5_W1[0];
+	N0_S4[0] <= N0_S4[1];    N2_S6[0] <= N2_S6[1];   N4_W0[0] <= N4_W0[1];   N6_W2[0] <= N6_W2[1];   E1_W4[0] <= E1_W4[1];   E4_W6[0] <= E4_W6[1];   E7_S0[0] <= E7_S0[1]; S5_W2[0] <= S5_W2[1];
+	N0_S5[1] <= N0_S4[0];    N2_S7[1] <= N2_S6[0];   N4_W1[1] <= N4_W0[0];   N6_W3[1] <= N6_W2[0];   E1_W5[1] <= E1_W4[0];   E4_W7[1] <= E4_W6[0];   E7_S1[1] <= E7_S0[0]; S5_W3[1] <= S5_W2[0];
+	N0_S5[0] <= N0_S5[1];    N2_S7[0] <= N2_S7[1];   N4_W1[0] <= N4_W1[1];   N6_W3[0] <= N6_W3[1];   E1_W5[0] <= E1_W5[1];   E4_W7[0] <= E4_W7[1];   E7_S1[0] <= E7_S1[1]; S5_W3[0] <= S5_W3[1];
+	N0_S6[1] <= N0_S5[0];    N2_W0[1] <= N2_S7[0];   N4_W2[1] <= N4_W1[0];   N6_W4[1] <= N6_W3[0];   E1_W6[1] <= E1_W5[0];   E4_S0[1] <= E4_W7[0];   E7_S2[1] <= E7_S1[0]; S5_W4[1] <= S5_W3[0];
+	N0_S6[0] <= N0_S6[1];    N2_W0[0] <= N2_W0[1];   N4_W2[0] <= N4_W2[1];   N6_W4[0] <= N6_W4[1];   E1_W6[0] <= E1_W6[1];   E4_S0[0] <= E4_S0[1];   E7_S2[0] <= E7_S2[1]; S5_W4[0] <= S5_W4[1];
+	N0_S7[1] <= N0_S6[0];    N2_W1[1] <= N2_W0[0];   N4_W3[1] <= N4_W2[0];   N6_W5[1] <= N6_W4[0];   E1_W7[1] <= E1_W6[0];   E4_S1[1] <= E4_S0[0];   E7_S3[1] <= E7_S2[0]; S5_W5[1] <= S5_W4[0];
+	N0_S7[0] <= N0_S7[1];    N2_W1[0] <= N2_W1[1];   N4_W3[0] <= N4_W3[1];   N6_W5[0] <= N6_W5[1];   E1_W7[0] <= E1_W7[1];   E4_S1[0] <= E4_S1[1];   E7_S3[0] <= E7_S3[1]; S5_W5[0] <= S5_W5[1];
+	N0_W0[1] <= N0_S7[0];    N2_W2[1] <= N2_W1[0];   N4_W4[1] <= N4_W3[0];   N6_W6[1] <= N6_W5[0];   E1_S0[1] <= E1_W7[0];   E4_S2[1] <= E4_S1[0];   E7_S4[1] <= E7_S3[0]; S5_W6[1] <= S5_W5[0];
+	N0_W0[0] <= N0_W0[1];    N2_W2[0] <= N2_W2[1];   N4_W4[0] <= N4_W4[1];   N6_W6[0] <= N6_W6[1];   E1_S0[0] <= E1_S0[1];   E4_S2[0] <= E4_S2[1];   E7_S4[0] <= E7_S4[1]; S5_W6[0] <= S5_W6[1];
+	N0_W1[1] <= N0_W0[0];    N2_W3[1] <= N2_W2[0];   N4_W5[1] <= N4_W4[0];   N6_W7[1] <= N6_W6[0];   E1_S1[1] <= E1_S0[0];   E4_S3[1] <= E4_S2[0];   E7_S5[1] <= E7_S4[0]; S5_W7[1] <= S5_W6[0];
+	N0_W1[0] <= N0_W1[1];    N2_W3[0] <= N2_W3[1];   N4_W5[0] <= N4_W5[1];   N6_W7[0] <= N6_W7[1];   E1_S1[0] <= E1_S1[1];   E4_S3[0] <= E4_S3[1];   E7_S5[0] <= E7_S5[1]; S5_W7[0] <= S5_W7[1];
+	N0_W2[1] <= N0_W1[0];    N2_W4[1] <= N2_W3[0];   N4_W6[1] <= N4_W5[0];   N7_E0[1] <= N6_W7[0];   E1_S2[1] <= E1_S1[0];   E4_S4[1] <= E4_S3[0];   E7_S6[1] <= E7_S5[0]; S6_W0[1] <= S5_W7[0];
+	N0_W2[0] <= N0_W2[1];    N2_W4[0] <= N2_W4[1];   N4_W6[0] <= N4_W6[1];   N7_E0[0] <= N7_E0[1];   E1_S2[0] <= E1_S2[1];   E4_S4[0] <= E4_S4[1];   E7_S6[0] <= E7_S6[1]; S6_W0[0] <= S6_W0[1];
+	N0_W3[1] <= N0_W2[0];    N2_W5[1] <= N2_W4[0];   N4_W7[1] <= N4_W6[0];   N7_E1[1] <= N7_E0[0];   E1_S3[1] <= E1_S2[0];   E4_S5[1] <= E4_S4[0];   E7_S7[1] <= E7_S6[0]; S6_W1[1] <= S6_W0[0];
+	N0_W3[0] <= N0_W3[1];    N2_W5[0] <= N2_W5[1];   N4_W7[0] <= N4_W7[1];   N7_E1[0] <= N7_E1[1];   E1_S3[0] <= E1_S3[1];   E4_S5[0] <= E4_S5[1];   E7_S7[0] <= E7_S7[1]; S6_W1[0] <= S6_W1[1];
+	N0_W4[1] <= N0_W3[0];    N2_W6[1] <= N2_W5[0];   N5_E0[1] <= N4_W7[0];   N7_E2[1] <= N7_E1[0];   E1_S4[1] <= E1_S3[0];   E4_S6[1] <= E4_S5[0];   S0_W0[1] <= E7_S7[0]; S6_W2[1] <= S6_W1[0];
+	N0_W4[0] <= N0_W4[1];    N2_W6[0] <= N2_W6[1];   N5_E0[0] <= N5_E0[1];   N7_E2[0] <= N7_E2[1];   E1_S4[0] <= E1_S4[1];   E4_S6[0] <= E4_S6[1];   S0_W0[0] <= S0_W0[1]; S6_W2[0] <= S6_W2[1];
+	N0_W5[1] <= N0_W4[0];    N2_W7[1] <= N2_W6[0];   N5_E1[1] <= N5_E0[0];   N7_E3[1] <= N7_E2[0];   E1_S5[1] <= E1_S4[0];   E4_S7[1] <= E4_S6[0];   S0_W1[1] <= S0_W0[0]; S6_W3[1] <= S6_W2[0];
+	N0_W5[0] <= N0_W5[1];    N2_W7[0] <= N2_W7[1];   N5_E1[0] <= N5_E1[1];   N7_E3[0] <= N7_E3[1];   E1_S5[0] <= E1_S5[1];   E4_S7[0] <= E4_S7[1];   S0_W1[0] <= S0_W1[1]; S6_W3[0] <= S6_W3[1];
+	N0_W6[1] <= N0_W5[0];    N3_E0[1] <= N2_W7[0];   N5_E2[1] <= N5_E1[0];   N7_E4[1] <= N7_E3[0];   E1_S6[1] <= E1_S5[0];   E5_W0[1] <= E4_S7[0];   S0_W2[1] <= S0_W1[0]; S6_W4[1] <= S6_W3[0];
+	N0_W6[0] <= N0_W6[1];    N3_E0[0] <= N3_E0[1];   N5_E2[0] <= N5_E2[1];   N7_E4[0] <= N7_E4[1];   E1_S6[0] <= E1_S6[1];   E5_W0[0] <= E5_W0[1];   S0_W2[0] <= S0_W2[1]; S6_W4[0] <= S6_W4[1];
+	N0_W7[1] <= N0_W6[0];    N3_E1[1] <= N3_E0[0];   N5_E3[1] <= N5_E2[0];   N7_E5[1] <= N7_E4[0];   E1_S7[1] <= E1_S6[0];   E5_W1[1] <= E5_W0[0];   S0_W3[1] <= S0_W2[0]; S6_W5[1] <= S6_W4[0];
+	N0_W7[0] <= N0_W7[1];    N3_E1[0] <= N3_E1[1];   N5_E3[0] <= N5_E3[1];   N7_E5[0] <= N7_E5[1];   E1_S7[0] <= E1_S7[1];   E5_W1[0] <= E5_W1[1];   S0_W3[0] <= S0_W3[1]; S6_W5[0] <= S6_W5[1];
+	N1_E0[1] <= N0_W7[0];    N3_E2[1] <= N3_E1[0];   N5_E4[1] <= N5_E3[0];   N7_E6[1] <= N7_E5[0];   E2_W0[1] <= E1_S7[0];   E5_W2[1] <= E5_W1[0];   S0_W4[1] <= S0_W3[0]; S6_W6[1] <= S6_W5[0];
+	N1_E0[0] <= N1_E0[1];    N3_E2[0] <= N3_E2[1];   N5_E4[0] <= N5_E4[1];   N7_E6[0] <= N7_E6[1];   E2_W0[0] <= E2_W0[1];   E5_W2[0] <= E5_W2[1];   S0_W4[0] <= S0_W4[1]; S6_W6[0] <= S6_W6[1];
+	N1_E1[1] <= N1_E0[0];    N3_E3[1] <= N3_E2[0];   N5_E5[1] <= N5_E4[0];   N7_E7[1] <= N7_E6[0];   E2_W1[1] <= E2_W0[0];   E5_W3[1] <= E5_W2[0];   S0_W5[1] <= S0_W4[0]; S6_W7[1] <= S6_W6[0];
+	N1_E1[0] <= N1_E1[1];    N3_E3[0] <= N3_E3[1];   N5_E5[0] <= N5_E5[1];   N7_E7[0] <= N7_E7[1];   E2_W1[0] <= E2_W1[1];   E5_W3[0] <= E5_W3[1];   S0_W5[0] <= S0_W5[1]; S6_W7[0] <= S6_W7[1];
+	N1_E2[1] <= N1_E1[0];    N3_E4[1] <= N3_E3[0];   N5_E6[1] <= N5_E5[0];   N7_S0[1] <= N7_E7[0];   E2_W2[1] <= E2_W1[0];   E5_W4[1] <= E5_W3[0];   S0_W6[1] <= S0_W5[0]; S7_W0[1] <= S6_W7[0];
+	N1_E2[0] <= N1_E2[1];    N3_E4[0] <= N3_E4[1];   N5_E6[0] <= N5_E6[1];   N7_S0[0] <= N7_S0[1];   E2_W2[0] <= E2_W2[1];   E5_W4[0] <= E5_W4[1];   S0_W6[0] <= S0_W6[1]; S7_W0[0] <= S7_W0[1];
+	N1_E3[1] <= N1_E2[0];    N3_E5[1] <= N3_E4[0];   N5_E7[1] <= N5_E6[0];   N7_S1[1] <= N7_S0[0];   E2_W3[1] <= E2_W2[0];   E5_W5[1] <= E5_W4[0];   S0_W7[1] <= S0_W6[0]; S7_W1[1] <= S7_W0[0];
+	N1_E3[0] <= N1_E3[1];    N3_E5[0] <= N3_E5[1];   N5_E7[0] <= N5_E7[1];   N7_S1[0] <= N7_S1[1];   E2_W3[0] <= E2_W3[1];   E5_W5[0] <= E5_W5[1];   S0_W7[0] <= S0_W7[1]; S7_W1[0] <= S7_W1[1];
+	N1_E4[1] <= N1_E3[0];    N3_E6[1] <= N3_E5[0];   N5_S0[1] <= N5_E7[0];   N7_S2[1] <= N7_S1[0];   E2_W4[1] <= E2_W3[0];   E5_W6[1] <= E5_W5[0];   S1_W0[1] <= S0_W7[0]; S7_W2[1] <= S7_W1[0];
+	N1_E4[0] <= N1_E4[1];    N3_E6[0] <= N3_E6[1];   N5_S0[0] <= N5_S0[1];   N7_S2[0] <= N7_S2[1];   E2_W4[0] <= E2_W4[1];   E5_W6[0] <= E5_W6[1];   S1_W0[0] <= S1_W0[1]; S7_W2[0] <= S7_W2[1];
+	N1_E5[1] <= N1_E4[0];    N3_E7[1] <= N3_E6[0];   N5_S1[1] <= N5_S0[0];   N7_S3[1] <= N7_S2[0];   E2_W5[1] <= E2_W4[0];   E5_W7[1] <= E5_W6[0];   S1_W1[1] <= S1_W0[0]; S7_W3[1] <= S7_W2[0];
+	N1_E5[0] <= N1_E5[1];    N3_E7[0] <= N3_E7[1];   N5_S1[0] <= N5_S1[1];   N7_S3[0] <= N7_S3[1];   E2_W5[0] <= E2_W5[1];   E5_W7[0] <= E5_W7[1];   S1_W1[0] <= S1_W1[1]; S7_W3[0] <= S7_W3[1];
+	N1_E6[1] <= N1_E5[0];    N3_S0[1] <= N3_E7[0];   N5_S2[1] <= N5_S1[0];   N7_S4[1] <= N7_S3[0];   E2_W6[1] <= E2_W5[0];   E5_S0[1] <= E5_W7[0];   S1_W2[1] <= S1_W1[0]; S7_W4[1] <= S7_W3[0];
+	N1_E6[0] <= N1_E6[1];    N3_S0[0] <= N3_S0[1];   N5_S2[0] <= N5_S2[1];   N7_S4[0] <= N7_S4[1];   E2_W6[0] <= E2_W6[1];   E5_S0[0] <= E5_S0[1];   S1_W2[0] <= S1_W2[1]; S7_W4[0] <= S7_W4[1];
+	N1_E7[1] <= N1_E6[0];    N3_S1[1] <= N3_S0[0];   N5_S3[1] <= N5_S2[0];   N7_S5[1] <= N7_S4[0];   E2_W7[1] <= E2_W6[0];   E5_S1[1] <= E5_S0[0];   S1_W3[1] <= S1_W2[0]; S7_W5[1] <= S7_W4[0];
+	N1_E7[0] <= N1_E7[1];    N3_S1[0] <= N3_S1[1];   N5_S3[0] <= N5_S3[1];   N7_S5[0] <= N7_S5[1];   E2_W7[0] <= E2_W7[1];   E5_S1[0] <= E5_S1[1];   S1_W3[0] <= S1_W3[1]; S7_W5[0] <= S7_W5[1];
+	N1_S0[1] <= N1_E7[0];    N3_S2[1] <= N3_S1[0];   N5_S4[1] <= N5_S3[0];   N7_S6[1] <= N7_S5[0];   E2_S0[1] <= E2_W7[0];   E5_S2[1] <= E5_S1[0];   S1_W4[1] <= S1_W3[0]; S7_W6[1] <= S7_W5[0];
+	N1_S0[0] <= N1_S0[1];    N3_S2[0] <= N3_S2[1];   N5_S4[0] <= N5_S4[1];   N7_S6[0] <= N7_S6[1];   E2_S0[0] <= E2_S0[1];   E5_S2[0] <= E5_S2[1];   S1_W4[0] <= S1_W4[1]; S7_W6[0] <= S7_W6[1];
+	N1_S1[1] <= N1_S0[0];    N3_S3[1] <= N3_S2[0];   N5_S5[1] <= N5_S4[0];   N7_S7[1] <= N7_S6[0];   E2_S1[1] <= E2_S0[0];   E5_S3[1] <= E5_S2[0];   S1_W5[1] <= S1_W4[0]; S7_W7[1] <= S7_W6[0];
+	N1_S1[0] <= N1_S1[1];    N3_S3[0] <= N3_S3[1];   N5_S5[0] <= N5_S5[1];   N7_S7[0] <= N7_S7[1];   E2_S1[0] <= E2_S1[1];   E5_S3[0] <= E5_S3[1];   S1_W5[0] <= S1_W5[1]; S7_W7[0] <= S7_W7[1];
+	N1_S2[1] <= N1_S1[0];    N3_S4[1] <= N3_S3[0];   N5_S6[1] <= N5_S5[0];   N7_W0[1] <= N7_S7[0];   E2_S2[1] <= E2_S1[0];   E5_S4[1] <= E5_S3[0];   S1_W6[1] <= S1_W5[0];                  
+	N1_S2[0] <= N1_S2[1];    N3_S4[0] <= N3_S4[1];   N5_S6[0] <= N5_S6[1];   N7_W0[0] <= N7_W0[1];   E2_S2[0] <= E2_S2[1];   E5_S4[0] <= E5_S4[1];   S1_W6[0] <= S1_W6[1];                  
+	N1_S3[1] <= N1_S2[0];    N3_S5[1] <= N3_S4[0];   N5_S7[1] <= N5_S6[0];   N7_W1[1] <= N7_W0[0];   E2_S3[1] <= E2_S2[0];   E5_S5[1] <= E5_S4[0];   S1_W7[1] <= S1_W6[0];                  
+	N1_S3[0] <= N1_S3[1];    N3_S5[0] <= N3_S5[1];   N5_S7[0] <= N5_S7[1];   N7_W1[0] <= N7_W1[1];   E2_S3[0] <= E2_S3[1];   E5_S5[0] <= E5_S5[1];   S1_W7[0] <= S1_W7[1];                  
+	N1_S4[1] <= N1_S3[0];    N3_S6[1] <= N3_S5[0];   N5_W0[1] <= N5_S7[0];   N7_W2[1] <= N7_W1[0];   E2_S4[1] <= E2_S3[0];   E5_S6[1] <= E5_S5[0];   S2_W0[1] <= S1_W7[0];                  
+	N1_S4[0] <= N1_S4[1];    N3_S6[0] <= N3_S6[1];   N5_W0[0] <= N5_W0[1];   N7_W2[0] <= N7_W2[1];   E2_S4[0] <= E2_S4[1];   E5_S6[0] <= E5_S6[1];   S2_W0[0] <= S2_W0[1];                  
+	N1_S5[1] <= N1_S4[0];    N3_S7[1] <= N3_S6[0];   N5_W1[1] <= N5_W0[0];   N7_W3[1] <= N7_W2[0];   E2_S5[1] <= E2_S4[0];   E5_S7[1] <= E5_S6[0];   S2_W1[1] <= S2_W0[0];                  
+	N1_S5[0] <= N1_S5[1];    N3_S7[0] <= N3_S7[1];   N5_W1[0] <= N5_W1[1];   N7_W3[0] <= N7_W3[1];   E2_S5[0] <= E2_S5[1];   E5_S7[0] <= E5_S7[1];   S2_W1[0] <= S2_W1[1];                  
+	N1_S6[1] <= N1_S5[0];    N3_W0[1] <= N3_S7[0];   N5_W2[1] <= N5_W1[0];   N7_W4[1] <= N7_W3[0];   E2_S6[1] <= E2_S5[0];   E6_W0[1] <= E5_S7[0];   S2_W2[1] <= S2_W1[0];                  
+	N1_S6[0] <= N1_S6[1];    N3_W0[0] <= N3_W0[1];   N5_W2[0] <= N5_W2[1];   N7_W4[0] <= N7_W4[1];   E2_S6[0] <= E2_S6[1];   E6_W0[0] <= E6_W0[1];   S2_W2[0] <= S2_W2[1];                  
+	N1_S7[1] <= N1_S6[0];    N3_W1[1] <= N3_W0[0];   N5_W3[1] <= N5_W2[0];   N7_W5[1] <= N7_W4[0];   E2_S7[1] <= E2_S6[0];   E6_W1[1] <= E6_W0[0];   S2_W3[1] <= S2_W2[0];                  
+	N1_S7[0] <= N1_S7[1];    N3_W1[0] <= N3_W1[1];   N5_W3[0] <= N5_W3[1];   N7_W5[0] <= N7_W5[1];   E2_S7[0] <= E2_S7[1];   E6_W1[0] <= E6_W1[1];   S2_W3[0] <= S2_W3[1];                  
+	N1_W0[1] <= N1_S7[0];    N3_W2[1] <= N3_W1[0];   N5_W4[1] <= N5_W3[0];   N7_W6[1] <= N7_W5[0];   E3_W0[1] <= E2_S7[0];   E6_W2[1] <= E6_W1[0];   S2_W4[1] <= S2_W3[0];                  
+	N1_W0[0] <= N1_W0[1];    N3_W2[0] <= N3_W2[1];   N5_W4[0] <= N5_W4[1];   N7_W6[0] <= N7_W6[1];   E3_W0[0] <= E3_W0[1];   E6_W2[0] <= E6_W2[1];   S2_W4[0] <= S2_W4[1];                  
+	N1_W1[1] <= N1_W0[0];    N3_W3[1] <= N3_W2[0];   N5_W5[1] <= N5_W4[0];   N7_W7[1] <= N7_W6[0];   E3_W1[1] <= E3_W0[0];   E6_W3[1] <= E6_W2[0];   S2_W5[1] <= S2_W4[0];                  
+	N1_W1[0] <= N1_W1[1];    N3_W3[0] <= N3_W3[1];   N5_W5[0] <= N5_W5[1];   N7_W7[0] <= N7_W7[1];   E3_W1[0] <= E3_W1[1];   E6_W3[0] <= E6_W3[1];   S2_W5[0] <= S2_W5[1];                  
+	N1_W2[1] <= N1_W1[0];    N3_W4[1] <= N3_W3[0];   N5_W6[1] <= N5_W5[0];   E0_W0[1] <= N7_W7[0];   E3_W2[1] <= E3_W1[0];   E6_W4[1] <= E6_W3[0];   S2_W6[1] <= S2_W5[0];                  
+	N1_W2[0] <= N1_W2[1];    N3_W4[0] <= N3_W4[1];   N5_W6[0] <= N5_W6[1];   E0_W0[0] <= E0_W0[1];   E3_W2[0] <= E3_W2[1];   E6_W4[0] <= E6_W4[1];   S2_W6[0] <= S2_W6[1];                  
+	N1_W3[1] <= N1_W2[0];    N3_W5[1] <= N3_W4[0];   N5_W7[1] <= N5_W6[0];   E0_W1[1] <= E0_W0[0];   E3_W3[1] <= E3_W2[0];   E6_W5[1] <= E6_W4[0];   S2_W7[1] <= S2_W6[0];                  
+	N1_W3[0] <= N1_W3[1];    N3_W5[0] <= N3_W5[1];   N5_W7[0] <= N5_W7[1];   E0_W1[0] <= E0_W1[1];   E3_W3[0] <= E3_W3[1];   E6_W5[0] <= E6_W5[1];   S2_W7[0] <= S2_W7[1];                  
+	N1_W4[1] <= N1_W3[0];    N3_W6[1] <= N3_W5[0];   N6_E0[1] <= N5_W7[0];   E0_W2[1] <= E0_W1[0];   E3_W4[1] <= E3_W3[0];   E6_W6[1] <= E6_W5[0];   S3_W0[1] <= S2_W7[0];                  
+	N1_W4[0] <= N1_W4[1];    N3_W6[0] <= N3_W6[1];   N6_E0[0] <= N6_E0[1];   E0_W2[0] <= E0_W2[1];   E3_W4[0] <= E3_W4[1];   E6_W6[0] <= E6_W6[1];   S3_W0[0] <= S3_W0[1];                  
+	N1_W5[1] <= N1_W4[0];    N3_W7[1] <= N3_W6[0];   N6_E1[1] <= N6_E0[0];   E0_W3[1] <= E0_W2[0];   E3_W5[1] <= E3_W4[0];   E6_W7[1] <= E6_W6[0];   S3_W1[1] <= S3_W0[0];                  
+	N1_W5[0] <= N1_W5[1];    N3_W7[0] <= N3_W7[1];   N6_E1[0] <= N6_E1[1];   E0_W3[0] <= E0_W3[1];   E3_W5[0] <= E3_W5[1];   E6_W7[0] <= E6_W7[1];   S3_W1[0] <= S3_W1[1];                  
+	N1_W6[1] <= N1_W5[0];    N4_E0[1] <= N3_W7[0];   N6_E2[1] <= N6_E1[0];   E0_W4[1] <= E0_W3[0];   E3_W6[1] <= E3_W5[0];   E6_S0[1] <= E6_W7[0];   S3_W2[1] <= S3_W1[0];                  
+	N1_W6[0] <= N1_W6[1];    N4_E0[0] <= N4_E0[1];   N6_E2[0] <= N6_E2[1];   E0_W4[0] <= E0_W4[1];   E3_W6[0] <= E3_W6[1];   E6_S0[0] <= E6_S0[1];   S3_W2[0] <= S3_W2[1];                  
+	N1_W7[1] <= N1_W6[0];    N4_E1[1] <= N4_E0[0];   N6_E3[1] <= N6_E2[0];   E0_W5[1] <= E0_W4[0];   E3_W7[1] <= E3_W6[0];   E6_S1[1] <= E6_S0[0];   S3_W3[1] <= S3_W2[0];                  
+	N1_W7[0] <= N1_W7[1];    N4_E1[0] <= N4_E1[1];   N6_E3[0] <= N6_E3[1];   E0_W5[0] <= E0_W5[1];   E3_W7[0] <= E3_W7[1];   E6_S1[0] <= E6_S1[1];   S3_W3[0] <= S3_W3[1];                  
+	N2_E0[1] <= N1_W7[0];    N4_E2[1] <= N4_E1[0];   N6_E4[1] <= N6_E3[0];   E0_W6[1] <= E0_W5[0];   E3_S0[1] <= E3_W7[0];   E6_S2[1] <= E6_S1[0];   S3_W4[1] <= S3_W3[0];                  
+	N2_E0[0] <= N2_E0[1];    N4_E2[0] <= N4_E2[1];   N6_E4[0] <= N6_E4[1];   E0_W6[0] <= E0_W6[1];   E3_S0[0] <= E3_S0[1];   E6_S2[0] <= E6_S2[1];   S3_W4[0] <= S3_W4[1];                  
+	N2_E1[1] <= N2_E0[0];    N4_E3[1] <= N4_E2[0];   N6_E5[1] <= N6_E4[0];   E0_W7[1] <= E0_W6[0];   E3_S1[1] <= E3_S0[0];   E6_S3[1] <= E6_S2[0];   S3_W5[1] <= S3_W4[0];                  
+	N2_E1[0] <= N2_E1[1];    N4_E3[0] <= N4_E3[1];   N6_E5[0] <= N6_E5[1];   E0_W7[0] <= E0_W7[1];   E3_S1[0] <= E3_S1[1];   E6_S3[0] <= E6_S3[1];   S3_W5[0] <= S3_W5[1]; 
+                 
                       
 	
 

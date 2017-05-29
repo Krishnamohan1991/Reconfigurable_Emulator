@@ -1,8 +1,8 @@
 module interconnect_unit(I0,I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,CLB_prgm_b,interconnect_switch,prgm_b,Q0,Q1,Q2,Q3,Q4,Q5,Q6,Q7,lut_inp
-,CYO_0,CYO_1,CYO_2,CYO_3,CYO_4,CYO_5,,CYO_6,CYO_7,RQ0,RQ1,RQ2,RQ3,RQ4,RQ5,RQ6,RQ7);
+,BY_0,BY_1,BY_2,BY_3,BY_4,BY_5,,BY_6,BY_7,RQ0,RQ1,RQ2,RQ3,RQ4,RQ5,RQ6,RQ7);
 
 input I0,I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,CLB_prgm_b,I16,prgm_b,Q0,Q1,Q2,Q3,Q4,Q5,Q6,Q7;
-input CYO_0,CYO_1,CYO_2,CYO_3,CYO_4,CYO_5,CYO_6,CYO_7,RQ0,RQ1,RQ2,RQ3,RQ4,RQ5,RQ6,RQ7;
+input BY_0,BY_1,BY_2,BY_3,BY_4,BY_5,BY_6,BY_7,RQ0,RQ1,RQ2,RQ3,RQ4,RQ5,RQ6,RQ7;
 input [5:0] interconnect_switch;
 output reg lut_inp;
 initial
@@ -51,14 +51,14 @@ begin
 6'b011101: lut_inp=RQ5;
 6'b011110: lut_inp=RQ6;
 6'b011111: lut_inp=RQ7;
-6'b100000: lut_inp=CYO_0;
-6'b100001: lut_inp=CYO_1;
-6'b100010: lut_inp=CYO_2;
-6'b100011: lut_inp=CYO_3;
-6'b100100: lut_inp=CYO_4;
-6'b100101: lut_inp=CYO_5;
-6'b100110: lut_inp=CYO_6;
-6'b100111: lut_inp=CYO_7;
+6'b100000: lut_inp=BY_0;
+6'b100001: lut_inp=BY_1;
+6'b100010: lut_inp=BY_2;
+6'b100011: lut_inp=BY_3;
+6'b100100: lut_inp=BY_4;
+6'b100101: lut_inp=BY_5;
+6'b100110: lut_inp=BY_6;
+6'b100111: lut_inp=BY_7;
 default: lut_inp=1'bx;   //earler default was 1'bz now changed to 1'bx as actual fpga might not give equivalent sybthesis for high impedence
 endcase
 

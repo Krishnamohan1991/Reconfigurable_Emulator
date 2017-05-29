@@ -140,15 +140,14 @@ begin
   if (prgm_b==1'b0 && CLB_prgm_b_in==1'b1 && CLB_prgm_b_out!=1'b1 && CLB_prgm_b==1'b1) begin
 
     if(reset) begin
-
-         		      data_0 <=0;
- 	q23 <=0;              data_1 <=0;
+         		              data_0 <=0;
+ 	  q23 <=0;              data_1 <=0;
   	q22 <=0;              data_2 <=0;
   	q21 <=0;              data_3 <=0;
   	q20 <=0;              data_4 <=0;
   	q19 <= 0;             data_5 <=0;
   	q18 <= 0;             by0 <=0;
-  	q17 <= 0; 	      by1 <=0;
+  	q17 <= 0; 	      	  by1 <=0;
   	q16 <= 0;             by2 <=0;
   	q15 <= 0;             by3 <=0;
   	q14 <= 0;             by4 <=0;
@@ -172,30 +171,30 @@ begin
 
     else begin
 
-	    q23 <=bit_in;	   data_5 <=q0;
+	    q23 <=bit_in;	       data_5 <=q0;
 	    q22 <=q23;             data_4 <=data_5;
 	    q21 <=q22;             data_3 <=data_4;
 	    q20 <=q21;             data_2 <=data_3;
 	    q19 <= q20;            data_1 <=data_2;
-            q18 <= q19;            data_0 <=data_1;
-            q17 <= q18; 	   by5 <=data_0;
-            q16 <= q17;            by4 <=by5;
-            q15 <= q16;            by3 <=by4;
-            q14 <= q15;            by2 <=by3;
-            q13 <= q14;            by1 <=by2;
-            q12 <= q13;            by0 <=by1;
-            q11 <= q12;           CYO_inp0_MUX_SEL[2] <= by0;				   
-            q10 <= q11;           CYO_inp0_MUX_SEL[1] <=CYO_inp0_MUX_SEL[2];
-            q9 <= q10;            CYO_inp0_MUX_SEL[0] <=CYO_inp0_MUX_SEL[1];
-            q8 <= q9;             CYO_MUX_SEL<=CYO_inp0_MUX_SEL[0];
-            q7 <= q8;             SUM_LUT_MUX_SEL<=CYO_MUX_SEL;
-            q6 <= q7;             DFF_INP_MUX_SEL<=SUM_LUT_MUX_SEL;
-            q5 <= q6;             config_data_reg <=DFF_INP_MUX_SEL;
-            q4 <= q5;      
-            q3 <= q4;      
-            q2 <= q3;	  
-            q1 <= q2;   
-            q0 <= q1;
+        q18 <= q19;            data_0 <=data_1;
+        q17 <= q18; 	       by5 <=data_0;
+        q16 <= q17;            by4 <=by5;
+        q15 <= q16;            by3 <=by4;
+        q14 <= q15;            by2 <=by3;
+        q13 <= q14;            by1 <=by2;
+        q12 <= q13;            by0 <=by1;
+        q11 <= q12;           CYO_inp0_MUX_SEL[2] <= by0;				   
+        q10 <= q11;           CYO_inp0_MUX_SEL[1] <=CYO_inp0_MUX_SEL[2];
+        q9 <= q10;            CYO_inp0_MUX_SEL[0] <=CYO_inp0_MUX_SEL[1];
+        q8 <= q9;             CYO_MUX_SEL<=CYO_inp0_MUX_SEL[0];
+        q7 <= q8;             SUM_LUT_MUX_SEL<=CYO_MUX_SEL;
+        q6 <= q7;             DFF_INP_MUX_SEL<=SUM_LUT_MUX_SEL;
+        q5 <= q6;             config_data_reg <=DFF_INP_MUX_SEL;
+        q4 <= q5;      
+        q3 <= q4;      
+        q2 <= q3;	  
+        q1 <= q2;   
+        q0 <= q1;
      
     end
 
