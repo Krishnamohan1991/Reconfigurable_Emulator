@@ -91,7 +91,7 @@ class lut(object):
 			if(CarryGenerateConfig!=''):
 				self.CYGEN_SEL=CY_GEN_Config[CarryGenerateConfig]
 
-		if((function == 'HALF_ADD' or function == 'FULL_ADD') and CarryGenerateConfig!=''):
+		if((function == 'OPT_FULL_ADD' or function == 'FULL_ADD' or function == '2INPAND') and CarryGenerateConfig!=''):
 			print 'Error: Adding Carry Generate Configuration To Functions Other Than Half and Full Adder'
 							
 		return LUTID

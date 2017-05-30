@@ -110,7 +110,10 @@ def begins(cls):
 						route.reverse()
 						target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.DReg_inp,cls.LUT_Reg,RegWr_enable)
 
-					elif(cls.DReg_inp[0:2]=='IO' and IOobjectDictionary[cls.DReg_inp[3:5]].status==1):
+					elif(cls.DReg_inp[0:2]=='IO' and IOobjectDictionary[cls.DReg_inp[3:5]].status==1 ):
+						if(IOobjectDictionary[cls.DReg_inp[3:5]].ioConf[int(cls.DReg_inp[7])]!='I'):
+							print 'ERROR THE IO PORT %s IS NOT CONFIGURED AS INPUT PORT'%(cls.DReg_inp)
+							return cls.DReg_inp
 						fromSB=IO_SB_Connect[cls.DReg_inp[3:5]][0]
 						route=CB_SB_RouteMap.shortest_path(fromSB,toCBCode)
 						route.append(fromSB)
@@ -129,7 +132,10 @@ def begins(cls):
 					print 'routing %s for %s Bypass line'%(cls.DReg_inp,cls.LUT_Reg)
 				
 				else:				
-					bypass=op
+					if(LUT_interconnect.has_key(op)):
+						bypass=op
+					else:
+						bypass=op[-3:]
 				print 'WHAT IS BYPASS = %s'%bypass
 				lutobjectDictionary[Logic_Objects[cls.LUT_Reg]].BY=	LUT_interconnect[bypass]
 			else:
@@ -171,7 +177,10 @@ def begins(cls):
 					route.reverse()
 					target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.write_input,cls.LUTID,RegWr_enable)
 
-				elif(cls.write_input[0:2]=='IO' and IOobjectDictionary[cls.DReg_inp[3:5]].status==1):
+				elif(cls.write_input[0:2]=='IO' and IOobjectDictionary[cls.write_input[3:5]].status==1):
+					if(IOobjectDictionary[cls.write_input[3:5]].ioConf[int(cls.write_input[7])]!='I'):
+							print 'ERROR THE IO PORT %s IS NOT CONFIGURED AS INPUT PORT'%(cls.write_input)
+							return cls.write_input
 					fromSB=IO_SB_Connect[cls.DReg_inp[3:5]][0]
 					route=CB_SB_RouteMap.shortest_path(fromSB,toCBCode)
 					route.append(fromSB)
@@ -190,7 +199,10 @@ def begins(cls):
 				print 'routing %s for %s data write line'%(cls.write_input,cls.LUTID)
 				
 			else:				
-				data_write=op
+				if(LUT_interconnect.has_key(op)):
+					data_write=op
+				else:
+					data_write=op[-3:]
 
 		
 		if((LUT_connect.has_key(cls.op1) and (LUT_connect[cls.op1][0]!=LUT_connect[cls.LUTID][0])) or cls.op1[0:2]=='IO'): #check if the input and output LUTs belong to the same group or not
@@ -227,6 +239,10 @@ def begins(cls):
 					target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.op1,cls.LUTID,RegWr_enable)
 
 				elif(cls.op1[0:2]=='IO' and IOobjectDictionary[cls.op1[3:5]].status==1):
+					#print 'IO status XXXXXXXXXXXXXXXXXXXXXXXXXXXX--- %c'%IOobjectDictionary[cls.op1[3:5]].ioConf[int(cls.op1[0])]
+					if(IOobjectDictionary[cls.op1[3:5]].ioConf[int(cls.op1[7])]!='I'):
+							print 'ERROR THE IO PORT %s IS NOT CONFIGURED AS INPUT PORT'%(cls.op1)
+							return cls.op1
 					fromSB=IO_SB_Connect[cls.op1[3:5]][0]
 					route=CB_SB_RouteMap.shortest_path(fromSB,toCBCode)
 					route.append(fromSB)
@@ -245,7 +261,10 @@ def begins(cls):
 				#print 'routing %s for %s input1'%(cls.op1,cls.LUTID)
 				
 			else:				
-				op1=op
+				if(LUT_interconnect.has_key(op)):
+					op1=op
+				else:
+					op1=op[-3:]
 				
 		if((LUT_connect.has_key(cls.op2) and (LUT_connect[cls.op2][0]!=LUT_connect[cls.LUTID][0])) or cls.op2[0:2]=='IO'):	
 			if(cls.op2[0:2]!='IO'):			
@@ -279,6 +298,9 @@ def begins(cls):
 					target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.op2,cls.LUTID,RegWr_enable)
 
 				elif(cls.op2[0:2]=='IO' and IOobjectDictionary[cls.op2[3:5]].status==1):
+					if(IOobjectDictionary[cls.op2[3:5]].ioConf[int(cls.op2[7])]!='I'):
+							print 'ERROR THE IO PORT %s IS NOT CONFIGURED AS INPUT PORT'%(cls.op2)
+							return cls.op2
 					fromSB=IO_SB_Connect[cls.op2[3:5]][0]
 					route=CB_SB_RouteMap.shortest_path(fromSB,toCBCode)
 					route.append(fromSB)
@@ -295,8 +317,12 @@ def begins(cls):
 					print 'No target CB port available'
 				#print 'routing %s for %s input2'%(cls.op2,cls.LUTID)
 					
-			else:				
-				op2=op
+			else:
+				print 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx %s'%op[-3:]				
+				if(LUT_interconnect.has_key(op)):
+					op2=op
+				else:
+					op2=op[-3:]
 				
 		if((LUT_connect.has_key(cls.op3) and (LUT_connect[cls.op3][0]!=LUT_connect[cls.LUTID][0])) or cls.op3[0:2]=='IO'):
 			print "INPUT 3"
@@ -331,6 +357,9 @@ def begins(cls):
 					target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.op3,cls.LUTID,RegWr_enable)
 
 				elif(cls.op3[0:2]=='IO' and IOobjectDictionary[cls.op3[3:5]].status==1):
+					if(IOobjectDictionary[cls.op3[3:5]].ioConf[int(cls.op3[7])]!='I'):
+							print 'ERROR THE IO PORT %s IS NOT CONFIGURED AS INPUT PORT'%(cls.op3)
+							return cls.op3
 					fromSB=IO_SB_Connect[cls.op3[3:5]][0]
 					route=CB_SB_RouteMap.shortest_path(fromSB,toCBCode)
 					route.append(fromSB)
@@ -348,7 +377,11 @@ def begins(cls):
 				#print 'routing %s for %s input3'%(cls.op3,cls.LUTID)
 				
 			else:
-				op3=op
+				print 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx %s'%op[-3:]
+				if(LUT_interconnect.has_key(op)):
+					op3=op
+				else:
+					op3=op[-3:]
 				
 		if((LUT_connect.has_key(cls.op4) and (LUT_connect[cls.op4][0]!=LUT_connect[cls.LUTID][0])) or cls.op4[0:2]=='IO'):
 			print "INPUT 4 XXXXXXXXXXXXX"
@@ -385,6 +418,10 @@ def begins(cls):
 					target_CB_port=routing(route,fromCB,fromCBCode,toCB,toCBCode,cls.op4,cls.LUTID,RegWr_enable)
 
 				elif(cls.op4[0:2]=='IO' and IOobjectDictionary[cls.op4[3:5]].status==1):
+					print 'IO status XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx%s'%IOobjectDictionary[cls.op4[3:5]].ioConf[int(cls.op4[7])]
+					if(IOobjectDictionary[cls.op4[3:5]].ioConf[int(cls.op4[7])]!='I'):
+							print 'ERROR THE IO PORT %s IS NOT CONFIGURED AS INPUT PORT'%(cls.op4)
+							return cls.op4
 					fromSB=IO_SB_Connect[cls.op4[3:5]][0]
 					route=CB_SB_RouteMap.shortest_path(fromSB,toCBCode)
 					route.append(fromSB)
@@ -403,7 +440,11 @@ def begins(cls):
 				#print 'routing %s for %s input4'%(cls.op4,cls.LUTID)
 				
 			else:
-				op4=op
+				print 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx %s'%op[-3:]
+				if(LUT_interconnect.has_key(op)):
+					op4=op
+				else:
+					op4=op[-3:]
 
 		print'lutid %s inpu1 %s input2 %s input3 %s input4 %s bypass %s data_write %s'%(cls.LUTID,op1,op2,op3,op4,bypass,data_write)		
 		#configuring the CLB
@@ -421,6 +462,7 @@ def begins(cls):
 
 	elif cls[0]=='IO':
 		IOBlocks.configIO(IOobjectDictionary[cls.IOId],cls.IOId,cls.SBport0,cls.SBport1,cls.SBport2,cls.SBport3,cls.SBport4,cls.SBport5,cls.SBport6,cls.SBport7)
+		#print 'IO status XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx%s'%IOobjectDictionary[cls.IOId].ioConf
 	
 	elif cls[0]=='CB':
 
@@ -547,7 +589,7 @@ operand1 = (input_port | output_port ).setResultsName('op1')
 operand2 = (input_port | output_port ).setResultsName('op2')
 operand3 = (input_port | output_port ).setResultsName('op3')
 operand4 = (input_port | output_port ).setResultsName('op4')
-op = (oneOf("AND OR XOR ZERO FULL_ADD HALF_ADD")).setResultsName('function')
+op = (oneOf("AND OR XOR ZERO FULL_ADD OPT_FULL_ADD 2INPAND V3 V2 V1 V0")).setResultsName('function')
 
 switchId = (oneOf("00 01 02 03 04 10 11 12 13 14 20 21 22 23 24 30 31 32 33 34 40 41 42 43 44")).setResultsName('switchID')
 
@@ -628,11 +670,11 @@ config=OneOrMore(expression)
 
 
 
-tests=open("test_pyParser.txt","r")
+tests=open("vector_multiply.txt","r")
 scr=tests.read()
 
 scr_split=scr.splitlines()
-
+	
 for test in scr_split:
 	stats = config.parseString(test)
 	begins(stats)
