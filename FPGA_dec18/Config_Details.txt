@@ -1,0 +1,33 @@
+CONFIGURATION BIT STREAM FOR 4 x 4 FPGA MODEL
+
+CLB
+----
+
+Bits required for one LUT = 58
+So, bits required for one CLB = 58*8
+
+Total bits required for all 16 CLBs = 58*8*16= 7424
+
+
+CB
+---
+
+Bits required for one CB = 80 
+So, bits required for one CLB = 80*4
+
+Total bits required for all 16*4 CBs = 80*4*16= 5120
+
+SB
+---
+
+Bits required for one SB = 768 
+So, bits required for 25 SBs = 768*25 = 19200
+
+IO
+---
+
+Bits required for one IO Block = 16
+So, bits required for 25 SBs = 16*20 = 320
+
+Total bits required to configure the FPGA = 7424 + 5120 + 19200 + 320 = 32064 bits = 4008 bytes
+

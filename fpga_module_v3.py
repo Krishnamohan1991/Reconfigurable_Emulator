@@ -684,34 +684,58 @@ tests.close()
 
 
 #####################################################printing bits######################################################################################
-'''
-CB_print_order=["11_3","11_2","11_1","11_0","10_3","10_2","10_1","10_0","01_3","01_2","01_1","01_0","00_3","00_2","00_1","00_0"]
+
+CB_print_order=	["33_3","33_2","33_1","33_0","32_3","32_2","32_1","32_0","31_3","31_2","31_1","31_0","30_3","30_2","30_1","30_0",
+	"23_3","23_2","23_1","23_0","22_3","22_2","22_1","22_0","21_3","21_2","21_1","21_0","20_3","20_2","20_1","20_0",
+	"13_3","13_2","13_1","13_0","12_3","12_2","12_1","12_0","11_3","11_2","11_1","11_0","10_3","10_2","10_1","10_0",
+	"03_3","03_2","03_1","03_0","02_3","02_2","02_1","02_0","01_3","01_2","01_1","01_0","00_3","00_2","00_1","00_0"]
+
 CB_bit_stream=''
 for i in CB_print_order:
-	CB_bit_stream=CB_bit_stream+CBobjectDictionary[i].printCBconfig()	
+	CB_bit_stream=CB_bit_stream+CBobjectDictionary[i].printCBconfig()
 
 
-SB_print_order = [ "22","21","20","12","11","10","02","01","00"]
-SB_bit_stream=''      
-for k in SB_print_order:
-	SB_bit_stream=SB_bit_stream+SBobjectDictionary[k].gen_SB_bits()
 
-IO_print_order=["42","41","40","31","30","21","20","11","10","02","01","00"]
+SB_print_order0 = ["14","13","12","11","10","04","03","02","01","00"]
+SB_print_order1= ["34","33","32","31","30","24","23","22","21","20"]
+SB_print_order2=["44","43","42","41","40"]
+SB_bit_stream0=''
+SB_bit_stream1=''
+SB_bit_stream2=''      
+
+for k0 in SB_print_order0:
+	SB_bit_stream0=SB_bit_stream0+SBobjectDictionary[k0].gen_SB_bits()
+
+for k1 in SB_print_order1:
+	SB_bit_stream1=SB_bit_stream1+SBobjectDictionary[k1].gen_SB_bits()	
+
+for k2 in SB_print_order2:
+	SB_bit_stream2=SB_bit_stream2+SBobjectDictionary[k2].gen_SB_bits()		
+
+IO_print_order=["64","63","62","61","60","51","50","41","40","31","30","21","20","11","10","04","03","02","01","00"]
 IO_bit_stream=''      
 for j in IO_print_order:  
 	IO_bit_stream=IO_bit_stream+IOobjectDictionary[j].printIObits()
 
-LUT_print_order=["Q11_7","Q11_6","Q11_5","Q11_4","Q11_2","Q11_2","Q11_1","Q11_0","Q10_7","Q10_6","Q10_5","Q10_4","Q10_3","Q10_2","Q10_1","Q10_0","Q01_7","Q01_6","Q01_5","Q01_4",
-"Q01_3","Q01_2","Q01_1","Q01_0","Q00_7","Q00_6","Q00_5","Q00_4","Q00_3","Q00_2","Q00_1","Q00_0"]
+LUT_print_order=["CLB33_Q7","CLB33_Q6","CLB33_Q5","CLB33_Q4","CLB33_Q3","CLB33_Q2","CLB33_Q1","CLB33_Q0","CLB32_Q7","CLB32_Q6","CLB32_Q5","CLB32_Q4","CLB32_Q3","CLB32_Q2","CLB32_Q1","CLB32_Q0",
+"CLB31_Q7","CLB31_Q6","CLB31_Q5","CLB31_Q4","CLB31_Q3","CLB31_Q2","CLB31_Q1","CLB31_Q0","CLB30_Q7","CLB30_Q6","CLB30_Q5","CLB30_Q4","CLB30_Q3","CLB30_Q2","CLB30_Q1","CLB30_Q0",
+"CLB23_Q7","CLB23_Q6","CLB23_Q5","CLB23_Q4","CLB23_Q3","CLB23_Q2","CLB23_Q1","CLB23_Q0","CLB22_Q7","CLB22_Q6","CLB22_Q5","CLB22_Q4","CLB22_Q3","CLB22_Q2","CLB22_Q1","CLB22_Q0",
+"CLB21_Q7","CLB21_Q6","CLB21_Q5","CLB21_Q4","CLB21_Q3","CLB21_Q2","CLB21_Q1","CLB21_Q0","CLB20_Q7","CLB20_Q6","CLB20_Q5","CLB20_Q4","CLB20_Q3","CLB20_Q2","CLB20_Q1","CLB20_Q0",
+"CLB13_Q7","CLB13_Q6","CLB13_Q5","CLB13_Q4","CLB13_Q3","CLB13_Q2","CLB13_Q1","CLB13_Q0","CLB12_Q7","CLB12_Q6","CLB12_Q5","CLB12_Q4","CLB12_Q3","CLB12_Q2","CLB12_Q1","CLB12_Q0",
+"CLB11_Q7","CLB11_Q6","CLB11_Q5","CLB11_Q4","CLB11_Q3","CLB11_Q2","CLB11_Q1","CLB11_Q0","CLB10_Q7","CLB10_Q6","CLB10_Q5","CLB10_Q4","CLB10_Q3","CLB10_Q2","CLB10_Q1","CLB10_Q0",
+"CLB03_Q7","CLB03_Q6","CLB03_Q5","CLB03_Q4","CLB03_Q3","CLB03_Q2","CLB03_Q1","CLB03_Q0","CLB02_Q7","CLB02_Q6","CLB02_Q5","CLB02_Q4","CLB02_Q3","CLB02_Q2","CLB02_Q1","CLB02_Q0",
+"CLB01_Q7","CLB01_Q6","CLB01_Q5","CLB01_Q4","CLB01_Q3","CLB01_Q2","CLB01_Q1","CLB01_Q0","CLB00_Q7","CLB00_Q6","CLB00_Q5","CLB00_Q4","CLB00_Q3","CLB00_Q2","CLB00_Q1","CLB00_Q0"]
 LUT_bit_stream=''
 for lut in LUT_print_order:
 	LUT_bit_stream=LUT_bit_stream+lutobjectDictionary[lut].bits()
 
 file=open('conf_bit_stream.txt','w')
-file.write("CB_config_stream[767:0]= 768'b"+CB_bit_stream+";\n")
-file.write("SB_config_stream[6911:0]= 6912'b"+SB_bit_stream+";\n")
-file.write("CLB_config_stream[1215:0]= 1216'b"+LUT_bit_stream+";\n")
-file.write("IO_config_stream[191:0]=192'b"+IO_bit_stream+";")
+file.write("CB_config_stream[5119:0]= 5120'b"+CB_bit_stream+";\n")
+file.write("SB_config_stream0[7679:0]= 7680'b"+SB_bit_stream0+";\n")
+file.write("SB_config_stream1[7679:0]= 7680'b"+SB_bit_stream1+";\n")
+file.write("SB_config_stream2[3839:0]= 3840'b"+SB_bit_stream2+";\n")
+file.write("CLB_config_stream[7423:0]= 7424'b"+LUT_bit_stream+";\n")
+file.write("IO_config_stream[319:0]=320'b"+IO_bit_stream+";")
 
 file.close()
 '''
@@ -727,3 +751,4 @@ print 'LUT CLB31_RQ0 bitstream = %s'%lutobjectDictionary[Logic_Objects['CLB31_RQ
 
 print 'LUT CLB31_RQ1 bitstream = %s'%lutobjectDictionary[Logic_Objects['CLB31_RQ1']].bits()
 
+'''

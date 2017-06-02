@@ -409,6 +409,8 @@ Logic_Objects={"CLB00_Q0":'CLB00_Q0',"CLB00_Q1":'CLB00_Q1',"CLB00_Q2":'CLB00_Q2'
 }
 
 
+
+#KEY-> IO Block Code Keys-> i) switch block adjacent to an IO Block ii) The side of the SB facing the IO block
 IO_SB_Connect={"00":['00','N'],"01":['01','N'],"02":['02','N'],"03":['03','N'],"04":['04','N'],
 				"10":['00','W'],"11":['04','E'],"20":['10','W'],"21":['14','N'],"30":['20','W'],"31":['24','E'],
 				"30":['20','W'],"31":['24','E'],"40":['30','W'],"41":['34','E'],"50":['40','W'],"51":['44','E'],
